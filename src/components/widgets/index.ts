@@ -1,6 +1,5 @@
-import AlbumsList from "./AlbumsList";
-import AlbumTrackList from "./AlbumTrackList";
-import ArtistsList from "./ArtistsList";
-import MainCard from "./MainCard";
+import AlbumsList from "./audio/AlbumsList";
+import AlbumTrackList from "./audio/AlbumTrackList";
+import ArtistsList from "./audio/ArtistsList";
 
-export { AlbumsList, ArtistsList, AlbumTrackList, MainCard };
+export { AlbumsList, ArtistsList, AlbumTrackList };
