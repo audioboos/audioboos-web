@@ -1,19 +1,15 @@
-import { SnackbarProvider } from "notistack";
 import React from "react";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { RecoilRoot } from "recoil";
 import App from "./App";
-import "./assets/scss/style.scss";
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-
 ReactDOM.render(
     <React.StrictMode>
         <RecoilRoot>
             <HelmetProvider>
-                <SnackbarProvider maxSnack={3}>
-                    <App />
-                </SnackbarProvider>
+                <App />
             </HelmetProvider>
         </RecoilRoot>
     </React.StrictMode>,

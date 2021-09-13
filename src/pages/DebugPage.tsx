@@ -1,9 +1,6 @@
-import { Button } from "@material-ui/core";
-import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import React from "react";
 import jobService from "../services/api/jobService";
 const DebugPage = () => {
-
     const startJob = async () => {
         const result = await jobService.startJob("UpdateLibrary");
         // if (result) {
@@ -16,14 +13,9 @@ const DebugPage = () => {
     };
     return (
         <React.Fragment>
-            <Button
-                variant="outlined"
-                color="secondary"
-                onClick={startJob}
-                startIcon={<LocalLibraryIcon />}
-            >
+            <button color="secondary" onClick={startJob}>
                 Start Update Library Job
-            </Button>
+            </button>
         </React.Fragment>
     );
 };

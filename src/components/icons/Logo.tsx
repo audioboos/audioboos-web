@@ -5,8 +5,10 @@ const Logo = () => {
     const siteName = "AudioBoos";
     return (
         <React.Fragment>
-            <img src={logo} alt="site logo" width={32} height={32} />
-            <h1> {siteName}</h1>
+            <img className="h-10" src={logo} alt="Header logo" />
+            <span className="ml-4 text-2xl font-bold text-gray-600 dark:text-gray-300">
+                {siteName}
+            </span>
         </React.Fragment>
     );
 };
