@@ -1,4 +1,3 @@
-import { StyledEngineProvider, ThemeProvider } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import {
     BrowserRouter as Router,
@@ -18,7 +17,6 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import authService from "./services/api/authService";
 import { auth, siteConfig } from "./store";
-import theme from "./themes";
 
 function App() {
     const [authSettings, setAuthSettings] = useRecoilState(auth);
@@ -35,37 +33,33 @@ function App() {
     const [settings] = useRecoilState(siteConfig);
     return (
         <Router>
-            <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={theme(settings)}>
-                    <Layout>
-                        <Switch>
-                            <Route path="/artists">
-                                <ArtistsPage />
-                            </Route>
-                            <Route path="/login">
-                                <LoginPage />
-                            </Route>
-                            <Route path="/register">
-                                <RegisterPage />
-                            </Route>
-                            <Route path="/debug">
-                                <DebugPage />
-                            </Route>
-                            <Route path="/artist/:artistName/:albumName">
-                                <AlbumPage />
-                            </Route>
-                            <Route path="/artist/:artistName">
-                                <ArtistPage />
-                            </Route>
-                            <Route exact path="/">
-                                <HomePage />
-                            </Route>
-                            <Route path="/404" component={NotFoundPage} />
-                            <Redirect to="/404" />
-                        </Switch>
-                    </Layout>
-                </ThemeProvider>
-            </StyledEngineProvider>
+            <Layout>
+                <Switch>
+                    <Route path="/artists">
+                        <ArtistsPage />
+                    </Route>
+                    <Route path="/login">
+                        <LoginPage />
+                    </Route>
+                    <Route path="/register">
+                        <RegisterPage />
+                    </Route>
+                    <Route path="/debug">
+                        <DebugPage />
+                    </Route>
+                    <Route path="/artist/:artistName/:albumName">
+                        <AlbumPage />
+                    </Route>
+                    <Route path="/artist/:artistName">
+                        <ArtistPage />
+                    </Route>
+                    <Route exact path="/">
+                        <HomePage />
+                    </Route>
+                    <Route path="/404" component={NotFoundPage} />
+                    <Redirect to="/404" />
+                </Switch>
+            </Layout>
         </Router>
     );
 }
