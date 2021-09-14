@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { ToastContainer } from "react-toastify";
 import { RecoilRoot } from "recoil";
 import App from "./App";
 import "./index.css";
@@ -10,6 +11,7 @@ ReactDOM.render(
         <RecoilRoot>
             <HelmetProvider>
                 <App />
+                <ToastContainer />
             </HelmetProvider>
         </RecoilRoot>
     </React.StrictMode>,

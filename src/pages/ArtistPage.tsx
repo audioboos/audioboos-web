@@ -1,13 +1,21 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { AlbumsList } from "../components/widgets";
+import React, { useEffect } from "react";
+import { AlbumsList, ArtistCard } from "../components/widgets";
+import { Artist } from "../models";
+import audioBoosService from "../services/api/audiosBooService";
 
-interface ParamTypes {
+interface IArtistPageParams {
     artistName: string;
 }
 
-const ArtistPage = () => {
-    const { artistName } = useParams<ParamTypes>();
+const ArtistPage = ({ artistName }: IArtistPageParams) => {
+    const [artist, setArtist] = React.useState<Artist>();
+    useEffect(() => {
+        const loadArtist = async () => {
+            const results = await audioBoosService.getArtist(artistName);
+            setArtist(results);
+        };
+        loadArtist();
+    }, [artistName]);
     return (
         <React.Fragment>
             <div>
@@ -85,20 +93,36 @@ const ArtistPage = () => {
                         </ul>
                     </div>
                     <div className="mt-6 lg:mt-0">
-                        <button className="px-6 py-2 mx-2 my-2 text-sm text-indigo-700 transition duration-150 ease-in-out bg-white rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white hover:bg-gray-100">
-                            Back
-                        </button>
-                        <button className="px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700">
-                            Edit Profile
+                        <button className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                />
+                            </svg>
+                            Edit
                         </button>
                     </div>
                 </div>
                 {/* Page title ends */}
                 <div className="container px-6 mx-auto">
-                    {/* Remove class [ h-64 ] when adding a card block */}
-                    {/* Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
-                    <div className="w-full h-64 border-2 border-gray-300 border-dashed rounded">
-                        <AlbumsList artistName={artistName} />
+                    <div className="w-full">
+                        <div className="flex flex-col space-x-3 md:flex-row">
+                            <div className="container flex flex-col items-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
+                                <AlbumsList artistName={artistName} />
+                            </div>
+                            <div className="hidden md:block">
+                                <ArtistCard artist={artist} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

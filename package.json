@@ -6,6 +6,8 @@
         "@craco/craco": "^6.3.0",
         "@emotion/react": "^11.4.0",
         "@emotion/styled": "^11.3.0",
+        "@headlessui/react": "^1.4.1",
+        "@heroicons/react": "^1.0.4",
         "@microsoft/signalr": "^5.0.9",
         "autoprefixer": "^9",
         "axios": "^0.21.1",
@@ -19,11 +21,13 @@
         "react-perfect-scrollbar": "^1.5.8",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.1",
+        "react-toastify": "^8.0.2",
         "recoil": "^0.1.2",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat",
         "typescript": "^4.0.3",
         "web-vitals": "^0.2.4",
-        "yup": "^0.32.8"
+        "yup": "^0.32.8",
+        "zustand": "^3.5.10"
     },
     "devDependencies": {
         "@testing-library/jest-dom": "^5.11.4",

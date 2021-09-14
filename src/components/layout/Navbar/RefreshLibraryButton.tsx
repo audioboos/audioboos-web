@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import jobService from "../../../services/api/jobService";
 import MiniActionButton from "../../widgets/MiniActionButton";
 
@@ -6,21 +7,31 @@ const RefreshLibraryButton = () => {
     const refreshAudioLibrary = async () => {
         const result = await jobService.startJob("UpdateLibrary");
         if (result) {
-            alert("Boing");
-            // enqueueSnackbar("Job started successfully", {
-            //     variant: "success",
-            // });
+            toast("🦄 Refresh library job submitted!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         } else {
-            alert("Boo");
-            // enqueueSnackbar("Job failed to start", {
-            //     variant: "error",
-            // });
+            toast.error("💩 Failed to submit refresh job!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     };
     return (
         <MiniActionButton
             tooltip="Refresh Library"
-            onclick={refreshAudioLibrary}
+            onClick={() => refreshAudioLibrary()}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

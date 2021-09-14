@@ -2,19 +2,19 @@ import React from "react";
 import "./MiniActionButton.css";
 interface IMiniActionButtonProps {
     tooltip: string;
-    onclick: () => void;
+    onClick: () => void;
     children: React.ReactNode;
 }
 
 const MiniActionButton = ({
     tooltip,
-    onclick,
+    onClick,
     children,
 }: IMiniActionButtonProps) => {
     return (
         <div className="tooltip">
             <span className="tooltiptext">{tooltip}</span>
-            <button>{children}</button>
+            <button onClick={onClick}>{children}</button>
         </div>
     );
 };

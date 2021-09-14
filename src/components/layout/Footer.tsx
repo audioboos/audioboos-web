@@ -1,8 +1,11 @@
-import React from "react";
-import EventReceiver from "../widgets/EventReceiver";
+import MiniPlayer from "../widgets/players/MiniPlayer";
 
 const Footer = () => {
-    return <EventReceiver />;
+    return (
+        <div>
+            <MiniPlayer />
+        </div>
+    );
 };
 
 export default Footer;

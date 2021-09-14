@@ -5,8 +5,9 @@ import {
     Route,
     Switch
 } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import { useRecoilState } from "recoil";
-import { Layout } from "./components/layout";
+import { AuthLayout, Layout } from "./components/layout";
 import AlbumPage from "./pages/AlbumPage";
 import ArtistPage from "./pages/ArtistPage";
 import ArtistsPage from "./pages/ArtistsPage";
@@ -16,7 +17,7 @@ import DebugPage from "./pages/DebugPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import authService from "./services/api/authService";
-import { auth, siteConfig } from "./store";
+import { auth } from "./store";
 
 function App() {
     const [authSettings, setAuthSettings] = useRecoilState(auth);
@@ -30,10 +31,16 @@ function App() {
         checkIsAuth();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const [settings] = useRecoilState(siteConfig);
+    const _getLayout = (children: React.ReactNode) => {
+        return authSettings.isLoggedIn ? (
+            <AuthLayout>{children}</AuthLayout>
+        ) : (
+            <Layout>{children}</Layout>
+        );
+    };
     return (
         <Router>
-            <Layout>
+            {_getLayout(
                 <Switch>
                     <Route path="/artists">
                         <ArtistsPage />
@@ -50,16 +57,21 @@ function App() {
                     <Route path="/artist/:artistName/:albumName">
                         <AlbumPage />
                     </Route>
-                    <Route path="/artist/:artistName">
-                        <ArtistPage />
-                    </Route>
+                    <Route
+                        path="/artist/:artistName"
+                        render={(props) => (
+                            <ArtistPage
+                                artistName={props.match.params.artistName}
+                            />
+                        )}
+                    />
                     <Route exact path="/">
                         <HomePage />
                     </Route>
                     <Route path="/404" component={NotFoundPage} />
                     <Redirect to="/404" />
                 </Switch>
-            </Layout>
+            )}
         </Router>
     );
 }
