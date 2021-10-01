@@ -1,19 +1,20 @@
 import ApiService from "./apiService";
 
 class AuthService extends ApiService {
-    isAuthed = async (): Promise<boolean> => {
-        const client = await this.requestClient();
+    isAuthed = async (redirect: boolean = false): Promise<boolean> => {
+        const client = await this.getInstance();
 
         try {
             const response = await client.get("/auth/p");
             return response && response.status === 200 && response.data.success;
         } catch (err) {
             console.error("Exception fetching settings", err);
+            if (redirect) throw err;
         }
         return false;
     };
     logout = async (): Promise<boolean> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
 
         try {
             const response = await client.post("/auth/logout");
@@ -24,8 +25,8 @@ class AuthService extends ApiService {
         return false;
     };
 
-    login = async (username: string, password: string): Promise<string> => {
-        const client = await this.requestClient();
+    login = async (username: string, password: string): Promise<boolean> => {
+        const client = await this.getInstance();
 
         try {
             const response = await client.post("/auth/login", {
@@ -36,14 +37,14 @@ class AuthService extends ApiService {
         } catch (err) {
             console.error("Exception fetching settings", err);
         }
-        return "";
+        return false;
     };
     register = async (
         username: string,
         password: string,
         confirmPassword: string
     ): Promise<boolean> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
 
         try {
             const response = await client.post("/auth/register", {

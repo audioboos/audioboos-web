@@ -3,13 +3,11 @@ import ApiService from "./apiService";
 
 class AudioBoosService extends ApiService {
     getArtists = async (): Promise<Artist[] | undefined> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
 
         try {
             const response = await client.get("/artists", {
                 withCredentials: true,
-                credentials: "include",
-                crossDomain: true,
             });
             if (response && response.status === 200) {
                 return response.data as Artist[];
@@ -20,12 +18,10 @@ class AudioBoosService extends ApiService {
         }
     };
     getArtist = async (artistName: string): Promise<Artist | undefined> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
         try {
             const response = await client.get(`/artists/${artistName}`, {
                 withCredentials: true,
-                credentials: "include",
-                crossDomain: true,
             });
             if (response && response.status === 200) {
                 return response.data as Artist;
@@ -37,7 +33,7 @@ class AudioBoosService extends ApiService {
     };
 
     getAlbums = async (artistName: string): Promise<Album[] | undefined> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
 
         try {
             const response = await client.get(`albums/${artistName}`);
@@ -53,7 +49,7 @@ class AudioBoosService extends ApiService {
         artistName: string,
         albumName: string
     ): Promise<Album | undefined> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
 
         try {
             const response = await client.get(

@@ -3,7 +3,8 @@ import {
     BrowserRouter as Router,
     Redirect,
     Route,
-    Switch
+    Switch,
+    useHistory
 } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { useRecoilState } from "recoil";
@@ -13,24 +14,38 @@ import ArtistPage from "./pages/ArtistPage";
 import ArtistsPage from "./pages/ArtistsPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
+import Dashboard from "./pages/Dashboard";
 import DebugPage from "./pages/DebugPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import authService from "./services/api/authService";
 import { auth } from "./store";
 
-function App() {
+const App = () => {
+    return (
+        <Router>
+            <INNER_APP />
+        </Router>
+    );
+};
+
+const INNER_APP = () => {
+    const history = useHistory();
     const [authSettings, setAuthSettings] = useRecoilState(auth);
 
     useEffect(() => {
         const checkIsAuth = async () => {
-            const result = await authService.isAuthed();
-            setAuthSettings({ ...authSettings, isLoggedIn: result });
+            try {
+                const result = await authService.isAuthed(true);
+                setAuthSettings({ ...authSettings, isLoggedIn: result });
+            } catch (err) {
+                history.push("/login");
+            }
         };
 
         checkIsAuth();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [history]);
     const _getLayout = (children: React.ReactNode) => {
         return authSettings.isLoggedIn ? (
             <AuthLayout>{children}</AuthLayout>
@@ -39,7 +54,7 @@ function App() {
         );
     };
     return (
-        <Router>
+        <React.Fragment>
             {_getLayout(
                 <Switch>
                     <Route path="/artists">
@@ -66,14 +81,14 @@ function App() {
                         )}
                     />
                     <Route exact path="/">
-                        <HomePage />
+                        {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
                     </Route>
                     <Route path="/404" component={NotFoundPage} />
                     <Redirect to="/404" />
                 </Switch>
             )}
-        </Router>
+        </React.Fragment>
     );
-}
+};
 
 export default App;

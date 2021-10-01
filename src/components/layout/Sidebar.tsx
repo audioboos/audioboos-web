@@ -3,13 +3,7 @@ import React from "react";
 import { Logo } from "../icons";
 import { ArtistsList } from "../widgets";
 import EventReceiver from "../widgets/EventReceiver";
-
-interface ISidebarProps {
-    // drawerOpen: boolean;
-    // drawerToggle: () => void;
-    // window: any;
-}
-const Sidebar = (/*{ drawerOpen, drawerToggle, window }: ISidebarProps*/) => {
+const Sidebar = () => {
     return (
         <aside className="flex justify-between h-screen bg-white border-r w-80 dark:border-primary-darker dark:bg-darker">
             <div className="flex flex-col">
@@ -29,7 +23,6 @@ const Sidebar = (/*{ drawerOpen, drawerToggle, window }: ISidebarProps*/) => {
                 </div>
             </div>
         </aside>
-
     );
 };
 

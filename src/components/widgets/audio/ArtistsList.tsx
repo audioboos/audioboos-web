@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 import { Artist } from "../../../models";
 import audioBoosService from "../../../services/api/audiosBooService";
 
 function ArtistsList() {
-    const history = useHistory();
-    const [selected, setSelected] = React.useState(null);
 
     const [artists, setArtists] = useState<Artist[] | undefined>();
 

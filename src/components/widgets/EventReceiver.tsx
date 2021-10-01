@@ -21,11 +21,6 @@ const EventReceiver = () => {
                 .start()
                 .then((result) => {
                     connection.on("QueueJobMessage", (message) => {
-                        console.log(
-                            "EventReceiver",
-                            "QueueJobMessage",
-                            message
-                        );
                         setMessage(message.message);
                         setPercentage(message.percentage);
                     });

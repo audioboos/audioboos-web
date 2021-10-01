@@ -1,16 +1,9 @@
+import { HomeIcon, RssIcon } from "@heroicons/react/outline";
 import React from "react";
 import Authentication from "./Authentication";
 import RefreshLibraryButton from "./RefreshLibraryButton";
 
-interface INavbarProps {
-    // handleLeftDrawerToggle: () => void;
-}
-
-const Navbar = (/*{ handleLeftDrawerToggle }: INavbarProps*/) => {
-    const [show, setShow] = React.useState(false);
-    const [profile, setProfile] = React.useState(false);
-    const [product, setProduct] = React.useState(false);
-    const [deliverables, setDeliverables] = React.useState(false);
+const Navbar = () => {
     return (
         <React.Fragment>
             <nav className="bg-white shadow dark:bg-gray-800 ">
@@ -23,79 +16,18 @@ const Navbar = (/*{ handleLeftDrawerToggle }: INavbarProps*/) => {
                                     className="flex items-center px-5 py-6 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                                 >
                                     <span className="mr-2">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="icon icon-tabler icon-tabler-grid"
-                                            width={20}
-                                            height={20}
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                            />
-                                            <rect
-                                                x={4}
-                                                y={4}
-                                                width={6}
-                                                height={6}
-                                                rx={1}
-                                            />
-                                            <rect
-                                                x={14}
-                                                y={4}
-                                                width={6}
-                                                height={6}
-                                                rx={1}
-                                            />
-                                            <rect
-                                                x={4}
-                                                y={14}
-                                                width={6}
-                                                height={6}
-                                                rx={1}
-                                            />
-                                            <rect
-                                                x={14}
-                                                y={14}
-                                                width={6}
-                                                height={6}
-                                                rx={1}
-                                            />
-                                        </svg>
+                                        <HomeIcon className="w-8 h-6" />
                                     </span>
                                     Dashboard
                                 </a>
                                 <a
-                                    href="/products"
+                                    href="/podcasts"
                                     className="flex items-center px-5 py-6 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                                 >
                                     <span className="mr-2">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="icon icon-tabler icon-tabler-puzzle"
-                                            width={20}
-                                            height={20}
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                            />
-                                            <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
-                                        </svg>
+                                        <RssIcon className="w-8 h-6" />
                                     </span>
-                                    Products
+                                    Podcasts
                                 </a>
                             </div>
                             <div className="hidden md:block">

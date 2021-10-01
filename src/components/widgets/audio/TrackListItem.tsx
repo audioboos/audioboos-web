@@ -9,8 +9,6 @@ const TrackListItem = ({ track: t }: ITrackListItemProps) => {
     const setNowPlaying = useAudioStore((state) => state.setNowPlaying);
     const nowPlayingId = useAudioStore((state) => state.id);
     const togglePlayState = useAudioStore((state) => state.togglePlayState);
-    const playState = useAudioStore((state) => state.playState);
-    const loading = false;
 
     const _playClick = (track: Track) => {
         if (nowPlayingId !== track.id && track.audioUrl) {

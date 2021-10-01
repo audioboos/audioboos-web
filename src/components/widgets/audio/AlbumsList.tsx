@@ -17,6 +17,7 @@ function AlbumsList({ artistName }: IAlbumsListProps) {
             setAlbums(results);
         };
         loadArtists();
+        return () => audioBoosService.cancel();
     }, [artistName]);
     return (
         <React.Fragment>
@@ -55,7 +56,7 @@ function AlbumsList({ artistName }: IAlbumsListProps) {
                                             />
                                         </div>
                                         <div className="pl-4">
-                                            <p className="font-medium">
+                                            <p className="font-semibold text-gray-700 uppercase">
                                                 {a.name}
                                             </p>
                                             <p className="pt-2 text-xs leading-3 text-gray-600">

@@ -2,7 +2,7 @@ import ApiService from "./apiService";
 
 class JobService extends ApiService {
     startJob = async (jobName: string): Promise<boolean> => {
-        const client = await this.requestClient();
+        const client = await this.getInstance();
 
         try {
             const response = await client.post(`/job/start?name=${jobName}`);

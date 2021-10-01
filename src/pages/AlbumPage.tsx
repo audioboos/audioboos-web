@@ -1,6 +1,6 @@
 import { PencilAltIcon } from "@heroicons/react/outline";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import EditAlbumDialog from "../components/widgets/audio/EditAlbumDialog";
 import TrackList from "../components/widgets/audio/TrackList";
 import { Album } from "../models";
@@ -10,16 +10,10 @@ interface ParamTypes {
     albumName: string;
 }
 const AlbumPage = () => {
-    const history = useHistory();
     const { artistName, albumName } = useParams<ParamTypes>();
     const [album, setAlbum] = useState<Album | undefined>();
-    const [expanded, setExpanded] = React.useState(false);
 
     const [editing, setEditing] = useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     useEffect(() => {
         const loadAlbum = async () => {
@@ -30,6 +24,7 @@ const AlbumPage = () => {
             setAlbum(results);
         };
         loadAlbum();
+        return () => audioBoosService.cancel();
     }, [artistName, albumName]);
 
     return (

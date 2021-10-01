@@ -4,13 +4,28 @@ import jobService from "../services/api/jobService";
 const DebugPage = () => {
     const startJob = async () => {
         const result = await jobService.startJob("UpdateLibrary");
-        // if (result) {
-        //     enqueueSnackbar("Job started successfully");
-        // } else {
-        //     enqueueSnackbar("Job failed to start", {
-        //         variant: "error",
-        //     });
-        // }
+
+        if (result) {
+            toast("🦄 Job started successfully!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            toast.error("💩 Job started successfully!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     };
     return (
         <React.Fragment>

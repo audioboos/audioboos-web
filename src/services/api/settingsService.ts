@@ -3,7 +3,7 @@ import ApiService from "./apiService";
 
 class SettingsService extends ApiService {
   getSettings = async (): Promise<Settings | undefined> => {
-    const client = await this.requestClient();
+    const client = await this.getInstance();
 
     try {
       const response = await client.get("/settings");

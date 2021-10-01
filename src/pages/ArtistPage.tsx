@@ -15,6 +15,7 @@ const ArtistPage = ({ artistName }: IArtistPageParams) => {
             setArtist(results);
         };
         loadArtist();
+        return () => audioBoosService.cancel();
     }, [artistName]);
     return (
         <React.Fragment>
