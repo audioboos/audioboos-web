@@ -3,18 +3,22 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import * as Yup from "yup";
+import { AlertWidget } from "../../components/widgets";
+import { AlertWidgetType } from "../../components/widgets/AlertWidget";
 import authService from "../../services/api/authService";
 import { auth } from "../../store";
 
 const LoginPage = () => {
     const history = useHistory();
     const [, setAuthSettings] = useRecoilState(auth);
-
+    const [error, setError] = React.useState<string>();
     const doLogin = async (email: string, password: string) => {
         const result = await authService.login(email, password);
         if (result) {
             setAuthSettings({ isLoggedIn: true });
             history.push("/");
+        } else {
+            setError("Unable to log you in at this time");
         }
     };
 
@@ -150,6 +154,15 @@ const LoginPage = () => {
                             </form>
                         )}
                     </Formik>
+                </div>
+                <div className="mt-4 mb-4">
+                    {error && (
+                        <AlertWidget
+                            text={error}
+                            allowDismiss={false}
+                            type={AlertWidgetType.Error}
+                        />
+                    )}
                 </div>
                 <div className="flex items-center justify-center mt-6">
                     <a
