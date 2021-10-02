@@ -7,6 +7,6 @@ export interface Album {
     description: string;
     largeImage: string;
     smallImage: string;
-    tracks?: Track[];
     releaseDate: DateOnly;
+    tracks?: Track[];
 }

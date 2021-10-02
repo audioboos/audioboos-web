@@ -1,3 +1,5 @@
+import { Album } from ".";
+
 export interface Artist {
     id: number;
     name: string;
@@ -5,4 +7,5 @@ export interface Artist {
     largeImage: string;
     smallImage: string;
     thumbnail: string;
+    albums: Album[];
 }
