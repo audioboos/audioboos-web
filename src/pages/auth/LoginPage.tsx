@@ -105,8 +105,9 @@ const LoginPage = () => {
                                             </svg>
                                         </span>
                                         <input
-                                            type="text"
-                                            id="sign-in-email"
+                                            type="email"
+                                            id="login-email"
+                                            autoComplete="audioboos-current-email"
                                             className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-r-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             placeholder="Your email"
                                         />
@@ -127,7 +128,8 @@ const LoginPage = () => {
                                         </span>
                                         <input
                                             type="password"
-                                            id="sign-in-email"
+                                            id="login-password"
+                                            autoComplete="audioboos-current-password"
                                             className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-r-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                             placeholder="Your password"
                                         />
