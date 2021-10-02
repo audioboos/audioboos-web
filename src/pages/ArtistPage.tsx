@@ -1,24 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AlbumsList, ArtistCard } from "../components/widgets";
 import { Artist } from "../models";
-import audioBoosService from "../services/api/audiosBooService";
+import { useArtistQuery } from "../store/redux/api";
 
 interface IArtistPageParams {
     artistName: string;
 }
 
 const ArtistPage = ({ artistName }: IArtistPageParams) => {
-    const [artist, setArtist] = React.useState<Artist>();
-    useEffect(() => {
-        const loadArtist = async () => {
-            const results = await audioBoosService.getArtist(artistName);
-            setArtist(results);
-        };
-        loadArtist();
-        return () => audioBoosService.cancel();
-    }, [artistName]);
-    return (
-        <React.Fragment>
+    const queryResult = useArtistQuery(artistName);
+
+    const _renderLoading = () => <div>Loading.....</div>;
+    const _renderError = () => <div>Error loading.....</div>;
+    const _renderArtist = (artist: Artist) => {
+        return (
             <div>
                 <div className="container flex flex-col items-start justify-between px-6 pb-4 mx-auto my-6 border-b border-gray-300 lg:my-12 lg:flex-row lg:items-center">
                     <div>
@@ -127,6 +122,13 @@ const ArtistPage = ({ artistName }: IArtistPageParams) => {
                     </div>
                 </div>
             </div>
+        );
+    };
+    return (
+        <React.Fragment>
+            {queryResult.isLoading && _renderLoading()}
+            {queryResult.isError && _renderError()}
+            {queryResult.isSuccess && _renderArtist(queryResult.data || [])}
         </React.Fragment>
     );
 };

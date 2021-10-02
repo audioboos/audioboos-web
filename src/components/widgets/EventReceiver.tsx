@@ -1,4 +1,4 @@
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import React from "react";
 
 const EventReceiver = () => {
@@ -10,6 +10,7 @@ const EventReceiver = () => {
     React.useEffect(() => {
         const newConnection = new HubConnectionBuilder()
             .withUrl(`${process.env.REACT_APP_API_URL}/hubs/job`)
+            .configureLogging(LogLevel.Warning)
             .withAutomaticReconnect()
             .build();
         setConnection(newConnection);

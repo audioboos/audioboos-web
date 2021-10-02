@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
     BrowserRouter as Router,
     Redirect,
@@ -33,7 +33,7 @@ const INNER_APP = () => {
     const history = useHistory();
     const [authSettings, setAuthSettings] = useRecoilState(auth);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const checkIsAuth = async () => {
             try {
                 const result = await authService.isAuthed(true);
@@ -69,9 +69,15 @@ const INNER_APP = () => {
                     <Route path="/debug">
                         <DebugPage />
                     </Route>
-                    <Route path="/artist/:artistName/:albumName">
-                        <AlbumPage />
-                    </Route>
+                    <Route
+                        path="/artist/:artistName/:albumName"
+                        render={(props) => (
+                            <AlbumPage
+                                artistName={props.match.params.artistName}
+                                albumName={props.match.params.albumName}
+                            />
+                        )}
+                    />
                     <Route
                         path="/artist/:artistName"
                         render={(props) => (

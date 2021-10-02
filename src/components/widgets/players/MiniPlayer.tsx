@@ -17,11 +17,14 @@ const MiniPlayer = () => {
         return () => {
             setProgressPercentage((position / duration) * 100);
         };
-    }, [position, progressPercentage]);
+    }, [position, progressPercentage, duration]);
 
     return (
         <div className="flex h-full p-2 justify-items-stretch ">
-            <div className="w-8 cursor-pointer stroke-1">
+            <div
+                className="w-8 cursor-pointer stroke-1"
+                onClick={() => togglePlayState()}
+            >
                 {playState === 1 ? (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +65,11 @@ const MiniPlayer = () => {
                 <div className="mr-4 text-sm text-gray-400 elapsed">
                     00:12:40
                 </div>
-                <div className="w-full h-full progress" ref={seekBarElem}>
+                <div
+                    className="w-full h-full progress"
+                    ref={seekBarElem}
+                    onClick={(e) => setSeekPosition(e.clientX)}
+                >
                     <div className="mt-4">
                         <div className="h-1 bg-purple-100 rounded-full">
                             <div
