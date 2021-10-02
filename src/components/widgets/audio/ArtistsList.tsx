@@ -4,7 +4,7 @@ import { Artist } from "../../../models";
 import { useArtistsQuery } from "../../../store/redux/api";
 
 function ArtistsList() {
-    const result = useArtistsQuery();
+    const queryResult = useArtistsQuery();
     const _renderArtists = (artists: Artist[]) => {
         return artists.map((a) => {
             return (
@@ -31,9 +31,9 @@ function ArtistsList() {
 
     return (
         <React.Fragment>
-            {result.isLoading && _renderLoading()}
-            {result.isError && _renderError()}
-            {result.isSuccess && _renderArtists(result.data || [])}
+            {queryResult.isLoading && _renderLoading()}
+            {queryResult.isError && _renderError()}
+            {queryResult.isSuccess && _renderArtists(queryResult.data || [])}
         </React.Fragment>
     );
 }

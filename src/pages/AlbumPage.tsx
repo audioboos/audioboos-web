@@ -1,32 +1,25 @@
 import { PencilAltIcon } from "@heroicons/react/outline";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 import EditAlbumDialog from "../components/widgets/audio/EditAlbumDialog";
 import TrackList from "../components/widgets/audio/TrackList";
 import { Album } from "../models";
-import audioBoosService from "../services/api/audiosBooService";
-interface ParamTypes {
+import { useArtistQuery } from "../store/redux/api";
+interface IAlbumPageParams {
     artistName: string;
     albumName: string;
 }
-const AlbumPage = () => {
-    const { artistName, albumName } = useParams<ParamTypes>();
-    const [album, setAlbum] = useState<Album | undefined>();
-
-    const [editing, setEditing] = useState(false);
-
-    useEffect(() => {
-        const loadAlbum = async () => {
-            const results = await audioBoosService.getAlbum(
-                artistName,
-                albumName
+const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
+    const [editing, setEditing] = React.useState(false);
+    const [album, setAlbum] = React.useState<Album>();
+    const queryResult = useArtistQuery(artistName);
+    React.useEffect(() => {
+        if (queryResult.data) {
+            const album = queryResult.data.albums.find(
+                (r) => r.name === albumName
             );
-            setAlbum(results);
-        };
-        loadAlbum();
-        return () => audioBoosService.cancel();
-    }, [artistName, albumName]);
-
+            setAlbum(album);
+        }
+    }, [queryResult, albumName]);
     return (
         <React.Fragment>
             <div>
