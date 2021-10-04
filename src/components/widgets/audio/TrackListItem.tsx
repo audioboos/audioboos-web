@@ -1,7 +1,7 @@
 import { DocumentAddIcon, PlayIcon, ShareIcon } from "@heroicons/react/outline";
 import React from "react";
 import { Track } from "../../../models";
-import useAudioStore from "../../../services/audio/audioStore";
+import { useAudioStore } from "../../../services/audio";
 import MiniActionButton from "../MiniActionButton";
 interface ITrackListItemProps {
     track: Track;
