@@ -14,7 +14,9 @@ const MiniActionButton = ({
     return (
         <div className="tooltip">
             <span className="tooltiptext">{tooltip}</span>
-            <button onClick={onClick}>{children}</button>
+            <button className="p-2" onClick={onClick}>
+                {children}
+            </button>
         </div>
     );
 };
