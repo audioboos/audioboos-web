@@ -42,7 +42,10 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
         }
         if (url) {
             player.current = _createPlayer(url);
-            player.current.play();
+            player.current.once("load", () => {
+                player && player.current && player.current.play();
+                setPlayState(PlayState.playing);
+            });
         }
         progressTimer.current = setInterval(() => {
             setPosition((player.current?.seek() || 0) as number);

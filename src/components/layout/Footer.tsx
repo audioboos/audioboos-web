@@ -6,14 +6,12 @@ import MiniPlayer from "../widgets/players/MiniPlayer";
 const Footer = () => {
     const playState = useAudioStore((state) => state.playState);
     return (
-        <React.Fragment>
+        <div className="sticky bottom-0 left-0 bg-gray-50 ">
             {playState === PlayState.playing ||
-                (playState === PlayState.paused && (
-                    <div>
-                        <MiniPlayer />
-                    </div>
-                ))}
-        </React.Fragment>
+                true ||
+                (playState === PlayState.paused && <MiniPlayer />)}
+            <MiniPlayer />
+        </div>
     );
 };
 
