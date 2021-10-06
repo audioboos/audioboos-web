@@ -19,6 +19,7 @@ import DebugPage from "./pages/DebugPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import authService from "./services/api/authService";
+import { AudioProvider } from "./services/audio";
 import { auth } from "./store";
 
 const App = () => {
@@ -55,44 +56,50 @@ const INNER_APP = () => {
     };
     return (
         <React.Fragment>
-            {_getLayout(
-                <Switch>
-                    <Route path="/artists">
-                        <ArtistsPage />
-                    </Route>
-                    <Route path="/login">
-                        <LoginPage />
-                    </Route>
-                    <Route path="/register">
-                        <RegisterPage />
-                    </Route>
-                    <Route path="/debug">
-                        <DebugPage />
-                    </Route>
-                    <Route
-                        path="/artist/:artistName/:albumName"
-                        render={(props) => (
-                            <AlbumPage
-                                artistName={props.match.params.artistName}
-                                albumName={props.match.params.albumName}
-                            />
-                        )}
-                    />
-                    <Route
-                        path="/artist/:artistName"
-                        render={(props) => (
-                            <ArtistPage
-                                artistName={props.match.params.artistName}
-                            />
-                        )}
-                    />
-                    <Route exact path="/">
-                        {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
-                    </Route>
-                    <Route path="/404" component={NotFoundPage} />
-                    <Redirect to="/404" />
-                </Switch>
-            )}
+            <AudioProvider>
+                {_getLayout(
+                    <Switch>
+                        <Route path="/artists">
+                            <ArtistsPage />
+                        </Route>
+                        <Route path="/login">
+                            <LoginPage />
+                        </Route>
+                        <Route path="/register">
+                            <RegisterPage />
+                        </Route>
+                        <Route path="/debug">
+                            <DebugPage />
+                        </Route>
+                        <Route
+                            path="/artist/:artistName/:albumName"
+                            render={(props) => (
+                                <AlbumPage
+                                    artistName={props.match.params.artistName}
+                                    albumName={props.match.params.albumName}
+                                />
+                            )}
+                        />
+                        <Route
+                            path="/artist/:artistName"
+                            render={(props) => (
+                                <ArtistPage
+                                    artistName={props.match.params.artistName}
+                                />
+                            )}
+                        />
+                        <Route exact path="/">
+                            {authSettings.isLoggedIn ? (
+                                <Dashboard />
+                            ) : (
+                                <HomePage />
+                            )}
+                        </Route>
+                        <Route path="/404" component={NotFoundPage} />
+                        <Redirect to="/404" />
+                    </Switch>
+                )}
+            </AudioProvider>
         </React.Fragment>
     );
 };

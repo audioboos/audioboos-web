@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import useAudioStore from "../../../services/audio/audioStore";
+import { useAudioStore } from "../../../services/audio";
 
 const MiniPlayer = () => {
     const duration = useAudioStore((state) => state.duration);
