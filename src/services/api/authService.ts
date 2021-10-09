@@ -6,7 +6,7 @@ class AuthService extends ApiService {
 
         try {
             const response = await client.get("/auth/p");
-            return response && response.status === 200 && response.data.success;
+            return response && response.status === 200;
         } catch (err) {
             console.error("Exception fetching settings", err);
             if (redirect) throw err;

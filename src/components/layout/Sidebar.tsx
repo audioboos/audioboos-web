@@ -10,7 +10,7 @@ const Sidebar = () => {
                 <div className="flex items-center justify-start mx-6 mt-5 bg-white">
                     <Logo />
                 </div>
-                <div className="mb-auto overflow-y-auto">
+                <div className="mb-auto overflow-y-hidden hover:overflow-y-auto">
                     <nav className="flex flex-col flex-grow px-6 mt-10">
                         <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md">
                             Artists
