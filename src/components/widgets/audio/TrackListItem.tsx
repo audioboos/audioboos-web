@@ -9,9 +9,6 @@ interface ITrackListItemProps {
 }
 
 const TrackListItem = ({ track: t }: ITrackListItemProps) => {
-    // const setNowPlaying = useAudioStore((state) => state.setNowPlaying);
-    // const nowPlayingId = useAudioStore((state) => state.id);
-    // const togglePlayState = useAudioStore((state) => state.togglePlayState);
     const dispatch = useDispatch();
 
     const _addToPlaylist = (track: Track) => {
@@ -22,11 +19,6 @@ const TrackListItem = ({ track: t }: ITrackListItemProps) => {
     };
     const _playClick = (track: Track) => {
         dispatch(setNowPlaying({ id: track.id, url: track.audioUrl }));
-        // if (nowPlayingId !== track.id && track.audioUrl) {
-        //     setNowPlaying(track.id, track.audioUrl);
-        // } else if (nowPlayingId === track.id) {
-        //     togglePlayState();
-        // }
     };
     return (
         <tr

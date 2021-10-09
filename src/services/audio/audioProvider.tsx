@@ -1,6 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDuration, setPosition } from "../../store/redux/audio";
+import {
+    PlayState,
+    setDuration,
+    setPlayState,
+    setPosition
+} from "../../store/redux/audio";
 import { RootState } from "../../store/redux/store";
 export interface IAudioProviderProps {
     children: React.ReactNode;
@@ -14,7 +19,6 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     // const progressTimer = useRef<NodeJS.Timeout>();
 
     //
-    // const playState = useSelector((state: RootState) => state.audio.playState);
 
     React.useEffect(() => {
         if (!url) return;
@@ -28,6 +32,7 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
         audio.play();
         audio.addEventListener("loadeddata", () => {
             dispatch(setDuration(audio.duration));
+            dispatch(setPlayState(PlayState.playing));
         });
         audio.addEventListener("timeupdate", () => {
             dispatch(setPosition(audio.currentTime));
