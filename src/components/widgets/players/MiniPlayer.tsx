@@ -1,9 +1,13 @@
 import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useAudioStore } from "../../../services/audio";
+import { RootState } from "../../../store/redux/store";
+import { secondsToReadableString } from "../../../utils/time";
 
 const MiniPlayer = () => {
-    const duration = useAudioStore((state) => state.duration);
-    const position = useAudioStore((state) => state.position);
+    const duration = useSelector((state: RootState) => state.audio.duration);
+    const position = useSelector((state: RootState) => state.audio.position);
+
     const setSeekPosition = useAudioStore((state) => state.setSeekPosition);
     const togglePlayState = useAudioStore((state) => state.togglePlayState);
     const playState = useAudioStore((state) => state.playState);
@@ -63,7 +67,7 @@ const MiniPlayer = () => {
             </div>
             <div className="flex items-center w-full pl-2">
                 <div className="mr-4 text-sm text-gray-400 elapsed">
-                    00:12:40
+                    {secondsToReadableString(position)}
                 </div>
                 <div
                     className="w-full h-full progress"
@@ -81,7 +85,9 @@ const MiniPlayer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="ml-4 text-sm text-gray-400 total">00:12:40</div>
+                <div className="ml-4 text-sm text-gray-400 total">
+                    {secondsToReadableString(duration)}
+                </div>
             </div>
         </div>
     );
