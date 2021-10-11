@@ -22,9 +22,9 @@ export interface IAudioState extends State {
 
 const initialState: IAudioState = {
     nowPlaying: undefined,
-    position: -1,
-    seekPosition: -1,
-    duration: -1,
+    position: 0,
+    seekPosition: 0,
+    duration: 0,
     playState: PlayState.stopped,
 };
 export const audioSlice = createSlice({

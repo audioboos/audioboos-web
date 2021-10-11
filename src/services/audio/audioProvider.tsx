@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    PlayState,
-    setDuration,
+    PlayState, setDuration,
     setPlayState,
-    setPosition
+    setPosition,
+    setSeekPosition
 } from "../../store/redux/audio";
 import { RootState } from "../../store/redux/store";
 export interface IAudioProviderProps {
@@ -23,8 +23,17 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
 
     React.useEffect(() => {
         if (!nowPlaying?.track.audioUrl) return;
-        setAudio(new Audio(nowPlaying?.track.audioUrl));
-    }, [nowPlaying?.track.audioUrl]);
+        if (audio) {
+            audio.pause();
+            setAudio(undefined);
+            dispatch(setSeekPosition(0));
+            dispatch(setPosition(0));
+            setAudio(new Audio(nowPlaying?.track.audioUrl));
+            audio.currentTime = 0;
+        } else {
+            setAudio(new Audio(nowPlaying?.track.audioUrl));
+        }
+    }, [nowPlaying]);
 
     React.useEffect(() => {
         if (!audio) return;
