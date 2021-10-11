@@ -1,14 +1,15 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAudioStore } from "../../../services/audio";
+import { setPosition } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
 import { secondsToReadableString } from "../../../utils/time";
 
 const MiniPlayer = () => {
     const duration = useSelector((state: RootState) => state.audio.duration);
     const position = useSelector((state: RootState) => state.audio.position);
+    const dispatch = useDispatch();
 
-    const setSeekPosition = useAudioStore((state) => state.setSeekPosition);
     const togglePlayState = useAudioStore((state) => state.togglePlayState);
     const playState = useAudioStore((state) => state.playState);
 
@@ -26,7 +27,7 @@ const MiniPlayer = () => {
     return (
         <div className="flex h-full p-2 justify-items-stretch ">
             <div
-                className="w-8 cursor-pointer stroke-1"
+                className="w-8 cursor-pointer stroke-1 "
                 onClick={() => togglePlayState()}
             >
                 {playState === 1 ? (
@@ -72,7 +73,7 @@ const MiniPlayer = () => {
                 <div
                     className="w-full h-full progress"
                     ref={seekBarElem}
-                    onClick={(e) => setSeekPosition(e.clientX)}
+                    onClick={(e) => dispatch(setPosition(e.clientX))}
                 >
                     <div className="mt-4">
                         <div className="h-1 bg-purple-100 rounded-full">

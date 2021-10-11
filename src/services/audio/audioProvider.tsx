@@ -22,7 +22,6 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
 
     React.useEffect(() => {
         if (!url) return;
-
         setAudio(new Audio(url));
     }, [url]);
 
@@ -38,7 +37,7 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
             dispatch(setPosition(audio.currentTime));
         });
     }, [audio, dispatch]);
-
+    React.useEffect(() => {});
     return <React.Fragment>{children}</React.Fragment>;
 };
 
