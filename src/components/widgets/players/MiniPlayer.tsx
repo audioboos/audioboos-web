@@ -1,7 +1,9 @@
 import {
     HeartIcon,
     PauseIcon,
-    PlayIcon, ViewListIcon, VolumeUpIcon
+    PlayIcon,
+    ViewListIcon,
+    VolumeUpIcon
 } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +13,7 @@ import { setSeekPosition } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
 import { makeRangeMapper } from "../../../utils/ranges";
 import { secondsToReadableString } from "../../../utils/time";
+import MiniActionButton from "../MiniActionButton";
 
 const MiniPlayer = () => {
     const duration = useSelector((state: RootState) => state.audio.duration);
@@ -68,11 +71,16 @@ const MiniPlayer = () => {
             </div>
             <div
                 id="left-button-bar"
-                className="flex flex-row px-2 space-x-1 text-gray-400"
+                className="flex flex-row px-1 space-x-1 text-gray-400"
             >
-                <HeartIcon className="w-8" />
+                <MiniActionButton
+                    tooltip="Add to favourites"
+                    onClick={() => console.log("MiniPlayer", "Favey")}
+                >
+                    <HeartIcon className="w-8" />
+                </MiniActionButton>
             </div>
-            <div className="flex items-center flex-grow w-full px-2 pl-5">
+            <div className="flex items-center flex-grow w-full px-1">
                 <div className="mr-4 text-sm text-gray-400">
                     {secondsToReadableString(position)}
                 </div>
@@ -84,8 +92,7 @@ const MiniPlayer = () => {
                         <div
                             className="relative h-3 bg-indigo-600 rounded-l-full rounded-r-none"
                             style={{ width: `${progressPercentage}%` }}
-                        >
-                        </div>
+                        ></div>
                     </div>
                 </div>
                 <div className="ml-4 text-sm text-gray-400">
