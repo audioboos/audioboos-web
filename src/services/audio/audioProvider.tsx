@@ -14,19 +14,19 @@ export interface IAudioProviderProps {
 const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const dispatch = useDispatch();
     const [audio, setAudio] = React.useState<HTMLAudioElement>();
-    const url = useSelector((state: RootState) => state.audio.url);
+    const nowPlaying = useSelector(
+        (state: RootState) => state.audio.nowPlaying
+    );
     const seekPosition = useSelector(
         (state: RootState) => state.audio.seekPosition
     );
 
     React.useEffect(() => {
-        console.log("audioProvider", "useEffect_url", url);
-        if (!url) return;
-        setAudio(new Audio(url));
-    }, [url]);
+        if (!nowPlaying?.track.audioUrl) return;
+        setAudio(new Audio(nowPlaying?.track.audioUrl));
+    }, [nowPlaying?.track.audioUrl]);
 
     React.useEffect(() => {
-        console.log("audioProvider", "useEffect_position, audio", seekPosition);
         if (!audio) return;
         audio.currentTime = seekPosition;
     }, [seekPosition, audio]);

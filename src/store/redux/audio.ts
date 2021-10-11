@@ -1,33 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { State } from "zustand";
+import { Album, Artist, Track } from "../../models";
 
 export enum PlayState {
     stopped = 1,
     playing = 2,
     paused = 3,
 }
-
+interface INowPlaying {
+    album: Album;
+    artist: Artist;
+    track: Track;
+}
 export interface IAudioState extends State {
-    id: string;
-    url: string;
+    nowPlaying?: INowPlaying;
     position: number;
     seekPosition: number;
     duration: number;
     playState: PlayState;
-    // setNowPlaying: (id: string, url: string) => void;
-    // setPosition: (position: number) => void;
-    // setDuration: (duration: number) => void;
-    // setSeekPosition: (duration: number) => void;
-    // setPlayState: (playState: PlayState) => void;
-    // togglePlayState: () => void;
 }
-interface INowPlayingDispatchArgs {
-    id: string;
-    url: string;
-}
+
 const initialState: IAudioState = {
-    id: "",
-    url: "",
+    nowPlaying: undefined,
     position: -1,
     seekPosition: -1,
     duration: -1,
@@ -37,12 +31,8 @@ export const audioSlice = createSlice({
     name: "audio",
     initialState,
     reducers: {
-        setNowPlaying: (
-            state,
-            action: PayloadAction<INowPlayingDispatchArgs>
-        ) => {
-            state.id = action.payload.id;
-            state.url = action.payload.url;
+        setNowPlaying: (state, action: PayloadAction<INowPlaying>) => {
+            state.nowPlaying = action.payload;
         },
         setPlayState: (state, action: PayloadAction<PlayState>) => {
             state.playState = action.payload;

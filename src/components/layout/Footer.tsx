@@ -7,7 +7,7 @@ import MiniPlayer from "../widgets/players/MiniPlayer";
 const Footer = () => {
     const playState = useSelector((state: RootState) => state.audio.playState);
     return (
-        <div className="sticky bottom-0 left-0 bg-gray-50 ">
+        <div className="sticky bottom-0 left-0 bg-gray-800 ">
             {(playState === PlayState.playing ||
                 playState === PlayState.paused) && <MiniPlayer />}
         </div>

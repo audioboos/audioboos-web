@@ -1,6 +1,12 @@
+import {
+    HeartIcon,
+    PauseIcon,
+    PlayIcon, ViewListIcon, VolumeUpIcon
+} from "@heroicons/react/outline";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAudioStore } from "../../../services/audio";
+import { PlayState } from "../../../services/audio/audioStore";
 import { setSeekPosition } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
 import { makeRangeMapper } from "../../../utils/ranges";
@@ -9,6 +15,9 @@ import { secondsToReadableString } from "../../../utils/time";
 const MiniPlayer = () => {
     const duration = useSelector((state: RootState) => state.audio.duration);
     const position = useSelector((state: RootState) => state.audio.position);
+    const nowPlaying = useSelector(
+        (state: RootState) => state.audio.nowPlaying
+    );
     const dispatch = useDispatch();
 
     const togglePlayState = useAudioStore((state) => state.togglePlayState);
@@ -34,68 +43,64 @@ const MiniPlayer = () => {
     }, [position, progressPercentage, duration]);
 
     return (
-        <div className="flex h-full p-2 justify-items-stretch ">
+        <div className="flex items-center h-16 p-2 bg-gray-900">
             <div
-                className="w-8 cursor-pointer stroke-1 "
-                onClick={() => togglePlayState()}
+                className="flex-none w-16 p-1 text-gray-300 cursor-pointer stroke-0 align-center"
+                onClick={togglePlayState}
             >
-                {playState === 1 ? (
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                        />
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                    </svg>
-                ) : (
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                    </svg>
-                )}
+                {playState === PlayState.playing ? <PauseIcon /> : <PlayIcon />}
             </div>
-            <div className="flex items-center w-full pl-2">
-                <div className="mr-4 text-sm text-gray-400 elapsed">
+            <div className="flex-none w-16 p-2">
+                <img
+                    src={nowPlaying?.album.smallImage}
+                    alt={nowPlaying?.album.name}
+                />
+            </div>
+            <div className="flex-none">
+                <div className="flex flex-col px-2 text-sm">
+                    <div className="flex-grow font-medium text-gray-300">
+                        {nowPlaying?.artist.name}
+                    </div>
+                    <div className="font-light text-gray-300">
+                        {nowPlaying?.track.name}
+                    </div>
+                </div>
+            </div>
+            <div
+                id="left-button-bar"
+                className="flex flex-row px-2 space-x-1 text-gray-400"
+            >
+                <HeartIcon className="w-8" />
+            </div>
+            <div className="flex items-center flex-grow w-full px-2 pl-5">
+                <div className="mr-4 text-sm text-gray-400">
                     {secondsToReadableString(position)}
                 </div>
-                <div
-                    className="w-full h-full progress"
-                    onClick={_handleTimeClick}
-                >
-                    <div className="mt-4">
-                        <div className="h-1 bg-purple-100 rounded-full">
-                            <div
-                                className="relative h-1 bg-purple-400 rounded-full"
-                                style={{ width: `${progressPercentage}%` }}
-                            >
-                                <span className="invisible w-4 h-4 bg-indigo-600 absolute right-0 bottom-0 -mb-1.5 rounded-full shadow"></span>
-                            </div>
+                <div className="w-full h-full progress">
+                    <div
+                        className="h-3 bg-indigo-100 rounded-full"
+                        onClick={_handleTimeClick}
+                    >
+                        <div
+                            className="relative h-3 bg-indigo-600 rounded-l-full rounded-r-none"
+                            style={{ width: `${progressPercentage}%` }}
+                        >
                         </div>
                     </div>
                 </div>
-                <div className="ml-4 text-sm text-gray-400 total">
+                <div className="ml-4 text-sm text-gray-400">
                     {secondsToReadableString(duration)}
+                </div>
+            </div>
+            <div
+                id="right-button-bar"
+                className="flex flex-row space-x-1 text-gray-400"
+            >
+                <div id="volume">
+                    <VolumeUpIcon className="w-8" />
+                </div>
+                <div id="queue">
+                    <ViewListIcon className="w-8" />
                 </div>
             </div>
         </div>

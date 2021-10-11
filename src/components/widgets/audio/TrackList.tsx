@@ -1,12 +1,12 @@
 import React from "react";
-import { Album } from "../../../models";
+import { Album, Artist } from "../../../models";
 import TrackListItem from "./TrackListItem";
 
 interface ITrackListProps {
-    artistName: string;
-    album: Album | undefined;
+    artist: Artist;
+    album: Album;
 }
-const TrackList = ({ artistName, album }: ITrackListProps) => {
+const TrackList = ({ artist, album }: ITrackListProps) => {
     return (
         <table className="w-full bg-white table-auto whitespace-nowrap">
             <thead className="">
@@ -18,7 +18,14 @@ const TrackList = ({ artistName, album }: ITrackListProps) => {
             </thead>
             <tbody className="w-full">
                 {album?.tracks?.map((t) => {
-                    return <TrackListItem key={t.id} track={t} />;
+                    return (
+                        <TrackListItem
+                            key={t.id}
+                            artist={artist}
+                            album={album}
+                            track={t}
+                        />
+                    );
                 })}
             </tbody>
         </table>

@@ -2,7 +2,7 @@ import { PencilAltIcon } from "@heroicons/react/outline";
 import React from "react";
 import EditAlbumDialog from "../components/widgets/audio/EditAlbumDialog";
 import TrackList from "../components/widgets/audio/TrackList";
-import { Album } from "../models";
+import { Album, Artist } from "../models";
 import { useArtistQuery } from "../store/redux/api";
 interface IAlbumPageParams {
     artistName: string;
@@ -10,16 +10,19 @@ interface IAlbumPageParams {
 }
 const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
     const [editing, setEditing] = React.useState(false);
+    const [artist, setArtist] = React.useState<Artist>();
     const [album, setAlbum] = React.useState<Album>();
-    const queryResult = useArtistQuery(artistName);
+    const artistQueryResult = useArtistQuery(artistName);
     React.useEffect(() => {
-        if (queryResult.data) {
-            const album = queryResult.data.albums.find(
+        if (artistQueryResult.data) {
+            const album = artistQueryResult.data.albums.find(
                 (r) => r.name === albumName
             );
             setAlbum(album);
+            setArtist(artistQueryResult.data);
         }
-    }, [queryResult, albumName]);
+    }, [artistQueryResult, albumName]);
+
     return (
         <React.Fragment>
             <div>
@@ -113,13 +116,15 @@ const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
                     </div>
                 </div>
                 {/* Page title ends */}
-                <div className="container px-6 mx-auto">
-                    <div className="w-full">
-                        <div className="flex flex-col space-x-3 md:flex-row">
-                            <TrackList artistName={artistName} album={album} />
+                {artist && album && (
+                    <div className="container px-6 mx-auto">
+                        <div className="w-full">
+                            <div className="flex flex-col space-x-3 md:flex-row">
+                                <TrackList artist={artist} album={album} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </React.Fragment>
     );
