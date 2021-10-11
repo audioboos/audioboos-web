@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAudioStore } from "../../../services/audio";
-import { setPosition } from "../../../store/redux/audio";
+import { setSeekPosition } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
+import { makeRangeMapper } from "../../../utils/ranges";
 import { secondsToReadableString } from "../../../utils/time";
 
 const MiniPlayer = () => {
@@ -15,7 +16,15 @@ const MiniPlayer = () => {
 
     const [progressPercentage, setProgressPercentage] = useState(0);
 
-    const seekBarElem = useRef<HTMLDivElement>(null);
+    const _handleTimeClick = ($event: React.MouseEvent<HTMLDivElement>) => {
+        let currentTargetRect = $event.currentTarget.getBoundingClientRect();
+        const eventOffsetX = $event.pageX - currentTargetRect.left;
+        let mapFn = makeRangeMapper(0, currentTargetRect.width, 0, duration);
+        if (mapFn) {
+            let position = mapFn(eventOffsetX);
+            dispatch(setSeekPosition(position));
+        }
+    };
 
     React.useEffect(() => {
         // unload the player on unmount
@@ -72,8 +81,7 @@ const MiniPlayer = () => {
                 </div>
                 <div
                     className="w-full h-full progress"
-                    ref={seekBarElem}
-                    onClick={(e) => dispatch(setPosition(e.clientX))}
+                    onClick={_handleTimeClick}
                 >
                     <div className="mt-4">
                         <div className="h-1 bg-purple-100 rounded-full">

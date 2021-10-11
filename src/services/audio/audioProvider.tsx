@@ -15,19 +15,26 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const dispatch = useDispatch();
     const [audio, setAudio] = React.useState<HTMLAudioElement>();
     const url = useSelector((state: RootState) => state.audio.url);
-
-    // const progressTimer = useRef<NodeJS.Timeout>();
-
-    //
+    const seekPosition = useSelector(
+        (state: RootState) => state.audio.seekPosition
+    );
 
     React.useEffect(() => {
+        console.log("audioProvider", "useEffect_url", url);
         if (!url) return;
         setAudio(new Audio(url));
     }, [url]);
 
     React.useEffect(() => {
-        if (!audio || !dispatch) return;
+        console.log("audioProvider", "useEffect_position, audio", seekPosition);
+        if (!audio) return;
+        audio.currentTime = seekPosition;
+    }, [seekPosition, audio]);
 
+    React.useEffect(() => {
+        console.log("audioProvider", "useEffect_audio, dispatch", audio);
+        if (!audio || !dispatch) return;
+        audio.volume = 0.05;
         audio.play();
         audio.addEventListener("loadeddata", () => {
             dispatch(setDuration(audio.duration));
@@ -37,7 +44,7 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
             dispatch(setPosition(audio.currentTime));
         });
     }, [audio, dispatch]);
-    React.useEffect(() => {});
+
     return <React.Fragment>{children}</React.Fragment>;
 };
 
