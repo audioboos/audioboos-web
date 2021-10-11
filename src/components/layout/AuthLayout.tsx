@@ -11,8 +11,9 @@ const AuthLayout = ({ children }: ILayoutProps) => {
                 <Sidebar />
                 <div className="flex flex-col w-full h-full overflow-x-hidden overflow-y-auto">
                     <Navbar />
-                    <main className="flex-grow">{children}</main>
-
+                    <main className="flex-grow overflow-y-scroll">
+                        {children}
+                    </main>
                     <Footer />
                 </div>
             </div>

@@ -1,80 +1,43 @@
-import { Howl } from "howler";
-import React, { useRef } from "react";
-import useAudioStore, { AudioState, PlayState } from "./audioStore";
-
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    PlayState,
+    setDuration,
+    setPlayState,
+    setPosition
+} from "../../store/redux/audio";
+import { RootState } from "../../store/redux/store";
 export interface IAudioProviderProps {
     children: React.ReactNode;
 }
 
 const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
-    const player = useRef<Howl>();
+    const dispatch = useDispatch();
+    const [audio, setAudio] = React.useState<HTMLAudioElement>();
+    const url = useSelector((state: RootState) => state.audio.url);
 
-    //TODO: WTF???
-    const url = useAudioStore((state: AudioState) => state.url);
-    const setPosition = useAudioStore((state: AudioState) => state.setPosition);
-    const setDuration = useAudioStore((state: AudioState) => state.setDuration);
-    const seekPosition = useAudioStore(
-        (state: AudioState) => state.seekPosition
-    );
-    const setPlayState = useAudioStore(
-        (state: AudioState) => state.setPlayState
-    );
-    const playState = useAudioStore((state: AudioState) => state.playState);
-    //TODO: END WTF???
+    // const progressTimer = useRef<NodeJS.Timeout>();
+
+    //
 
     React.useEffect(() => {
-        if (playState === PlayState.stopped) return;
-
-        if (player.current?.playing() && playState === PlayState.playing) {
-            player.current.pause();
-        } else {
-            player && player.current && player.current.play();
-        }
-    }, [playState]);
-
-    const progressTimer = useRef<NodeJS.Timeout>();
-    React.useEffect(() => {
-        if (player.current) {
-            player.current.stop();
-        }
-        if (progressTimer.current) {
-            clearInterval(progressTimer.current);
-        }
-        if (url) {
-            player.current = _createPlayer(url);
-            player.current.once("load", () => {
-                player && player.current && player.current.play();
-                setPlayState(PlayState.playing);
-            });
-        }
-        progressTimer.current = setInterval(() => {
-            setPosition((player.current?.seek() || 0) as number);
-        }, 100);
+        if (!url) return;
+        setAudio(new Audio(url));
     }, [url]);
 
     React.useEffect(() => {
-        player.current?.seek(seekPosition);
-    }, [seekPosition]);
+        if (!audio || !dispatch) return;
 
-    const _createPlayer = (src: string) => {
-        const howl = new Howl({
-            src: src,
-            autoplay: true,
-            html5: true,
-            volume: 1,
+        audio.play();
+        audio.addEventListener("loadeddata", () => {
+            dispatch(setDuration(audio.duration));
+            dispatch(setPlayState(PlayState.playing));
         });
-        howl.on("load", () => {
-            console.log("AudioProvider", "Howl Loaded");
-            console.log("AudioProvider", "Setting play state", playState);
-            setTimeout(() => {
-                setPlayState(PlayState.playing);
-                setDuration(howl.duration());
-            });
-            console.log("AudioProvider", "Set play state", playState);
+        audio.addEventListener("timeupdate", () => {
+            dispatch(setPosition(audio.currentTime));
         });
-        return howl;
-    };
-
+    }, [audio, dispatch]);
+    React.useEffect(() => {});
     return <React.Fragment>{children}</React.Fragment>;
 };
 

@@ -33,7 +33,10 @@ const useAudioStore = create<AudioState>((set): any => ({
         set((state) => ({ seekPosition })),
     setDuration: (duration: number) => set((state) => ({ duration })),
     setNowPlaying: (id: string, url: string) => set((state) => ({ id, url })),
-    setPlayState: (playState: PlayState) => set((state) => ({ playState })),
+    setPlayState: (playState: PlayState) =>
+        set((state) => {
+            return { playState: state.playState };
+        }),
     togglePlayState: () =>
         set((state) => {
             return {

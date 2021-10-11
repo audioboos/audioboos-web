@@ -1,16 +1,15 @@
 import { DocumentAddIcon, PlayIcon, ShareIcon } from "@heroicons/react/outline";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Track } from "../../../models";
-import { useAudioStore } from "../../../services/audio";
+import { setNowPlaying } from "../../../store/redux/audio";
 import MiniActionButton from "../MiniActionButton";
 interface ITrackListItemProps {
     track: Track;
 }
 
 const TrackListItem = ({ track: t }: ITrackListItemProps) => {
-    const setNowPlaying = useAudioStore((state) => state.setNowPlaying);
-    const nowPlayingId = useAudioStore((state) => state.id);
-    const togglePlayState = useAudioStore((state) => state.togglePlayState);
+    const dispatch = useDispatch();
 
     const _addToPlaylist = (track: Track) => {
         alert("Adding to playlist");
@@ -19,16 +18,12 @@ const TrackListItem = ({ track: t }: ITrackListItemProps) => {
         alert("Sharing");
     };
     const _playClick = (track: Track) => {
-        if (nowPlayingId !== track.id && track.audioUrl) {
-            setNowPlaying(track.id, track.audioUrl);
-        } else if (nowPlayingId === track.id) {
-            togglePlayState();
-        }
+        dispatch(setNowPlaying({ id: track.id, url: track.audioUrl }));
     };
     return (
         <tr
             key={t.id}
-            className="h-10 text-sm leading-none text-gray-800 border-t border-b border-gray-100 hover:bg-gray-100"
+            className="text-sm leading-none text-gray-800 border-t border-b border-gray-100 hover:bg-gray-100"
         >
             <td className="pl-4 cursor-pointer">
                 <div className="pl-4">
@@ -45,9 +40,8 @@ const TrackListItem = ({ track: t }: ITrackListItemProps) => {
                     onClick={() => _playClick(t)}
                     tooltip="Play item"
                 >
-                    <PlayIcon className="w-8 h-8 text-current text-gray-500" />
+                    <PlayIcon className="w-8 h-8 text-gray-500 stroke-0" />
                 </MiniActionButton>
-
                 <MiniActionButton
                     onClick={() => _addToPlaylist(t)}
                     tooltip="Add to playlist"

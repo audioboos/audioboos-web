@@ -30,11 +30,11 @@ function ArtistsList() {
     const _renderError = () => <div>Error loading.....</div>;
 
     return (
-        <React.Fragment>
+        <div className="overflow-y-auto">
             {queryResult.isLoading && _renderLoading()}
             {queryResult.isError && _renderError()}
             {queryResult.isSuccess && _renderArtists(queryResult.data || [])}
-        </React.Fragment>
+        </div>
     );
 }
 
