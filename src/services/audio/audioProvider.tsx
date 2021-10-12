@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    playNext,
     PlayState,
     setDuration,
     setPlayState,
@@ -26,6 +27,12 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const currentVolume = useSelector(
         (state: RootState) => state.audio.currentVolume
     );
+    React.useEffect(() => {
+        audio.current.addEventListener("timeupdate", () => {
+            dispatch(setPosition(audio.current.currentTime));
+        });
+        audio.current.addEventListener("ended", () => dispatch(playNext()));
+    }, [dispatch]);
 
     React.useEffect(() => {
         //TODO: This smells a bit?
@@ -40,9 +47,6 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
         audio.current.play().then(() => {
             dispatch(setDuration(audio.current.duration));
             dispatch(setPlayState(PlayState.playing));
-            audio.current.addEventListener("timeupdate", () => {
-                dispatch(setPosition(audio.current.currentTime));
-            });
         });
     }, [nowPlaying, dispatch]);
 
