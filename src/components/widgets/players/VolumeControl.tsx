@@ -17,7 +17,9 @@ const VolumeControl = ({ volume, onVolumeChanged }: IVolumeControlProps) => {
         const eventOffsetX = $event.pageX - currentTargetRect.left;
         let mapFn = makeRangeMapper(0, currentTargetRect.width, 0, 100);
         let volume = mapFn(eventOffsetX);
-        onVolumeChanged(volume / 100);
+        if (volume >= 0) {
+            onVolumeChanged(volume / 100);
+        }
     };
 
     return (

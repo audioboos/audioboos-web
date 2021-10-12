@@ -2,13 +2,15 @@ import { Popover } from "@headlessui/react";
 import React from "react";
 import { MdOutlineClear, MdQueueMusic } from "react-icons/md";
 import { usePopper } from "react-popper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromQueue } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
 
 const QueueControl = () => {
     let [referenceElement, setReferenceElement] = React.useState<any>();
     let [popperElement, setPopperElement] = React.useState<any>();
     let { styles, attributes } = usePopper(referenceElement, popperElement);
+    const dispatch = useDispatch();
     const queue = useSelector((state: RootState) => state.audio.playQueue);
 
     return (
@@ -27,9 +29,6 @@ const QueueControl = () => {
                         <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                             Queue
                         </h3>
-                        {/* <p className="max-w-2xl mt-1 text-sm text-gray-500 dark:text-gray-200">
-                            Details and informations about user.
-                        </p> */}
                     </div>
                     <ul className="flex flex-col divide-y divide">
                         {queue.map((item) => (
@@ -55,7 +54,14 @@ const QueueControl = () => {
                                             {item.track.name}
                                         </div>
                                     </div>
-                                    <button className="flex justify-end w-24 text-right">
+                                    <button
+                                        className="flex justify-end w-24 text-right"
+                                        onClick={() =>
+                                            dispatch(
+                                                removeFromQueue(item.track.id)
+                                            )
+                                        }
+                                    >
                                         <MdOutlineClear className="w-8 h-8" />
                                     </button>
                                 </div>

@@ -60,7 +60,7 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     }, [seekPosition]);
 
     React.useEffect(() => {
-        audio.current.volume = currentVolume;
+        audio.current.volume = currentVolume >= 0 ? currentVolume : 0;
     }, [currentVolume]);
 
     React.useEffect(() => {

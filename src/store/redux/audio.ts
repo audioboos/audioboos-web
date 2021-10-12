@@ -64,7 +64,18 @@ export const audioSlice = createSlice({
             state.currentVolume = action.payload;
         },
         addToQueue: (state, action: PayloadAction<INowPlaying>) => {
-            state.playQueue.push(action.payload);
+            //check if item exists in queue already
+            const exists = state.playQueue.find(
+                (r) => r.track.id === action.payload.track.id
+            );
+            if (!exists) {
+                state.playQueue.push(action.payload);
+            }
+        },
+        removeFromQueue: (state, action: PayloadAction<string>) => {
+            state.playQueue = state.playQueue.filter(
+                (q) => q.track.id !== action.payload
+            );
         },
         playNext: (state) => {
             const nextItem: INowPlaying | undefined = state.playQueue.shift();
@@ -85,6 +96,7 @@ export const {
     setSeekPosition,
     togglePlayState,
     setCurrentVolume,
+    removeFromQueue,
     addToQueue,
     playNext,
 } = audioSlice.actions;
