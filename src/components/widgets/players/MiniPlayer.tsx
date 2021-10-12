@@ -1,24 +1,32 @@
 import React, { useState } from "react";
 import {
-    MdFavoriteBorder,
-    MdList, MdPauseCircleFilled,
-    MdPlayCircleFilled, MdVolumeUp
+    MdFavoriteBorder, MdPauseCircleFilled,
+    MdPlayCircleFilled, MdQueueMusic
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { PlayState, setSeekPosition, togglePlayState } from "../../../store/redux/audio";
+import { VolumeControl } from "..";
+import {
+    PlayState,
+    setCurrentVolume,
+    setSeekPosition,
+    togglePlayState
+} from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
 import { makeRangeMapper } from "../../../utils/ranges";
 import { secondsToReadableString } from "../../../utils/time";
 import MiniActionButton from "../MiniActionButton";
 
 const MiniPlayer = () => {
+    const dispatch = useDispatch();
     const duration = useSelector((state: RootState) => state.audio.duration);
     const position = useSelector((state: RootState) => state.audio.position);
     const playState = useSelector((state: RootState) => state.audio.playState);
+    const currentVolume = useSelector(
+        (state: RootState) => state.audio.currentVolume
+    );
     const nowPlaying = useSelector(
         (state: RootState) => state.audio.nowPlaying
     );
-    const dispatch = useDispatch();
 
     const [progressPercentage, setProgressPercentage] = useState(0);
 
@@ -26,10 +34,8 @@ const MiniPlayer = () => {
         let currentTargetRect = $event.currentTarget.getBoundingClientRect();
         const eventOffsetX = $event.pageX - currentTargetRect.left;
         let mapFn = makeRangeMapper(0, currentTargetRect.width, 0, duration);
-        if (mapFn) {
-            let position = mapFn(eventOffsetX);
-            dispatch(setSeekPosition(position));
-        }
+        let position = mapFn(eventOffsetX);
+        dispatch(setSeekPosition(position));
     };
 
     React.useEffect(() => {
@@ -40,7 +46,7 @@ const MiniPlayer = () => {
     }, [position, progressPercentage, duration]);
 
     return (
-        <div className="flex items-center h-16 p-2 bg-gray-900">
+        <div className="flex items-center h-16 p-2 bg-gray-800">
             <div
                 className="flex-none w-16 p-1 text-gray-300 cursor-pointer stroke-0 align-center"
                 onClick={() => dispatch(togglePlayState())}
@@ -59,10 +65,10 @@ const MiniPlayer = () => {
             </div>
             <div className="flex-none">
                 <div className="flex flex-col px-2 text-sm">
-                    <div className="flex-grow font-medium text-gray-300">
+                    <div className="flex-grow font-medium text-gray-200">
                         {nowPlaying?.artist.name}
                     </div>
-                    <div className="font-light text-gray-300">
+                    <div className="font-light text-gray-200">
                         {nowPlaying?.track.name}
                     </div>
                 </div>
@@ -102,19 +108,19 @@ const MiniPlayer = () => {
                 className="flex flex-row space-x-1 text-gray-400"
             >
                 <div id="volume">
-                    <MiniActionButton
-                        tooltip="Volume"
-                        onClick={() => console.log("MiniPlayer", "Favey")}
-                    >
-                        <MdVolumeUp />
-                    </MiniActionButton>
+                    <VolumeControl
+                        volume={currentVolume}
+                        onVolumeChanged={(volume) =>
+                            dispatch(setCurrentVolume(volume))
+                        }
+                    />
                 </div>
                 <div id="queue">
                     <MiniActionButton
                         tooltip="View playlist"
                         onClick={() => console.log("MiniPlayer", "Favey")}
                     >
-                        <MdList />
+                        <MdQueueMusic />
                     </MiniActionButton>
                 </div>
             </div>

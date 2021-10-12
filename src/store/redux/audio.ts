@@ -18,7 +18,7 @@ export interface IAudioState extends State {
     seekPosition: number;
     duration: number;
     playState: PlayState;
-    volume: number;
+    currentVolume: number;
 }
 
 const initialState: IAudioState = {
@@ -27,7 +27,7 @@ const initialState: IAudioState = {
     seekPosition: 0,
     duration: 0,
     playState: PlayState.stopped,
-    volume: parseFloat(localStorage.getItem("vol") ?? "1"),
+    currentVolume: parseFloat(localStorage.getItem("vol") ?? "1"),
 };
 export const audioSlice = createSlice({
     name: "audio",
@@ -54,6 +54,10 @@ export const audioSlice = createSlice({
                     ? PlayState.paused
                     : PlayState.playing;
         },
+        setCurrentVolume: (state, action: PayloadAction<number>) => {
+            localStorage.setItem("vol", action.payload.toString());
+            state.currentVolume = action.payload;
+        },
     },
 });
 export const {
@@ -63,5 +67,6 @@ export const {
     setDuration,
     setSeekPosition,
     togglePlayState,
+    setCurrentVolume,
 } = audioSlice.actions;
 export default audioSlice.reducer;

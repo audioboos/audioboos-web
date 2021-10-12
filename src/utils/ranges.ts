@@ -1,16 +1,21 @@
+/**
+ * Takes a number in range (oMin - oMax) and converts it to equivalent in range (nMin - nMax)
+ * @returns {Function | undefined} Returns a function that can be called on the value to convert
+ */
+
 export const makeRangeMapper = (
     oMin: number,
     oMax: number,
     nMin: number,
     nMax: number
-) => {
+): Function => {
     //range check
     if (oMin === oMax) {
-        return undefined;
+        return (x: number) => x;
     }
 
     if (nMin === nMax) {
-        return undefined;
+        return (x: number) => x;
     }
 
     //check reversed input range

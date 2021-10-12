@@ -1,7 +1,7 @@
 import React from "react";
 import "./MiniActionButton.css";
 interface IMiniActionButtonProps {
-    tooltip: string;
+    tooltip?: string;
     onClick: () => void;
     children: React.ReactElement;
 }
@@ -13,7 +13,7 @@ const MiniActionButton = ({
 }: IMiniActionButtonProps) => {
     return (
         <div className="tooltip">
-            <span className="tooltiptext">{tooltip}</span>
+            {tooltip && <span className="tooltiptext">{tooltip}</span>}
             <button className="p-2" onClick={onClick}>
                 {React.cloneElement(children, {
                     className:

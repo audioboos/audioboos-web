@@ -4,6 +4,7 @@
 
 body {
     scrollbar-gutter: stable both-edges;
+    overflow-y: hidden;
 }
 .audioboos-scroll {
     display: inline-block;
