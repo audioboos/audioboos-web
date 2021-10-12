@@ -28,10 +28,15 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
         (state: RootState) => state.audio.currentVolume
     );
     React.useEffect(() => {
+        const cleanup = audio.current;
         audio.current.addEventListener("timeupdate", () => {
             dispatch(setPosition(audio.current.currentTime));
         });
         audio.current.addEventListener("ended", () => dispatch(playNext()));
+        return () => {
+            cleanup.removeEventListener("timeupdate", () => {});
+            cleanup.removeEventListener("ended", () => {});
+        };
     }, [dispatch]);
 
     React.useEffect(() => {

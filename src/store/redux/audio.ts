@@ -40,7 +40,9 @@ export const audioSlice = createSlice({
             state.nowPlaying = action.payload;
         },
         setPlayState: (state, action: PayloadAction<PlayState>) => {
-            state.playState = action.payload;
+            if (state.position <= action.payload) {
+                state.playState = action.payload;
+            }
         },
         setPosition: (state, action: PayloadAction<number>) => {
             state.position = action.payload;

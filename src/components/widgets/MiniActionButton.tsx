@@ -14,7 +14,7 @@ const MiniActionButton = ({
     return (
         <div className="tooltip">
             {tooltip && <span className="tooltiptext">{tooltip}</span>}
-            <button className="p-2" onClick={onClick}>
+            <button className="p-1" onClick={onClick}>
                 {React.cloneElement(children, {
                     className:
                         "w-8 h-8 text-current text-gray-500 hover:text-gray-700 delay-100",
