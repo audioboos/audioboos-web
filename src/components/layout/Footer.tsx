@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { PlayState } from "../../services/audio/audioStore";
+import { PlayState } from "../../store/redux/audio";
 import { RootState } from "../../store/redux/store";
 import MiniPlayer from "../widgets/players/MiniPlayer";
 

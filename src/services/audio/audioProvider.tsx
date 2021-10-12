@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    PlayState, setDuration,
+    PlayState,
+    setDuration,
     setPlayState,
     setPosition,
     setSeekPosition
@@ -17,6 +18,7 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const nowPlaying = useSelector(
         (state: RootState) => state.audio.nowPlaying
     );
+    const playState = useSelector((state: RootState) => state.audio.playState);
     const seekPosition = useSelector(
         (state: RootState) => state.audio.seekPosition
     );
@@ -39,6 +41,15 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
         if (!audio) return;
         audio.currentTime = seekPosition;
     }, [seekPosition, audio]);
+
+    React.useEffect(() => {
+        if (!audio) return;
+        if (playState === PlayState.paused) {
+            audio.pause();
+        } else if (playState === PlayState.playing) {
+            audio.play();
+        }
+    }, [playState, audio]);
 
     React.useEffect(() => {
         console.log("audioProvider", "useEffect_audio, dispatch", audio);

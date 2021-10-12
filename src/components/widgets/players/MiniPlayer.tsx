@@ -5,9 +5,7 @@ import {
     MdPlayCircleFilled, MdVolumeUp
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { useAudioStore } from "../../../services/audio";
-import { PlayState } from "../../../services/audio/audioStore";
-import { setSeekPosition } from "../../../store/redux/audio";
+import { PlayState, setSeekPosition, togglePlayState } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
 import { makeRangeMapper } from "../../../utils/ranges";
 import { secondsToReadableString } from "../../../utils/time";
@@ -16,13 +14,11 @@ import MiniActionButton from "../MiniActionButton";
 const MiniPlayer = () => {
     const duration = useSelector((state: RootState) => state.audio.duration);
     const position = useSelector((state: RootState) => state.audio.position);
+    const playState = useSelector((state: RootState) => state.audio.playState);
     const nowPlaying = useSelector(
         (state: RootState) => state.audio.nowPlaying
     );
     const dispatch = useDispatch();
-
-    const togglePlayState = useAudioStore((state) => state.togglePlayState);
-    const playState = useAudioStore((state) => state.playState);
 
     const [progressPercentage, setProgressPercentage] = useState(0);
 
@@ -47,7 +43,7 @@ const MiniPlayer = () => {
         <div className="flex items-center h-16 p-2 bg-gray-900">
             <div
                 className="flex-none w-16 p-1 text-gray-300 cursor-pointer stroke-0 align-center"
-                onClick={togglePlayState}
+                onClick={() => dispatch(togglePlayState())}
             >
                 {playState === PlayState.playing ? (
                     <MdPauseCircleFilled className="w-full h-full delay-100 hover:text-gray-400" />

@@ -48,7 +48,7 @@ export const audioSlice = createSlice({
         setSeekPosition: (state, action: PayloadAction<number>) => {
             state.seekPosition = action.payload;
         },
-        togglePlayState: (state, action: PayloadAction<number>) => {
+        togglePlayState: (state) => {
             state.playState =
                 state.playState === PlayState.playing
                     ? PlayState.paused
