@@ -1,10 +1,9 @@
 import {
     HeartIcon,
-    PauseIcon,
-    PlayIcon,
-    ViewListIcon,
+    PauseIcon, ViewListIcon,
     VolumeUpIcon
 } from "@heroicons/react/outline";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAudioStore } from "../../../services/audio";
@@ -51,7 +50,11 @@ const MiniPlayer = () => {
                 className="flex-none w-16 p-1 text-gray-300 cursor-pointer stroke-0 align-center"
                 onClick={togglePlayState}
             >
-                {playState === PlayState.playing ? <PauseIcon /> : <PlayIcon />}
+                {playState === PlayState.playing ? (
+                    <PauseIcon className="delay-100 hover:text-gray-400" />
+                ) : (
+                    <PlayCircleOutlineIcon className="delay-100 hover:text-gray-400" />
+                )}
             </div>
             <div className="flex-none w-16 p-2">
                 <img
@@ -77,7 +80,7 @@ const MiniPlayer = () => {
                     tooltip="Add to favourites"
                     onClick={() => console.log("MiniPlayer", "Favey")}
                 >
-                    <HeartIcon className="w-8" />
+                    <HeartIcon />
                 </MiniActionButton>
             </div>
             <div className="flex items-center flex-grow w-full px-1">
@@ -104,10 +107,20 @@ const MiniPlayer = () => {
                 className="flex flex-row space-x-1 text-gray-400"
             >
                 <div id="volume">
-                    <VolumeUpIcon className="w-8" />
+                    <MiniActionButton
+                        tooltip="Volume"
+                        onClick={() => console.log("MiniPlayer", "Favey")}
+                    >
+                        <VolumeUpIcon className="w-8" />
+                    </MiniActionButton>
                 </div>
                 <div id="queue">
-                    <ViewListIcon className="w-8" />
+                    <MiniActionButton
+                        tooltip="View playlist"
+                        onClick={() => console.log("MiniPlayer", "Favey")}
+                    >
+                        <ViewListIcon />
+                    </MiniActionButton>
                 </div>
             </div>
         </div>

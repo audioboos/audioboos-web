@@ -18,6 +18,7 @@ export interface IAudioState extends State {
     seekPosition: number;
     duration: number;
     playState: PlayState;
+    volume: number;
 }
 
 const initialState: IAudioState = {
@@ -26,6 +27,7 @@ const initialState: IAudioState = {
     seekPosition: 0,
     duration: 0,
     playState: PlayState.stopped,
+    volume: parseFloat(localStorage.getItem("vol") ?? "1"),
 };
 export const audioSlice = createSlice({
     name: "audio",

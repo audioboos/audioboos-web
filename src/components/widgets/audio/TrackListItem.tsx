@@ -43,19 +43,19 @@ const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
                     onClick={() => _playClick(track)}
                     tooltip="Play item"
                 >
-                    <PlayIcon className="w-8 h-8 text-gray-500 stroke-0" />
+                    <PlayIcon />
                 </MiniActionButton>
                 <MiniActionButton
                     onClick={() => _addToPlaylist(track)}
                     tooltip="Add to playlist"
                 >
-                    <DocumentAddIcon className="w-8 h-8 text-current text-gray-500" />
+                    <DocumentAddIcon />
                 </MiniActionButton>{" "}
                 <MiniActionButton
                     onClick={() => _openShare(track)}
                     tooltip="Share item"
                 >
-                    <ShareIcon className="w-8 h-8 text-current text-gray-500" />
+                    <ShareIcon />
                 </MiniActionButton>
             </td>
         </tr>
