@@ -1,10 +1,9 @@
-import {
-    HeartIcon,
-    PauseIcon, ViewListIcon,
-    VolumeUpIcon
-} from "@heroicons/react/outline";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import React, { useState } from "react";
+import {
+    MdFavoriteBorder,
+    MdList, MdPauseCircleFilled,
+    MdPlayCircleFilled, MdVolumeUp
+} from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useAudioStore } from "../../../services/audio";
 import { PlayState } from "../../../services/audio/audioStore";
@@ -51,9 +50,9 @@ const MiniPlayer = () => {
                 onClick={togglePlayState}
             >
                 {playState === PlayState.playing ? (
-                    <PauseIcon className="delay-100 hover:text-gray-400" />
+                    <MdPauseCircleFilled className="w-full h-full delay-100 hover:text-gray-400" />
                 ) : (
-                    <PlayCircleOutlineIcon className="delay-100 hover:text-gray-400" />
+                    <MdPlayCircleFilled className="w-full h-full delay-100 hover:text-gray-400" />
                 )}
             </div>
             <div className="flex-none w-16 p-2">
@@ -80,7 +79,7 @@ const MiniPlayer = () => {
                     tooltip="Add to favourites"
                     onClick={() => console.log("MiniPlayer", "Favey")}
                 >
-                    <HeartIcon />
+                    <MdFavoriteBorder />
                 </MiniActionButton>
             </div>
             <div className="flex items-center flex-grow w-full px-1">
@@ -111,7 +110,7 @@ const MiniPlayer = () => {
                         tooltip="Volume"
                         onClick={() => console.log("MiniPlayer", "Favey")}
                     >
-                        <VolumeUpIcon className="w-8" />
+                        <MdVolumeUp />
                     </MiniActionButton>
                 </div>
                 <div id="queue">
@@ -119,7 +118,7 @@ const MiniPlayer = () => {
                         tooltip="View playlist"
                         onClick={() => console.log("MiniPlayer", "Favey")}
                     >
-                        <ViewListIcon />
+                        <MdList />
                     </MiniActionButton>
                 </div>
             </div>

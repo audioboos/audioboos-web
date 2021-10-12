@@ -1,5 +1,7 @@
-import { DocumentAddIcon, PlayIcon, ShareIcon } from "@heroicons/react/outline";
 import React from "react";
+import {
+    MdOutlineIosShare, MdOutlinePlayCircleOutline, MdPostAdd
+} from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { Album, Artist, Track } from "../../../models";
 import { setNowPlaying } from "../../../store/redux/audio";
@@ -43,19 +45,19 @@ const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
                     onClick={() => _playClick(track)}
                     tooltip="Play item"
                 >
-                    <PlayIcon />
+                    <MdOutlinePlayCircleOutline />
                 </MiniActionButton>
                 <MiniActionButton
                     onClick={() => _addToPlaylist(track)}
                     tooltip="Add to playlist"
                 >
-                    <DocumentAddIcon />
+                    <MdPostAdd />
                 </MiniActionButton>{" "}
                 <MiniActionButton
                     onClick={() => _openShare(track)}
                     tooltip="Share item"
                 >
-                    <ShareIcon />
+                    <MdOutlineIosShare />
                 </MiniActionButton>
             </td>
         </tr>

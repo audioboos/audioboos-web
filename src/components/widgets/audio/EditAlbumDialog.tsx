@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
 import React, { Fragment } from "react";
+import { MdEditNote } from "react-icons/md";
 import { Album } from "../../../models";
 
 interface IEditAlbumDialogProps {
@@ -50,7 +50,7 @@ const EditAlbumDialog = ({ isOpen, setOpen, album }: IEditAlbumDialogProps) => {
                             <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                                 <div className="sm:flex sm:items-start">
                                     <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                                        <ExclamationIcon
+                                        <MdEditNote
                                             className="w-6 h-6 text-red-600"
                                             aria-hidden="true"
                                         />

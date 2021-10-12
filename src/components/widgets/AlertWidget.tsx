@@ -1,7 +1,7 @@
-import ExclamationCircleIcon from "@heroicons/react/outline/ExclamationCircleIcon";
-import InformationCircleIcon from "@heroicons/react/outline/InformationCircleIcon";
-import ShieldExclamationIcon from "@heroicons/react/outline/ShieldExclamationIcon";
+
 import React from "react";
+import { MdErrorOutline, MdInfoOutline, MdWarningAmber } from "react-icons/md";
+
 
 enum AlertWidgetType {
     Information,
@@ -22,11 +22,11 @@ const AlertWidget = ({
     const renderIcon = (type: AlertWidgetType) => {
         switch (type) {
             case AlertWidgetType.Information:
-                return <InformationCircleIcon className="w-8 h-8" />;
+                return <MdWarningAmber className="w-8 h-8" />;
             case AlertWidgetType.Warning:
-                return <ShieldExclamationIcon className="w-8 h-8" />;
+                return <MdErrorOutline className="w-8 h-8" />;
             case AlertWidgetType.Error:
-                return <ExclamationCircleIcon className="w-8 h-8" />;
+                return <MdInfoOutline className="w-8 h-8" />;
         }
     };
     const getClass = (type: AlertWidgetType) => {

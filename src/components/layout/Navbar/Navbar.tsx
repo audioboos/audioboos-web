@@ -1,5 +1,5 @@
-import { HomeIcon, RssIcon } from "@heroicons/react/outline";
 import React from "react";
+import { MdHome, MdRssFeed } from "react-icons/md";
 import Authentication from "./Authentication";
 import RefreshLibraryButton from "./RefreshLibraryButton";
 
@@ -16,7 +16,7 @@ const Navbar = () => {
                                     className="flex items-center px-5 py-6 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                                 >
                                     <span className="mr-2">
-                                        <HomeIcon className="w-8 h-6" />
+                                        <MdHome className="w-8 h-6" />
                                     </span>
                                     Dashboard
                                 </a>
@@ -25,7 +25,7 @@ const Navbar = () => {
                                     className="flex items-center px-5 py-6 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                                 >
                                     <span className="mr-2">
-                                        <RssIcon className="w-8 h-6" />
+                                        <MdRssFeed className="w-8 h-6" />
                                     </span>
                                     Podcasts
                                 </a>

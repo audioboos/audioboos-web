@@ -1,5 +1,5 @@
-import { PencilAltIcon } from "@heroicons/react/outline";
 import React from "react";
+import { MdModeEdit } from "react-icons/md";
 import EditAlbumDialog from "../components/widgets/audio/EditAlbumDialog";
 import TrackList from "../components/widgets/audio/TrackList";
 import { Album, Artist } from "../models";
@@ -110,7 +110,7 @@ const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
                             onClick={() => setEditing(true)}
                             className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
                         >
-                            <PencilAltIcon className="w-5 h-5 mr-1 text-white" />
+                            <MdModeEdit className="w-5 h-5 mr-1 text-white" />
                             Edit
                         </button>
                     </div>
