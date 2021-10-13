@@ -101,7 +101,7 @@ const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
                                         <line x1={3} y1={21} x2={21} y2={21} />
                                     </svg>
                                 </span>
-                                <span>Started on 29 Jan 2020</span>
+                                <span>Released {album?.releaseDate}</span>
                             </li>
                         </ul>
                     </div>
