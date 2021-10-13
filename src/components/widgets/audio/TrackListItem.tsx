@@ -2,12 +2,19 @@ import React from "react";
 import {
     MdAddCircleOutline,
     MdOutlineIosShare,
+    MdOutlinePauseCircleOutline,
     MdOutlinePlayCircleOutline,
     MdPostAdd
 } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Album, Artist, Track } from "../../../models";
-import { addToQueue, setNowPlaying } from "../../../store/redux/audio";
+import {
+    addToQueue,
+    PlayState,
+    setNowPlaying,
+    togglePlayState
+} from "../../../store/redux/audio";
+import { RootState } from "../../../store/redux/store";
 import MiniActionButton from "../MiniActionButton";
 
 interface ITrackListItemProps {
@@ -18,7 +25,10 @@ interface ITrackListItemProps {
 
 const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
     const dispatch = useDispatch();
-
+    const nowPlaying = useSelector(
+        (state: RootState) => state.audio.nowPlaying
+    );
+    const playState = useSelector((state: RootState) => state.audio.playState);
     const _addToPlayQueue = () => {
         dispatch(
             addToQueue({
@@ -35,12 +45,16 @@ const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
         alert("Sharing");
     };
     const _playClick = () => {
-        dispatch(setNowPlaying({ artist, album, track }));
+        if (nowPlaying?.track.id === track.id) {
+            dispatch(togglePlayState());
+        } else {
+            dispatch(setNowPlaying({ artist, album, track }));
+        }
     };
     return (
         <tr
             key={track.id}
-            className="text-sm leading-none text-gray-800 border-t border-b border-gray-100 hover:bg-gray-100"
+            className="leading-none text-gray-800 border-t border-b border-gray-100 text-md hover:bg-gray-100"
         >
             <td className="pl-4 cursor-pointer">
                 <div className="pl-4">
@@ -54,7 +68,12 @@ const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
             </td>
             <td className="float-right mx-4">
                 <MiniActionButton onClick={_playClick} tooltip="Play item">
-                    <MdOutlinePlayCircleOutline />
+                    {playState === PlayState.playing &&
+                    nowPlaying?.track.id === track.id ? (
+                        <MdOutlinePauseCircleOutline />
+                    ) : (
+                        <MdOutlinePlayCircleOutline />
+                    )}
                 </MiniActionButton>
                 <MiniActionButton
                     onClick={_addToPlayQueue}

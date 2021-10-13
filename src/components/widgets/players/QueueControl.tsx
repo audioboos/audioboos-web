@@ -12,7 +12,6 @@ const QueueControl = () => {
     let { styles, attributes } = usePopper(referenceElement, popperElement);
     const dispatch = useDispatch();
     const queue = useSelector((state: RootState) => state.audio.playQueue);
-
     return (
         <Popover>
             <Popover.Button ref={setReferenceElement} className="p-1">
