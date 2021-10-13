@@ -77,6 +77,14 @@ export const audioSlice = createSlice({
                 (q) => q.track.id !== action.payload
             );
         },
+        play: (state, action: PayloadAction<string>) => {
+            const queueItem = state.playQueue.filter(
+                (q) => q.track.id !== action.payload
+            );
+            if (queueItem && queueItem.length !== 0) {
+                state.nowPlaying = queueItem[0];
+            }
+        },
         playNext: (state) => {
             const nextItem: INowPlaying | undefined = state.playQueue.shift();
             if (nextItem) {
@@ -98,6 +106,7 @@ export const {
     setCurrentVolume,
     removeFromQueue,
     addToQueue,
+    play,
     playNext,
 } = audioSlice.actions;
 export default audioSlice.reducer;
