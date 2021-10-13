@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import {
-    MdFavoriteBorder, MdPauseCircleFilled,
-    MdPlayCircleFilled, MdQueueMusic
+    MdFavoriteBorder,
+    MdPauseCircleFilled,
+    MdPlayCircleFilled,
+    MdSkipNext
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { VolumeControl } from "..";
+import { QueueControl, VolumeControl } from "..";
 import {
+    playNext,
     PlayState,
     setCurrentVolume,
     setSeekPosition,
@@ -83,6 +86,9 @@ const MiniPlayer = () => {
                 >
                     <MdFavoriteBorder />
                 </MiniActionButton>
+                <MiniActionButton onClick={() => dispatch(playNext())}>
+                    <MdSkipNext />
+                </MiniActionButton>
             </div>
             <div className="flex items-center flex-grow w-full px-1">
                 <div className="mr-4 text-sm text-gray-400">
@@ -116,12 +122,7 @@ const MiniPlayer = () => {
                     />
                 </div>
                 <div id="queue">
-                    <MiniActionButton
-                        tooltip="View playlist"
-                        onClick={() => console.log("MiniPlayer", "Favey")}
-                    >
-                        <MdQueueMusic />
-                    </MiniActionButton>
+                    <QueueControl />
                 </div>
             </div>
         </div>

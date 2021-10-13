@@ -1,10 +1,13 @@
 import React from "react";
 import {
-    MdOutlineIosShare, MdOutlinePlayCircleOutline, MdPostAdd
+    MdAddCircleOutline,
+    MdOutlineIosShare,
+    MdOutlinePlayCircleOutline,
+    MdPostAdd
 } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { Album, Artist, Track } from "../../../models";
-import { setNowPlaying } from "../../../store/redux/audio";
+import { addToQueue, setNowPlaying } from "../../../store/redux/audio";
 import MiniActionButton from "../MiniActionButton";
 
 interface ITrackListItemProps {
@@ -16,13 +19,22 @@ interface ITrackListItemProps {
 const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
     const dispatch = useDispatch();
 
-    const _addToPlaylist = (track: Track) => {
+    const _addToPlayQueue = () => {
+        dispatch(
+            addToQueue({
+                artist,
+                album,
+                track,
+            })
+        );
+    };
+    const _addToPlaylist = () => {
         alert("Adding to playlist");
     };
-    const _openShare = (track: Track) => {
+    const _openShare = () => {
         alert("Sharing");
     };
-    const _playClick = (track: Track) => {
+    const _playClick = () => {
         dispatch(setNowPlaying({ artist, album, track }));
     };
     return (
@@ -41,22 +53,22 @@ const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
                 </p>
             </td>
             <td className="float-right mx-4">
-                <MiniActionButton
-                    onClick={() => _playClick(track)}
-                    tooltip="Play item"
-                >
+                <MiniActionButton onClick={_playClick} tooltip="Play item">
                     <MdOutlinePlayCircleOutline />
                 </MiniActionButton>
                 <MiniActionButton
-                    onClick={() => _addToPlaylist(track)}
+                    onClick={_addToPlayQueue}
+                    tooltip="Add to play queue"
+                >
+                    <MdAddCircleOutline />
+                </MiniActionButton>
+                <MiniActionButton
+                    onClick={_addToPlaylist}
                     tooltip="Add to playlist"
                 >
                     <MdPostAdd />
                 </MiniActionButton>{" "}
-                <MiniActionButton
-                    onClick={() => _openShare(track)}
-                    tooltip="Share item"
-                >
+                <MiniActionButton onClick={_openShare} tooltip="Share item">
                     <MdOutlineIosShare />
                 </MiniActionButton>
             </td>

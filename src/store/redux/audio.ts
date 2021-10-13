@@ -19,6 +19,7 @@ export interface IAudioState extends State {
     duration: number;
     playState: PlayState;
     currentVolume: number;
+    playQueue: Array<INowPlaying>;
 }
 
 const initialState: IAudioState = {
@@ -28,7 +29,9 @@ const initialState: IAudioState = {
     duration: 0,
     playState: PlayState.stopped,
     currentVolume: parseFloat(localStorage.getItem("vol") ?? "1"),
+    playQueue: [],
 };
+
 export const audioSlice = createSlice({
     name: "audio",
     initialState,
@@ -37,7 +40,9 @@ export const audioSlice = createSlice({
             state.nowPlaying = action.payload;
         },
         setPlayState: (state, action: PayloadAction<PlayState>) => {
-            state.playState = action.payload;
+            if (state.position <= action.payload) {
+                state.playState = action.payload;
+            }
         },
         setPosition: (state, action: PayloadAction<number>) => {
             state.position = action.payload;
@@ -58,6 +63,37 @@ export const audioSlice = createSlice({
             localStorage.setItem("vol", action.payload.toString());
             state.currentVolume = action.payload;
         },
+        addToQueue: (state, action: PayloadAction<INowPlaying>) => {
+            //check if item exists in queue already
+            const exists = state.playQueue.find(
+                (r) => r.track.id === action.payload.track.id
+            );
+            if (!exists) {
+                state.playQueue.push(action.payload);
+            }
+        },
+        removeFromQueue: (state, action: PayloadAction<string>) => {
+            state.playQueue = state.playQueue.filter(
+                (q) => q.track.id !== action.payload
+            );
+        },
+        play: (state, action: PayloadAction<string>) => {
+            const queueItem = state.playQueue.filter(
+                (q) => q.track.id !== action.payload
+            );
+            if (queueItem && queueItem.length !== 0) {
+                state.nowPlaying = queueItem[0];
+            }
+        },
+        playNext: (state) => {
+            const nextItem: INowPlaying | undefined = state.playQueue.shift();
+            if (nextItem) {
+                state.nowPlaying = nextItem;
+            } else {
+                state.playState = PlayState.stopped;
+                state.nowPlaying = undefined;
+            }
+        },
     },
 });
 export const {
@@ -68,5 +104,9 @@ export const {
     setSeekPosition,
     togglePlayState,
     setCurrentVolume,
+    removeFromQueue,
+    addToQueue,
+    play,
+    playNext,
 } = audioSlice.actions;
 export default audioSlice.reducer;

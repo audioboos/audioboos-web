@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    playNext,
     PlayState,
     setDuration,
     setPlayState,
@@ -14,7 +15,8 @@ export interface IAudioProviderProps {
 
 const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const dispatch = useDispatch();
-    const [audio, setAudio] = React.useState<HTMLAudioElement>();
+    const audio = React.useRef<HTMLAudioElement>(new Audio());
+
     const nowPlaying = useSelector(
         (state: RootState) => state.audio.nowPlaying
     );
@@ -25,54 +27,49 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const currentVolume = useSelector(
         (state: RootState) => state.audio.currentVolume
     );
+    React.useEffect(() => {
+        const cleanup = audio.current;
+        audio.current.addEventListener("timeupdate", () => {
+            dispatch(setPosition(audio.current.currentTime));
+        });
+        audio.current.addEventListener("ended", () => dispatch(playNext()));
+        return () => {
+            cleanup.removeEventListener("timeupdate", () => {});
+            cleanup.removeEventListener("ended", () => {});
+        };
+    }, [dispatch]);
 
     React.useEffect(() => {
         //TODO: This smells a bit?
         if (!nowPlaying?.track.audioUrl) return;
-        if (audio) {
-            audio.pause();
-            setAudio(undefined);
-            dispatch(setSeekPosition(0));
-            dispatch(setPosition(0));
-            setAudio(new Audio(nowPlaying?.track.audioUrl));
-            audio.currentTime = 0;
-        } else {
-            setAudio(new Audio(nowPlaying?.track.audioUrl));
-        }
-    }, [nowPlaying]);
+        audio.current.pause();
+        dispatch(setSeekPosition(0));
+        dispatch(setPosition(0));
+        audio.current.src = nowPlaying?.track.audioUrl;
+        audio.current.currentTime = 0;
+
+        if (!audio || !dispatch) return;
+        audio.current.play().then(() => {
+            dispatch(setDuration(audio.current.duration));
+            dispatch(setPlayState(PlayState.playing));
+        });
+    }, [nowPlaying, dispatch]);
 
     React.useEffect(() => {
-        if (!audio) return;
-        audio.currentTime = seekPosition;
-    }, [seekPosition, audio]);
+        audio.current.currentTime = seekPosition;
+    }, [seekPosition]);
 
     React.useEffect(() => {
-        if (!audio) return;
-        audio.volume = currentVolume;
+        audio.current.volume = currentVolume >= 0 ? currentVolume : 0;
     }, [currentVolume]);
 
     React.useEffect(() => {
-        if (!audio) return;
         if (playState === PlayState.paused) {
-            audio.pause();
+            audio.current.pause();
         } else if (playState === PlayState.playing) {
-            audio.play();
+            audio.current.play();
         }
-    }, [playState, audio]);
-
-    React.useEffect(() => {
-        console.log("audioProvider", "useEffect_audio, dispatch", audio);
-        if (!audio || !dispatch) return;
-        audio.volume = currentVolume;
-        audio.play();
-        audio.addEventListener("loadeddata", () => {
-            dispatch(setDuration(audio.duration));
-            dispatch(setPlayState(PlayState.playing));
-        });
-        audio.addEventListener("timeupdate", () => {
-            dispatch(setPosition(audio.currentTime));
-        });
-    }, [audio, dispatch]);
+    }, [playState]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };
