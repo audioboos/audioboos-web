@@ -54,7 +54,9 @@ const TrackListItem = ({ artist, album, track }: ITrackListItemProps) => {
     return (
         <tr
             key={track.id}
-            className="leading-none text-gray-800 border-t border-b border-gray-100 text-md hover:bg-gray-100"
+            className={`${
+                nowPlaying?.track.id === track.id && "bg-yellow-100"
+            } leading-none text-gray-800 border-t border-b border-gray-100 text-md hover:bg-gray-100`}
         >
             <td className="pl-4 cursor-pointer">
                 <div className="pl-4">
