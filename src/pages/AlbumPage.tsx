@@ -1,9 +1,16 @@
 import React from "react";
-import { MdModeEdit } from "react-icons/md";
+import { MdModeEdit, MdPlayArrow, MdPlaylistPlay } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import EditAlbumDialog from "../components/widgets/audio/EditAlbumDialog";
 import TrackList from "../components/widgets/audio/TrackList";
 import { Album, Artist } from "../models";
 import { useArtistQuery } from "../store/redux/api";
+import {
+    addAllToQueue,
+    clearQueue,
+    INowPlaying,
+    setNowPlaying
+} from "../store/redux/audio";
 interface IAlbumPageParams {
     artistName: string;
     albumName: string;
@@ -13,6 +20,7 @@ const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
     const [artist, setArtist] = React.useState<Artist>();
     const [album, setAlbum] = React.useState<Album>();
     const artistQueryResult = useArtistQuery(artistName);
+    const dispatch = useDispatch();
     React.useEffect(() => {
         if (artistQueryResult.data) {
             const album = artistQueryResult.data.albums.find(
@@ -23,6 +31,26 @@ const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
         }
     }, [artistQueryResult, albumName]);
 
+    const _playAll = () => {
+        dispatch(clearQueue());
+        _addAllToQueue(true);
+    };
+
+    const _addAllToQueue = (playFirst: boolean = false) => {
+        const tracks = album?.tracks?.map((t) => {
+            return {
+                album: album,
+                artist: artist,
+                track: t,
+            } as INowPlaying;
+        });
+        if (tracks && tracks.length >= 0) {
+            dispatch(addAllToQueue(tracks));
+            if (playFirst) {
+                dispatch(setNowPlaying(tracks[0]));
+            }
+        }
+    };
     return (
         <React.Fragment>
             <div>
@@ -105,7 +133,21 @@ const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
                             </li>
                         </ul>
                     </div>
-                    <div className="mt-6 lg:mt-0">
+                    <div className="flex flex-row mt-6 space-x-1 lg:mt-0">
+                        <button
+                            onClick={() => _playAll()}
+                            className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+                        >
+                            <MdPlayArrow className="w-5 h-5 mr-1 text-white" />
+                            Play
+                        </button>
+                        <button
+                            onClick={() => _addAllToQueue()}
+                            className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+                        >
+                            <MdPlaylistPlay className="w-5 h-5 mr-1 text-white" />
+                            Queue
+                        </button>
                         <button
                             onClick={() => setEditing(true)}
                             className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"

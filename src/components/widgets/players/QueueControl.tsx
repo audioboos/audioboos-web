@@ -1,10 +1,16 @@
 import { Popover } from "@headlessui/react";
 import React from "react";
-import { MdOutlineClear, MdQueueMusic } from "react-icons/md";
+import {
+    MdClose,
+    MdDeleteOutline,
+    MdLayersClear,
+    MdQueueMusic
+} from "react-icons/md";
 import { usePopper } from "react-popper";
 import { useDispatch, useSelector } from "react-redux";
-import { play, removeFromQueue } from "../../../store/redux/audio";
+import { clearQueue, play, removeFromQueue } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
+import MiniActionButton from "../MiniActionButton";
 
 const QueueControl = () => {
     let [referenceElement, setReferenceElement] = React.useState<any>();
@@ -12,7 +18,7 @@ const QueueControl = () => {
     let { styles, attributes } = usePopper(referenceElement, popperElement);
     const dispatch = useDispatch();
     const queue = useSelector((state: RootState) => state.audio.playQueue);
-    return (
+    return queue.length !== 0 ? (
         <Popover>
             <Popover.Button ref={setReferenceElement} className="p-1">
                 <MdQueueMusic className="w-8 h-8 text-current text-gray-500 delay-100 hover:text-gray-700" />
@@ -23,14 +29,35 @@ const QueueControl = () => {
                 {...attributes.popper}
                 className="pb-3 shadow"
             >
-                {queue.length !== 0 && (
+                {({ close }: any) => (
                     <div className="container flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
-                        <div className="w-full px-4 py-5 bg-gray-100 border-b sm:px-6 ">
-                            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
-                                Queue
-                            </h3>
+                        <div className="items-center w-full p-4 text-center bg-indigo-100 dark:bg-gray-700">
+                            <div className="flex items-center justify-between m">
+                                <div className="flex items-center">
+                                    <div className="flex flex-col">
+                                        <span className="ml-2 font-bold text-gray-500 text-md dark:text-white">
+                                            Up next....
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row items-center">
+                                    <MiniActionButton
+                                        tooltip="Clear queue"
+                                        onClick={() => dispatch(clearQueue())}
+                                    >
+                                        <MdLayersClear />
+                                    </MiniActionButton>
+                                    <MiniActionButton
+                                        tooltip="Close"
+                                        onClick={() => close()}
+                                    >
+                                        <MdClose />
+                                    </MiniActionButton>
+                                </div>
+                            </div>
                         </div>
-                        <ul className="flex flex-col divide-y divide">
+
+                        <ul className="flex flex-col overflow-y-scroll max-h-120">
                             {queue.map((item) => (
                                 <li
                                     className="flex flex-row"
@@ -72,7 +99,7 @@ const QueueControl = () => {
                                                 )
                                             }
                                         >
-                                            <MdOutlineClear className="w-8 h-8" />
+                                            <MdDeleteOutline className="w-8 h-8" />
                                         </button>
                                     </div>
                                 </li>
@@ -82,22 +109,8 @@ const QueueControl = () => {
                 )}
             </Popover.Panel>
         </Popover>
-
-        // <Menu>
-        //     <Menu.Button>
-        //         <MiniActionButton
-        //             tooltip="View playlist"
-        //             onClick={() => console.log("MiniPlayer", "Favey")}
-        //         >
-        //             <MdQueueMusic />
-        //         </MiniActionButton>
-        //     </Menu.Button>
-        //     <Menu.Items>
-        //         <Menu.Item>Track One</Menu.Item>
-        //         <Menu.Item>Track Two</Menu.Item>
-        //         <Menu.Item>Track Three</Menu.Item>
-        //     </Menu.Items>
-        // </Menu>
+    ) : (
+        <React.Fragment></React.Fragment>
     );
 };
 
