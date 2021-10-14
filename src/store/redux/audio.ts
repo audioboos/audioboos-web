@@ -7,7 +7,7 @@ export enum PlayState {
     playing = 2,
     paused = 3,
 }
-interface INowPlaying {
+export interface INowPlaying {
     album: Album;
     artist: Artist;
     track: Track;
@@ -72,6 +72,19 @@ export const audioSlice = createSlice({
                 state.playQueue.push(action.payload);
             }
         },
+        addAllToQueue: (state, action: PayloadAction<Array<INowPlaying>>) => {
+            action.payload.forEach((a) => {
+                const exists = state.playQueue.find(
+                    (r) => r.track.id === a.track.id
+                );
+                if (!exists) {
+                    state.playQueue.push(a);
+                }
+            });
+        },
+        clearQueue: (state) => {
+            state.playQueue = initialState.playQueue;
+        },
         removeFromQueue: (state, action: PayloadAction<string>) => {
             state.playQueue = state.playQueue.filter(
                 (q) => q.track.id !== action.payload
@@ -106,6 +119,8 @@ export const {
     setCurrentVolume,
     removeFromQueue,
     addToQueue,
+    addAllToQueue,
+    clearQueue,
     play,
     playNext,
 } = audioSlice.actions;
