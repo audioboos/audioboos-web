@@ -1,14 +1,16 @@
-import { Transition } from "@headlessui/react";
+import { Popover } from "@headlessui/react";
 import React from "react";
 import { MdVolumeUp } from "react-icons/md";
+import { usePopper } from "react-popper";
 import { makeRangeMapper } from "../../../utils/ranges";
-import MiniActionButton from "../MiniActionButton";
 interface IVolumeControlProps {
     volume: number;
     onVolumeChanged: (volume: number) => void;
 }
 const VolumeControl = ({ volume, onVolumeChanged }: IVolumeControlProps) => {
-    const [menuOpen, setMenuOpen] = React.useState(false);
+    let [referenceElement, setReferenceElement] = React.useState<any>();
+    let [popperElement, setPopperElement] = React.useState<any>();
+    let { styles, attributes } = usePopper(referenceElement, popperElement);
 
     const _handleVolumeClick = (
         $event: React.MouseEvent<HTMLProgressElement>
@@ -23,22 +25,17 @@ const VolumeControl = ({ volume, onVolumeChanged }: IVolumeControlProps) => {
     };
 
     return (
-        <div
-            id="volume"
-            className="flex flex-row items-center"
-            onMouseEnter={() => setMenuOpen(true)}
-            onMouseLeave={() => setMenuOpen(false)}
-        >
-            <Transition
-                show={menuOpen}
-                enter="duration-200 ease-out"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="duration-200 ease-in"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+        <Popover>
+            <Popover.Button ref={setReferenceElement} className="p-1">
+                <MdVolumeUp className="w-8 h-8 text-current text-gray-500 delay-100 hover:text-gray-700" />
+            </Popover.Button>
+            <Popover.Panel
+                ref={setPopperElement}
+                style={styles.popper}
+                {...attributes.popper}
+                className="shadow"
             >
-                <div id="volume-slider" className="px-1 pt-1">
+                <div id="volume-slider" className="">
                     <progress
                         className="progress"
                         value={volume * 100}
@@ -46,13 +43,8 @@ const VolumeControl = ({ volume, onVolumeChanged }: IVolumeControlProps) => {
                         onClick={_handleVolumeClick}
                     />
                 </div>
-            </Transition>
-            <MiniActionButton
-                onClick={() => console.log("MiniPlayer", "Favey")}
-            >
-                <MdVolumeUp />
-            </MiniActionButton>
-        </div>
+            </Popover.Panel>
+        </Popover>
     );
 };
 
