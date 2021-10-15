@@ -35,13 +35,12 @@ const VolumeControl = ({ volume, onVolumeChanged }: IVolumeControlProps) => {
                 {...attributes.popper}
                 className="shadow"
             >
-                <div id="volume-slider" className="">
-                    <progress
-                        className="progress"
-                        value={volume * 100}
-                        max={100}
+                <div className="w-5 shadow-sm h-52 loadbar bg-gray-50">
+                    <strong
                         onClick={_handleVolumeClick}
-                    />
+                        className="absolute bottom-0 block w-full text-white bg-red-400 bar"
+                        style={{ height: volume * 100 }}
+                    ></strong>
                 </div>
             </Popover.Panel>
         </Popover>

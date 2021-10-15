@@ -33,3 +33,19 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf;
 }
+
+.loadbar {
+    width: 12px;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    position: relative;
+}
+.bar {
+    width: 100%;
+    display: block;
+    background-color: #b00b1e;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+}
