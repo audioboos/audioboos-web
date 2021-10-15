@@ -27,6 +27,8 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
     const currentVolume = useSelector(
         (state: RootState) => state.audio.currentVolume
     );
+    const muted = useSelector((state: RootState) => state.audio.muted);
+
     React.useEffect(() => {
         const cleanup = audio.current;
         audio.current.addEventListener("timeupdate", () => {
@@ -70,6 +72,10 @@ const AudioProvider: React.FC<IAudioProviderProps> = ({ children }) => {
             audio.current.play();
         }
     }, [playState]);
+
+    React.useEffect(() => {
+        audio.current.muted = muted;
+    }, [muted]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };

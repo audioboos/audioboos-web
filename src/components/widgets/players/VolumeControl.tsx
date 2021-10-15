@@ -1,58 +1,79 @@
-import { Transition } from "@headlessui/react";
+import { Popover } from "@headlessui/react";
 import React from "react";
-import { MdVolumeUp } from "react-icons/md";
+import { MdVolumeOff, MdVolumeUp } from "react-icons/md";
+import { usePopper } from "react-popper";
+import { useDispatch, useSelector } from "react-redux";
+import { setMuted } from "../../../store/redux/audio";
+import { RootState } from "../../../store/redux/store";
 import { makeRangeMapper } from "../../../utils/ranges";
-import MiniActionButton from "../MiniActionButton";
 interface IVolumeControlProps {
     volume: number;
     onVolumeChanged: (volume: number) => void;
 }
 const VolumeControl = ({ volume, onVolumeChanged }: IVolumeControlProps) => {
-    const [menuOpen, setMenuOpen] = React.useState(false);
+    const dispatch = useDispatch();
+    const muted = useSelector((state: RootState) => state.audio.muted);
 
-    const _handleVolumeClick = (
-        $event: React.MouseEvent<HTMLProgressElement>
-    ) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    let [referenceElement, setReferenceElement] = React.useState<any>();
+    let [popperElement, setPopperElement] = React.useState<any>();
+    let { styles, attributes } = usePopper(referenceElement, popperElement);
+
+    const _toggleMuted = () => {
+        dispatch(setMuted(!muted));
+        setIsOpen(false);
+    };
+
+    const _handleVolumeClick = ($event: React.MouseEvent<HTMLDivElement>) => {
         let currentTargetRect = $event.currentTarget.getBoundingClientRect();
-        const eventOffsetX = $event.pageX - currentTargetRect.left;
-        let mapFn = makeRangeMapper(0, currentTargetRect.width, 0, 100);
-        let volume = mapFn(eventOffsetX);
-        if (volume >= 0) {
+        const eventOffsetY = $event.pageY - currentTargetRect.top;
+        let mapFn = makeRangeMapper(0, currentTargetRect.height, 100, 0);
+        let volume = mapFn(eventOffsetY);
+        if (volume >= 0 && volume <= 100) {
+            dispatch(setMuted(false));
             onVolumeChanged(volume / 100);
         }
     };
 
     return (
-        <div
-            id="volume"
-            className="flex flex-row items-center"
-            onMouseEnter={() => setMenuOpen(true)}
-            onMouseLeave={() => setMenuOpen(false)}
-        >
-            <Transition
-                show={menuOpen}
-                enter="duration-200 ease-out"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="duration-200 ease-in"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+        <Popover>
+            <div
+                onMouseEnter={() => setIsOpen(true)}
+                onMouseLeave={() => setIsOpen(false)}
             >
-                <div id="volume-slider" className="px-1 pt-1">
-                    <progress
-                        className="progress"
-                        value={volume * 100}
-                        max={100}
-                        onClick={_handleVolumeClick}
-                    />
+                <div onClick={_toggleMuted}>
+                    <Popover.Button ref={setReferenceElement} className="p-1">
+                        {muted ? (
+                            <MdVolumeOff className="w-8 h-8 text-current text-gray-500 delay-100 hover:text-gray-700" />
+                        ) : (
+                            <MdVolumeUp className="w-8 h-8 text-current text-gray-500 delay-100 hover:text-gray-700" />
+                        )}
+                    </Popover.Button>
                 </div>
-            </Transition>
-            <MiniActionButton
-                onClick={() => console.log("MiniPlayer", "Favey")}
-            >
-                <MdVolumeUp />
-            </MiniActionButton>
-        </div>
+                {isOpen && (
+                    <div>
+                        <Popover.Panel
+                            static
+                            ref={setPopperElement}
+                            style={styles.popper}
+                            {...attributes.popper}
+                            className="shadow"
+                        >
+                            <div
+                                className="w-8 p-1 bg-gray-800 shadow-lg cursor-pointer h-52"
+                                onClick={_handleVolumeClick}
+                            >
+                                <span
+                                    className="absolute bottom-0 block w-1/2 ml-1 text-white align-middle bg-red-400 rounded "
+                                    style={{ height: `${volume * 100}%` }}
+                                ></span>
+                            </div>
+                        </Popover.Panel>
+                    </div>
+                )}
+            </div>
+        </Popover>
     );
 };
 
