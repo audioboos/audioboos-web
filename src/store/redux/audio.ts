@@ -19,6 +19,7 @@ export interface IAudioState extends State {
     duration: number;
     playState: PlayState;
     currentVolume: number;
+    muted: boolean;
     playQueue: Array<INowPlaying>;
 }
 
@@ -29,6 +30,7 @@ const initialState: IAudioState = {
     duration: 0,
     playState: PlayState.stopped,
     currentVolume: parseFloat(localStorage.getItem("vol") ?? "1"),
+    muted: false,
     playQueue: [],
 };
 
@@ -71,6 +73,9 @@ export const audioSlice = createSlice({
             if (!exists) {
                 state.playQueue.push(action.payload);
             }
+        },
+        setMuted: (state, action: PayloadAction<boolean>) => {
+            state.muted = action.payload;
         },
         addAllToQueue: (state, action: PayloadAction<Array<INowPlaying>>) => {
             action.payload.forEach((a) => {
@@ -117,6 +122,7 @@ export const {
     setSeekPosition,
     togglePlayState,
     setCurrentVolume,
+    setMuted,
     removeFromQueue,
     addToQueue,
     addAllToQueue,
