@@ -25,12 +25,12 @@ class ApiService {
         return ApiService._client;
     };
     private __requestClient = async () => {
-        process.env.NODE_TLS_REJECT_UNAuthorisED = "0";
+        import.meta.env.NODE_TLS_REJECT_UNAuthorisED = "0";
         const instance = axios.create({
-            baseURL: process.env.REACT_APP_API_URL,
-            maxRedirects: 0,
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
+          baseURL: import.meta.env.VITE_API_URL as string,
+          maxRedirects: 0,
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         });
         return instance;
     };

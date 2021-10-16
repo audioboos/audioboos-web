@@ -23,85 +23,79 @@ import { AudioProvider } from "./services/audio";
 import { auth } from "./store";
 
 const App = () => {
-    return (
-        <Router>
-            <INNER_APP />
-        </Router>
-    );
+  return (
+    <Router>
+      <INNER_APP />
+    </Router>
+  );
 };
 
 const INNER_APP = () => {
-    const history = useHistory();
-    const [authSettings, setAuthSettings] = useRecoilState(auth);
+  const history = useHistory();
+  const [authSettings, setAuthSettings] = useRecoilState(auth);
 
-    React.useEffect(() => {
-        const checkIsAuth = async () => {
-            try {
-                const result = await authService.isAuthed(true);
-                setAuthSettings({ ...authSettings, isLoggedIn: result });
-            } catch (err) {
-                history.push("/login");
-            }
-        };
-
-        checkIsAuth();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [history]);
-    const _getLayout = (children: React.ReactNode) => {
-        return authSettings.isLoggedIn ? (
-            <AuthLayout>{children}</AuthLayout>
-        ) : (
-            <Layout>{children}</Layout>
-        );
+  React.useEffect(() => {
+    const checkIsAuth = async () => {
+      try {
+        const result = await authService.isAuthed(true);
+        setAuthSettings({ ...authSettings, isLoggedIn: result });
+      } catch (err) {
+        history.push("/login");
+      }
     };
-    return (
-        <React.Fragment>
-            <AudioProvider>
-                {_getLayout(
-                    <Switch>
-                        <Route path="/artists">
-                            <ArtistsPage />
-                        </Route>
-                        <Route path="/login">
-                            <LoginPage />
-                        </Route>
-                        <Route path="/register">
-                            <RegisterPage />
-                        </Route>
-                        <Route path="/debug">
-                            <DebugPage />
-                        </Route>
-                        <Route
-                            path="/artist/:artistName/:albumName"
-                            render={(props) => (
-                                <AlbumPage
-                                    artistName={props.match.params.artistName}
-                                    albumName={props.match.params.albumName}
-                                />
-                            )}
-                        />
-                        <Route
-                            path="/artist/:artistName"
-                            render={(props) => (
-                                <ArtistPage
-                                    artistName={props.match.params.artistName}
-                                />
-                            )}
-                        />
-                        <Route exact path="/">
-                            {authSettings.isLoggedIn ? (
-                                <Dashboard />
-                            ) : (
-                                <HomePage />
-                            )}
-                        </Route>
-                        <Route path="/404" component={NotFoundPage} />
-                        <Redirect to="/404" />
-                    </Switch>
-                )}
-            </AudioProvider>
-        </React.Fragment>
+
+    checkIsAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history]);
+  const _getLayout = (children: React.ReactNode) => {
+    return authSettings.isLoggedIn ? (
+      <AuthLayout>{children}</AuthLayout>
+    ) : (
+      <Layout>{children}</Layout>
     );
+  };
+  return (
+    <React.Fragment>
+      <AudioProvider>
+        {_getLayout(
+          <Switch>
+            <Route path="/artists">
+              <ArtistsPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/register">
+              <RegisterPage />
+            </Route>
+            <Route path="/debug">
+              <DebugPage />
+            </Route>
+            <Route
+              path="/artist/:artistName/:albumName"
+              render={(props) => (
+                <AlbumPage
+                  artistName={props.match.params.artistName}
+                  albumName={props.match.params.albumName}
+                />
+              )}
+            />
+            <Route
+              path="/artist/:artistName"
+              render={(props) => (
+                <ArtistPage artistName={props.match.params.artistName} />
+              )}
+            />
+            <Route exact path="/">
+              {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
+            </Route>
+            <Route path="/404" component={NotFoundPage} />
+            <Redirect to="/404" />
+          </Switch>
+        )}
+      </AudioProvider>
+    </React.Fragment>
+  );
 };
 
 export default App;

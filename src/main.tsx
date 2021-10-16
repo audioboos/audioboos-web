@@ -10,17 +10,17 @@ import "./index.css";
 import store from "./store/redux/store";
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <RecoilRoot>
-                <HelmetProvider>
-                    <App />
-                    <ToastContainer />
-                </HelmetProvider>
-            </RecoilRoot>
-        </Provider>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <Provider store={store}>
+      <RecoilRoot>
+        <HelmetProvider>
+          <App />
+          <ToastContainer />
+        </HelmetProvider>
+      </RecoilRoot>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // reportWebVitals(console.log);
