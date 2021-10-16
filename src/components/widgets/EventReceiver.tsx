@@ -9,10 +9,10 @@ const EventReceiver = () => {
 
     React.useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl(`${process.env.REACT_APP_API_URL}/hubs/job`)
-            .configureLogging(LogLevel.Warning)
-            .withAutomaticReconnect()
-            .build();
+          .withUrl(`${import.meta.env.VITE_API_URL}/hubs/job`)
+          .configureLogging(LogLevel.Warning)
+          .withAutomaticReconnect()
+          .build();
         setConnection(newConnection);
     }, []);
 
