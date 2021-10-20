@@ -1,4 +1,5 @@
 import AlertWidget from "./AlertWidget";
+import ArtistStats from './artist/ArtistStats';
 import AlbumsList from "./audio/AlbumsList";
 import AlbumTrackList from "./audio/AlbumTrackList";
 import ArtistCard from "./audio/ArtistCard";
@@ -14,4 +15,5 @@ export {
     AlertWidget,
     VolumeControl,
     QueueControl,
+    ArtistStats,
 };

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import jobService from "../services/api/jobService";
 const DebugPage = () => {
     const startJob = async () => {
-        const result = await jobService.startJob("UpdateLibrary");
+        const result = await jobService.startJob("ScanArtists");
 
         if (result) {
             toast("🦄 Job started successfully!", {

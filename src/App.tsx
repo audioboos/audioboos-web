@@ -11,7 +11,6 @@ import { useRecoilState } from "recoil";
 import { AuthLayout, Layout } from "./components/layout";
 import AlbumPage from "./pages/AlbumPage";
 import ArtistPage from "./pages/ArtistPage";
-import ArtistsPage from "./pages/ArtistsPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import Dashboard from "./pages/Dashboard";
@@ -59,9 +58,7 @@ const INNER_APP = () => {
       <AudioProvider>
         {_getLayout(
           <Switch>
-            <Route path="/artists">
-              <ArtistsPage />
-            </Route>
+
             <Route path="/login">
               <LoginPage />
             </Route>
