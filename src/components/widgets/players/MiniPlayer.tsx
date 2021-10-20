@@ -6,7 +6,7 @@ import {
     MdSkipNext
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { QueueControl, VolumeControl } from "..";
+import { MiniActionButton, QueueControl, VolumeControl } from "..";
 import {
     playNext,
     PlayState,
@@ -17,7 +17,6 @@ import {
 import { RootState } from "../../../store/redux/store";
 import { makeRangeMapper } from "../../../utils/ranges";
 import { secondsToReadableString } from "../../../utils/time";
-import MiniActionButton from "../MiniActionButton";
 
 const MiniPlayer = () => {
     const dispatch = useDispatch();

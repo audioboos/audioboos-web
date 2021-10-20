@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import jobService from "../../../services/api/jobService";
-import MiniActionButton from "../../widgets/MiniActionButton";
+import { MiniActionButton } from "../../widgets";
 
 const RefreshLibraryButton = () => {
     const refreshAudioLibrary = async () => {

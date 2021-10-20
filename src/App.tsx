@@ -1,25 +1,19 @@
-import React from "react";
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch,
-    useHistory
-} from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
-import { useRecoilState } from "recoil";
-import { AuthLayout, Layout } from "./components/layout";
-import AlbumPage from "./pages/AlbumPage";
-import ArtistPage from "./pages/ArtistPage";
-import LoginPage from "./pages/auth/LoginPage";
-import RegisterPage from "./pages/auth/RegisterPage";
-import Dashboard from "./pages/Dashboard";
-import DebugPage from "./pages/DebugPage";
-import HomePage from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import authService from "./services/api/authService";
-import { AudioProvider } from "./services/audio";
-import { auth } from "./store";
+import React from 'react';
+import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRecoilState } from 'recoil';
+import { AuthLayout, Layout } from './components/layout';
+import AlbumPage from './pages/AlbumPage';
+import ArtistPage from './pages/ArtistPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import Dashboard from './pages/Dashboard';
+import DebugPage from './pages/DebugPage';
+import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage';
+import authService from './services/api/authService';
+import { AudioProvider } from './services/audio';
+import { auth } from './store';
 
 const App = () => {
   return (
@@ -39,7 +33,7 @@ const INNER_APP = () => {
         const result = await authService.isAuthed(true);
         setAuthSettings({ ...authSettings, isLoggedIn: result });
       } catch (err) {
-        history.push("/login");
+        history.push('/login');
       }
     };
 
@@ -58,7 +52,6 @@ const INNER_APP = () => {
       <AudioProvider>
         {_getLayout(
           <Switch>
-
             <Route path="/login">
               <LoginPage />
             </Route>
@@ -79,9 +72,7 @@ const INNER_APP = () => {
             />
             <Route
               path="/artist/:artistName"
-              render={(props) => (
-                <ArtistPage artistName={props.match.params.artistName} />
-              )}
+              render={(props) => <ArtistPage artistName={props.match.params.artistName} />}
             />
             <Route exact path="/">
               {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
