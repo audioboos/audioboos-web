@@ -21,7 +21,7 @@ const ArtistPage = ({ artistName }: IArtistPageParams) => {
             <h4 className="text-2xl font-bold leading-tight text-gray-800">{artistName}</h4>
             <ArtistStats artist={artist} />
           </div>
-          <div className="inline-flex space-x-2 text-red-500">
+          <div className="inline-flex space-x-2 text-gray-500">
             <MiniActionButton onClick={() => null} tooltip="Edit artist info">
               <MdModeEditOutline />
             </MiniActionButton>
