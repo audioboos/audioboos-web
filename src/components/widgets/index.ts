@@ -1,5 +1,6 @@
 import AlertWidget from './AlertWidget';
 import ArtistStats from './artist/ArtistStats';
+import AlbumCard from './audio/AlbumCard';
 import AlbumsList from './audio/AlbumsList';
 import AlbumTrackList from './audio/AlbumTrackList';
 import ArtistCard from './audio/ArtistCard';
@@ -14,6 +15,7 @@ export {
     ArtistsList,
     AlbumTrackList,
     ArtistCard,
+    AlbumCard,
     AlertWidget,
     VolumeControl,
     QueueControl,
