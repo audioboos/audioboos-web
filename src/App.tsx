@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import DebugPage from './pages/DebugPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import SetupPage from './pages/setup/SetupPage';
 import authService from './services/api/authService';
 import { AudioProvider } from './services/audio';
 import { auth } from './store';
@@ -26,9 +27,11 @@ const App = () => {
 const INNER_APP = () => {
   const history = useHistory();
   const [authSettings, setAuthSettings] = useRecoilState(auth);
+  const [firstRun, setIsFirstRun] = React.useState(true);
 
   React.useEffect(() => {
     const checkIsAuth = async () => {
+      setIsFirstRun(true);
       try {
         const result = await authService.isAuthed(true);
         setAuthSettings({ ...authSettings, isLoggedIn: result });
@@ -36,11 +39,15 @@ const INNER_APP = () => {
         history.push('/login');
       }
     };
-
-    checkIsAuth();
+    if (!firstRun) {
+      checkIsAuth();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
   const _getLayout = (children: React.ReactNode) => {
+    if (firstRun) {
+      return <SetupPage />;
+    }
     return authSettings.isLoggedIn ? (
       <AuthLayout>{children}</AuthLayout>
     ) : (

@@ -1,14 +1,14 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     maxHeight: {
-      120: "54rem",
+      120: '54rem',
     },
     extend: {},
   },
   variants: {
-    extend: { display: ["group-hover"], overflow: ["hover", "focus"] },
+    extend: { display: ['group-hover'], overflow: ['hover', 'focus'] },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };
