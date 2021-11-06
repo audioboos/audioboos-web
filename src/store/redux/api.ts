@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Artist } from "../../models";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Artist, Settings } from '../../models';
 
 const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -8,14 +8,17 @@ const api = createApi({
   endpoints(build) {
     return {
       artists: build.query<Array<Artist>, void>({
-        query: () => "/artists",
+        query: () => '/artists',
       }),
       artist: build.query<Artist, string>({
         query: (name) => `/artists/${name}`,
+      }),
+      settings: build.query<Settings, void>({
+        query: () => `/settings`,
       }),
     };
   },
 });
 
-export const { useArtistsQuery, useArtistQuery } = api;
+export const { useSettingsQuery, useArtistsQuery, useArtistQuery } = api;
 export default api;
