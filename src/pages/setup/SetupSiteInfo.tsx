@@ -1,9 +1,7 @@
 import React from 'react';
+import IHookFormProps from '../../components/IHookFormProps';
 
-interface ISetupCreateAdminUserProps {
-  register: any;
-}
-const SetupCreateAdminUser = ({ register }: ISetupCreateAdminUserProps) => {
+const SetupSiteInfo = ({ register }: IHookFormProps) => {
   return (
     <>
       <div>
@@ -74,4 +72,4 @@ const SetupCreateAdminUser = ({ register }: ISetupCreateAdminUserProps) => {
   );
 };
 
-export default SetupCreateAdminUser;
+export default SetupSiteInfo;

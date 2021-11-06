@@ -6,6 +6,7 @@ interface IIconButtonProps {
   fullWidth: boolean;
   className?: string;
   extraClasses?: string;
+  onClick?: React.MouseEventHandler | undefined;
 }
 const defaults = {
   className:
@@ -20,9 +21,10 @@ const IconButton = ({
   iconRight = defaults.iconRight,
   fullWidth = defaults.fullWidth,
   extraClasses = '',
+  onClick,
 }: IIconButtonProps) => {
   return (
-    <button className={`${className} ${fullWidth && 'w-full justify-center'}`}>
+    <button className={`${className} ${fullWidth && 'w-full justify-center'}`} onClick={onClick}>
       {!iconRight && children}
       <span>{text}</span>
       {iconRight && children}

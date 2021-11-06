@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 're
 import 'react-toastify/dist/ReactToastify.css';
 import { useRecoilState } from 'recoil';
 import { AuthLayout, Layout } from './components/layout';
+import GuardedRoute from './components/providers/GuardedRoute';
 import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
@@ -31,7 +32,10 @@ const INNER_APP = () => {
 
   React.useEffect(() => {
     const checkIsAuth = async () => {
-      setIsFirstRun(true);
+      if (firstRun) {
+        history.push('/setup');
+        return;
+      }
       try {
         const result = await authService.isAuthed(true);
         setAuthSettings({ ...authSettings, isLoggedIn: result });
@@ -39,15 +43,9 @@ const INNER_APP = () => {
         history.push('/login');
       }
     };
-    if (!firstRun) {
-      checkIsAuth();
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
   const _getLayout = (children: React.ReactNode) => {
-    if (firstRun) {
-      return <SetupPage />;
-    }
     return authSettings.isLoggedIn ? (
       <AuthLayout>{children}</AuthLayout>
     ) : (
@@ -59,15 +57,35 @@ const INNER_APP = () => {
       <AudioProvider>
         {_getLayout(
           <Switch>
-            <Route path="/login">
-              <LoginPage />
+            <Route exact path="/">
+              {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
             </Route>
-            <Route path="/register">
-              <RegisterPage />
-            </Route>
-            <Route path="/debug">
-              <DebugPage />
-            </Route>
+            <Route path="/setup/:stage" component={SetupPage} />
+            <GuardedRoute
+              predicate={!firstRun}
+              redirectTo={'/setup/first'}
+              component={LoginPage}
+              path="/login"
+            />
+            <GuardedRoute
+              predicate={!firstRun}
+              redirectTo={'/register'}
+              component={RegisterPage}
+              path="/register"
+            />
+            <GuardedRoute
+              predicate={!firstRun && authSettings.isLoggedIn}
+              redirectTo={firstRun ? '/setup/first' : '/login'}
+              component={DebugPage}
+              path="/debug"
+            />
+            <GuardedRoute
+              predicate={!firstRun && authSettings.isLoggedIn}
+              redirectTo={firstRun ? '/setup/first' : '/login'}
+              component={<AlbumPage />}
+              path="/artist/:artistName/:albumName"
+            />
+
             <Route
               path="/artist/:artistName/:albumName"
               render={(props) => (
@@ -81,9 +99,6 @@ const INNER_APP = () => {
               path="/artist/:artistName"
               render={(props) => <ArtistPage artistName={props.match.params.artistName} />}
             />
-            <Route exact path="/">
-              {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
-            </Route>
             <Route path="/404" component={NotFoundPage} />
             <Redirect to="/404" />
           </Switch>
