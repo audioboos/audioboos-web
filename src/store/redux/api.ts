@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Artist, Settings } from '../../models';
+import { ProfileDto } from '../../models/Track';
 
 const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -16,9 +17,12 @@ const api = createApi({
       settings: build.query<Settings, void>({
         query: () => `/settings`,
       }),
+      auth: build.query<ProfileDto, void>({
+        query: () => `/auth/profile`,
+      }),
     };
   },
 });
 
-export const { useSettingsQuery, useArtistsQuery, useArtistQuery } = api;
+export const { useSettingsQuery, useArtistsQuery, useArtistQuery, useAuthQuery } = api;
 export default api;

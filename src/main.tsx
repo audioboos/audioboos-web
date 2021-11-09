@@ -1,13 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { HelmetProvider } from "react-helmet-async";
-import { Provider } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import { RecoilRoot } from "recoil";
-import App from "./App";
-import "./index.css";
-// import reportWebVitals from "./reportWebVitals";
-import store from "./store/redux/store";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { RecoilRoot } from 'recoil';
+import App from './App';
+import './index.css';
+import store from './store/redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,7 +19,7 @@ ReactDOM.render(
       </RecoilRoot>
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // reportWebVitals(console.log);

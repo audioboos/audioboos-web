@@ -1,7 +1,7 @@
 import ApiService from "./apiService";
 
 class AuthService extends ApiService {
-    isAuthed = async (redirect: boolean = false): Promise<boolean> => {
+    isAuthenticated = async (redirect: boolean = false): Promise<boolean> => {
         const client = await this.getInstance();
 
         try {

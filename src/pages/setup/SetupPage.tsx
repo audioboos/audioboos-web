@@ -10,11 +10,18 @@ import SetupAddLibrary from './SetupAddLibrary';
 import SetupSiteInfo from './SetupSiteInfo';
 
 interface ISetupRouteParams {
-  stage: string;
+  forwardedStage: string;
 }
 const SetupPage = () => {
-  let { stage } = useParams<ISetupRouteParams>();
+  let { forwardedStage } = useParams<ISetupRouteParams>();
+  const [currentStage, setCurrentStage] = React.useState(forwardedStage);
   const history = useHistory();
+  React.useEffect(() => {
+    if (!forwardedStage) {
+      setCurrentStage('first');
+      history.replace('/setup/first');
+    }
+  }, [forwardedStage]);
   const {
     register,
     handleSubmit,
@@ -31,21 +38,21 @@ const SetupPage = () => {
 
   let setupInfo: InitialSettings = {};
   const _handlePrevious = async (data: any) => {
-    if (stage === 'library') {
-      stage = 'first';
-      await __processStage(data);
+    if (currentStage === 'library') {
+      setCurrentStage('first');
+      await __processStage(data, 'first');
     }
   };
   const _handleNext = async (data: any) => {
-    if (stage === 'first') {
-      stage = 'library';
-      await __processStage(data);
-    } else if (stage === 'library') {
-      stage = 'post';
-      await __processStage(data);
+    if (currentStage === 'first') {
+      setCurrentStage('library');
+      await __processStage(data, 'library');
+    } else if (currentStage === 'library') {
+      setCurrentStage('post');
+      await __processStage(data, 'post');
     }
   };
-  const __processStage = async (data: any) => {
+  const __processStage = async (data: any, stage: string) => {
     setupInfo = { ...setupInfo, ...data };
     if (stage === 'post') {
       const result = await settingsService.postSettings(setupInfo);
@@ -53,7 +60,7 @@ const SetupPage = () => {
         history.push('/');
       }
     } else {
-      history.push(`/setup/${stage}`);
+      history.replace(`/setup/${stage}`);
     }
   };
   return (
@@ -67,10 +74,10 @@ const SetupPage = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-3xl">
         <div className="px-6 py-8 bg-white rounded-lg shadow sm:px-10">
-          {stage === 'first' && <SetupSiteInfo register={register} />}
-          {stage === 'library' && <SetupAddLibrary register={register} />}
+          {currentStage === 'first' && <SetupSiteInfo register={register} />}
+          {currentStage === 'library' && <SetupAddLibrary register={register} />}
           <div className="flex justify-end mt-4 space-x-4">
-            {stage !== 'first' && (
+            {currentStage !== 'first' && (
               <IconButton
                 text="Previous"
                 iconRight={false}
