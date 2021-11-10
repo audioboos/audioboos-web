@@ -5,7 +5,7 @@ import LoginPage from './pages/auth/LoginPage';
 import HomePage from './pages/HomePage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
-import { useSettingsQuery } from './store/redux/api';
+import { useAuthQuery, useSettingsQuery } from './store/redux/api';
 
 const App = () => {
   return (
@@ -28,11 +28,13 @@ const App = () => {
 // TODO: Get isAuth redirecting working
 enum State {
   Loading,
+  Authing,
   Loaded,
   Error,
 }
 const AppWrapper = () => {
   const settings = useSettingsQuery();
+  const auth = useAuthQuery();
   const [state, setState] = React.useState<State>(State.Loading);
 
   React.useEffect(() => {
@@ -45,7 +47,7 @@ const AppWrapper = () => {
       setState(State.Error);
     }
   }, [settings]);
-
+  
   const _renderLayout = (): React.ReactNode => {
     if (state === State.Error) {
       return <h1>ERROR ERROR ERROR</h1>;

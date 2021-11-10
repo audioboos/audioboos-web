@@ -6,6 +6,7 @@ import logo from '../../assets/images/logo.svg';
 import { IconButton } from '../../components/widgets';
 import { InitialSettings } from '../../models';
 import settingsService from '../../services/api/settingsService';
+import { useSettingsQuery } from '../../store/redux/api';
 import SetupAddLibrary from './SetupAddLibrary';
 import SetupSiteInfo from './SetupSiteInfo';
 
@@ -13,6 +14,7 @@ interface ISetupRouteParams {
   forwardedStage: string;
 }
 const SetupPage = () => {
+  const { data, refetch } = useSettingsQuery();
   let { forwardedStage } = useParams<ISetupRouteParams>();
   const [currentStage, setCurrentStage] = React.useState(forwardedStage);
   const history = useHistory();
@@ -57,6 +59,7 @@ const SetupPage = () => {
     if (stage === 'post') {
       const result = await settingsService.postSettings(setupInfo);
       if (result?.siteName) {
+        refetch();
         history.push('/');
       }
     } else {
