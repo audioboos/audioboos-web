@@ -74,8 +74,10 @@ const SetupPage = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-3xl">
         <div className="px-6 py-8 bg-white rounded-lg shadow sm:px-10">
-          {currentStage === 'first' && <SetupSiteInfo register={register} />}
-          {currentStage === 'library' && <SetupAddLibrary register={register} />}
+          <form>
+            {currentStage === 'first' && <SetupSiteInfo register={register} />}
+            {currentStage === 'library' && <SetupAddLibrary register={register} />}
+          </form>
           <div className="flex justify-end mt-4 space-x-4">
             {currentStage !== 'first' && (
               <IconButton
