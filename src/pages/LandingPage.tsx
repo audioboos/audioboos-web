@@ -1,15 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Logo } from "../components/icons";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Logo } from '../components/icons';
 
 const HomePage = () => {
+  const [isFirstRun, setIsFirstRun] = React.useState(true);
   return (
     <React.Fragment>
       <main className="relative h-screen overflow-hidden font-mono bg-white dark:bg-gray-800">
         <div className="absolute hidden md:block -bottom-32 -left-32 w-96 h-96">
           <div className="absolute z-20 text-xl text-extrabold right-12 text-start top-1/4">
             <span className="text-7xl">🎨</span>
-            <p>Got a project ?</p>
+            <p>Need some help ?</p>
             <a href="/" className="underline">
               Let's talk
             </a>
@@ -88,9 +89,7 @@ const HomePage = () => {
           <div className="container relative flex flex-col items-center justify-between px-6 py-4 mx-auto">
             <div className="flex flex-col">
               <Logo />
-              <p className="my-6 text-3xl text-center dark:text-white">
-                Audio Boos
-              </p>
+              <p className="my-6 text-3xl text-center dark:text-white">Audio Boos</p>
               <h2 className="max-w-3xl py-2 mx-auto text-5xl font-bold text-center text-gray-800 md:text-6xl dark:text-white">
                 Robot Powered Audio
               </h2>

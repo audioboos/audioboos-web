@@ -1,89 +1,113 @@
 import React from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import { useRecoilState } from 'recoil';
-import { AuthLayout, Layout } from './components/layout';
-import AlbumPage from './pages/AlbumPage';
-import ArtistPage from './pages/ArtistPage';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Layout } from './components/layout';
+import GuardedRoute from './components/providers/GuardedRoute';
 import LoginPage from './pages/auth/LoginPage';
-import RegisterPage from './pages/auth/RegisterPage';
 import Dashboard from './pages/Dashboard';
-import DebugPage from './pages/DebugPage';
-import HomePage from './pages/HomePage';
-import NotFoundPage from './pages/NotFoundPage';
-import authService from './services/api/authService';
+import LandingPage from './pages/LandingPage';
+import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
-import { auth } from './store';
+import { useSettingsQuery } from './store/redux/api';
 
 const App = () => {
   return (
-    <Router>
-      <INNER_APP />
-    </Router>
+    <AudioProvider>
+      <Layout>
+        <Switch>
+          <GuardedRoute component={Dashboard} fallback={LandingPage} exact path="/" />
+          <Route path="/setup/:stage" component={SetupPage} />
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+        </Switch>
+      </Layout>
+    </AudioProvider>
   );
 };
-
-const INNER_APP = () => {
-  const history = useHistory();
-  const [authSettings, setAuthSettings] = useRecoilState(auth);
+// TODO: Setup redirecting is working
+// TODO: Get isAuth redirecting working
+enum State {
+  Loading,
+  Authing,
+  Loaded,
+  Error,
+}
+const AppWrapper = () => {
+  const settings = useSettingsQuery();
+  const [state, setState] = React.useState<State>(State.Loading);
 
   React.useEffect(() => {
-    const checkIsAuth = async () => {
-      try {
-        const result = await authService.isAuthed(true);
-        setAuthSettings({ ...authSettings, isLoggedIn: result });
-      } catch (err) {
-        history.push('/login');
-      }
-    };
+    if (settings.isLoading || settings.isFetching) {
+      setState(State.Loading);
+    } else if (settings.isSuccess && settings.data) {
+      setState(State.Loaded);
+    } else if (settings.isError) {
+      setState(State.Error);
+    }
+  }, [settings]);
 
-    checkIsAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history]);
-  const _getLayout = (children: React.ReactNode) => {
-    return authSettings.isLoggedIn ? (
-      <AuthLayout>{children}</AuthLayout>
-    ) : (
-      <Layout>{children}</Layout>
-    );
+  const _renderLayout = (): React.ReactNode => {
+    if (state === State.Error) {
+      return <h1>ERROR ERROR ERROR</h1>;
+    } else if (state === State.Loading) {
+      return <div>Loading...</div>;
+    } else if (settings?.data?.siteName) {
+      return <App />;
+    } else {
+      return <SetupPage />;
+    }
   };
-  return (
-    <React.Fragment>
-      <AudioProvider>
-        {_getLayout(
-          <Switch>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <Route path="/register">
-              <RegisterPage />
-            </Route>
-            <Route path="/debug">
-              <DebugPage />
-            </Route>
-            <Route
-              path="/artist/:artistName/:albumName"
-              render={(props) => (
-                <AlbumPage
-                  artistName={props.match.params.artistName}
-                  albumName={props.match.params.albumName}
-                />
-              )}
-            />
-            <Route
-              path="/artist/:artistName"
-              render={(props) => <ArtistPage artistName={props.match.params.artistName} />}
-            />
-            <Route exact path="/">
-              {authSettings.isLoggedIn ? <Dashboard /> : <HomePage />}
-            </Route>
-            <Route path="/404" component={NotFoundPage} />
-            <Redirect to="/404" />
-          </Switch>
-        )}
-      </AudioProvider>
-    </React.Fragment>
-  );
+  return <Router>{_renderLayout()}</Router>;
 };
 
-export default App;
+//   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+//   const authQuery = useAuthQuery();
+//   const _getLayout = (children: React.ReactNode) => {
+//     return isAuthenticated ? <AuthLayout>{children}</AuthLayout> : <Layout>{children}</Layout>;
+//   };
+
+//   return (
+//     <AudioProvider>
+//       <Router>
+//         {_getLayout(
+//           <Switch>
+//             <Route exact path="/">
+//               {isAuthenticated ? <Dashboard /> : <LandingPage />}
+//             </Route>
+//             <Route path="/setup/:stage" component={SetupPage} />
+//             <Route exact path="/login">
+//               <LoginPage />
+//             </Route>
+//             {/* <GuardedRoute
+//               component={<LoginPage />}
+//               isAuthenticated={isAuthenticated}
+//               isLoading={isLoading}
+//               path="/login"
+//             ></GuardedRoute> */}
+//             {/* <GuardedRoute redirectTo={'/register'} component={RegisterPage} path="/register" />
+//             <GuardedRoute component={DebugPage} path="/debug" />
+//             <GuardedRoute component={<AlbumPage />} path="/artist/:artistName/:albumName" />
+
+//             <Route
+//               path="/artist/:artistName/:albumName"
+//               render={(props) => (
+//                 <AlbumPage
+//                   artistName={props.match.params.artistName}
+//                   albumName={props.match.params.albumName}
+//                 />
+//               )}
+//             />
+//             <Route
+//               path="/artist/:artistName"
+//               render={(props) => <ArtistPage artistName={props.match.params.artistName} />}
+//             />
+//             <Route path="/404" component={NotFoundPage} />
+//             <Redirect to="/404" /> */}
+//           </Switch>
+//         )}
+//       </Router>
+//     </AudioProvider>
+//   );
+// };
+
+export default AppWrapper;
