@@ -1,14 +1,21 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { useAuthQuery } from '../../store/redux/api';
+import { AuthLayout } from '../layout';
 interface IGuardedRouteProps {}
-const GuardedRoute = ({ component: Component, isAuthenticated, isLoading, ...rest }: any) => {
-  if (isLoading) {
+const GuardedRoute = ({ component: Component, fallback: Fallback, ...rest }: any) => {
+  const auth = useAuthQuery();
+
+  if (auth.isLoading) {
     return <div>Loading...</div>;
   }
-  if (!isAuthenticated) {
-    return <Redirect to="/login" />;
+  if (auth.isSuccess) {
+    return (
+      <AuthLayout>
+        <Component {...rest} />
+      </AuthLayout>
+    );
   }
-  return <Component {...rest} />;
+  return <Fallback {...rest} />;
 };
 
 export default GuardedRoute;

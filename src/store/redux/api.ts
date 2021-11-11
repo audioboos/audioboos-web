@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Artist, Settings } from '../../models';
-import { ProfileDto } from '../../models/Track';
+import { Profile } from "../../models/Profile";
 
 const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL as string,
+    prepareHeaders(headers) {
+      return headers;
+    },
+    credentials: 'include',
   }),
   endpoints(build) {
     return {
@@ -17,7 +21,7 @@ const api = createApi({
       settings: build.query<Settings, void>({
         query: () => `/settings`,
       }),
-      auth: build.query<ProfileDto, void>({
+      auth: build.query<Profile, void>({
         query: () => `/auth/profile`,
       }),
     };

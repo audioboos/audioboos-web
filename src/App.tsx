@@ -1,20 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/layout';
+import GuardedRoute from './components/providers/GuardedRoute';
 import LoginPage from './pages/auth/LoginPage';
-import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
+import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
-import { useAuthQuery, useSettingsQuery } from './store/redux/api';
+import { useSettingsQuery } from './store/redux/api';
 
 const App = () => {
   return (
     <AudioProvider>
       <Layout>
         <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
+          <GuardedRoute component={Dashboard} fallback={LandingPage} exact path="/" />
           <Route path="/setup/:stage" component={SetupPage} />
           <Route path="/login">
             <LoginPage />
@@ -34,11 +34,9 @@ enum State {
 }
 const AppWrapper = () => {
   const settings = useSettingsQuery();
-  const auth = useAuthQuery();
   const [state, setState] = React.useState<State>(State.Loading);
 
   React.useEffect(() => {
-    console.log('App', 'Settings', settings);
     if (settings.isLoading || settings.isFetching) {
       setState(State.Loading);
     } else if (settings.isSuccess && settings.data) {
@@ -47,7 +45,7 @@ const AppWrapper = () => {
       setState(State.Error);
     }
   }, [settings]);
-  
+
   const _renderLayout = (): React.ReactNode => {
     if (state === State.Error) {
       return <h1>ERROR ERROR ERROR</h1>;
@@ -74,7 +72,7 @@ const AppWrapper = () => {
 //         {_getLayout(
 //           <Switch>
 //             <Route exact path="/">
-//               {isAuthenticated ? <Dashboard /> : <HomePage />}
+//               {isAuthenticated ? <Dashboard /> : <LandingPage />}
 //             </Route>
 //             <Route path="/setup/:stage" component={SetupPage} />
 //             <Route exact path="/login">
