@@ -1,14 +1,17 @@
 import React from 'react';
 import { MdManageSearch, MdModeEditOutline } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
 import { AlbumsList, ArtistCard, ArtistStats, MiniActionButton } from '../components/widgets';
 import { Artist } from '../models';
 import { useArtistQuery } from '../store/redux/api';
 
-interface IArtistPageParams {
+interface IArtistPageRouteProps {
   artistName: string;
 }
 
-const ArtistPage = ({ artistName }: IArtistPageParams) => {
+const ArtistPage = () => {
+  const { artistName } = useParams<IArtistPageRouteProps>();
+  const params = useParams();
   const queryResult = useArtistQuery(artistName);
 
   const _renderLoading = () => <div>Loading.....</div>;

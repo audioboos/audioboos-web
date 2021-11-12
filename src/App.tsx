@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/layout';
 import GuardedRoute from './components/providers/GuardedRoute';
+import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
@@ -14,12 +15,13 @@ const App = () => {
     <AudioProvider>
       <Layout>
         <Switch>
-          <GuardedRoute component={Dashboard} fallback={LandingPage} exact path="/" />
+          <GuardedRoute exact path="/" component={Dashboard} fallback={LandingPage} />
+          <GuardedRoute path="/artist/:artistName" component={ArtistPage} redirect={'/login'} />
           <Route path="/setup/:stage" component={SetupPage} />
           <Route path="/login">
             <LoginPage />
           </Route>
-        </Switch>
+        </Switch>x
       </Layout>
     </AudioProvider>
   );

@@ -1,24 +1,20 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import * as Yup from 'yup';
 import { AlertWidget } from '../../components/widgets';
 import { AlertWidgetType } from '../../components/widgets/AlertWidget';
 import authService from '../../services/api/authService';
-import { auth } from '../../store';
 import { useAuthQuery } from '../../store/redux/api';
 
 const LoginPage = () => {
   const history = useHistory();
   const { data, refetch } = useAuthQuery();
 
-  const [, setAuthSettings] = useRecoilState(auth);
   const [error, setError] = React.useState<string>();
   const doLogin = async (email: string, password: string) => {
     const result = await authService.login(email, password);
     if (result) {
-      setAuthSettings({ isLoggedIn: true });
       refetch();
       history.push('/');
     } else {
