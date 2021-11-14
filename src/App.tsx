@@ -5,6 +5,7 @@ import PrivateRoute from './components/providers/PrivateRoute';
 import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
 import Dashboard from './pages/Dashboard';
+import Error500Page from './pages/error/500Page';
 import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
@@ -49,7 +50,7 @@ const AppWrapper = () => {
 
   const _renderLayout = (): React.ReactNode => {
     if (state === State.Error) {
-      return <h1>ERROR ERROR ERROR</h1>;
+      return <Error500Page />;
     } else if (state === State.Loading) {
       return <div>Loading...</div>;
     } else if (settings?.data?.siteName) {
