@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/layout';
-import GuardedRoute from './components/providers/GuardedRoute';
+import PrivateRoute from './components/providers/PrivateRoute';
 import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
 import Dashboard from './pages/Dashboard';
@@ -15,19 +15,17 @@ const App = () => {
     <AudioProvider>
       <Layout>
         <Switch>
-          <GuardedRoute exact path="/" component={Dashboard} fallback={LandingPage} />
-          <GuardedRoute path="/artist/:artistName" component={ArtistPage} redirect={'/login'} />
+          <PrivateRoute exact path="/" component={Dashboard} fallback={LandingPage} />
+          <PrivateRoute path="/artist/:artistName" component={ArtistPage} redirect={'/login'} />
           <Route path="/setup/:stage" component={SetupPage} />
           <Route path="/login">
             <LoginPage />
           </Route>
-        </Switch>x
+        </Switch>
       </Layout>
     </AudioProvider>
   );
 };
-// TODO: Setup redirecting is working
-// TODO: Get isAuth redirecting working
 enum State {
   Loading,
   Authing,
@@ -39,6 +37,7 @@ const AppWrapper = () => {
   const [state, setState] = React.useState<State>(State.Loading);
 
   React.useEffect(() => {
+    console.log('App', 'AppWrapper', settings);
     if (settings.isLoading || settings.isFetching) {
       setState(State.Loading);
     } else if (settings.isSuccess && settings.data) {
@@ -80,15 +79,15 @@ const AppWrapper = () => {
 //             <Route exact path="/login">
 //               <LoginPage />
 //             </Route>
-//             {/* <GuardedRoute
+//             {/* <PrivateRoute
 //               component={<LoginPage />}
 //               isAuthenticated={isAuthenticated}
 //               isLoading={isLoading}
 //               path="/login"
-//             ></GuardedRoute> */}
-//             {/* <GuardedRoute redirectTo={'/register'} component={RegisterPage} path="/register" />
-//             <GuardedRoute component={DebugPage} path="/debug" />
-//             <GuardedRoute component={<AlbumPage />} path="/artist/:artistName/:albumName" />
+//             ></PrivateRoute> */}
+//             {/* <PrivateRoute redirectTo={'/register'} component={RegisterPage} path="/register" />
+//             <PrivateRoute component={DebugPage} path="/debug" />
+//             <PrivateRoute component={<AlbumPage />} path="/artist/:artistName/:albumName" />
 
 //             <Route
 //               path="/artist/:artistName/:albumName"
