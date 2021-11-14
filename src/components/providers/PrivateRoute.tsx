@@ -15,13 +15,15 @@ const PrivateRoute = ({ component: Component, fallback: Fallback, ...rest }: any
           </AuthLayout>
         ) : Fallback ? (
           <Fallback {...props} />
-        ) : (
+        ) : auth.isError ? (
           <Redirect
             to={{
               pathname: '/login',
               state: { from: props.location },
             }}
           />
+        ) : (
+          <div>Loading.....</div>
         )
       }
     />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MdModeEdit, MdPlayArrow, MdPlaylistPlay } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { AlbumCard } from '../components/widgets';
 import EditAlbumDialog from '../components/widgets/audio/EditAlbumDialog';
 import TrackList from '../components/widgets/audio/TrackList';
@@ -11,7 +12,8 @@ interface IAlbumPageParams {
   artistName: string;
   albumName: string;
 }
-const AlbumPage = ({ artistName, albumName }: IAlbumPageParams) => {
+const AlbumPage = () => {
+  const { artistName, albumName } = useParams<IAlbumPageParams>();
   const [editing, setEditing] = React.useState(false);
   const [artist, setArtist] = React.useState<Artist>();
   const [album, setAlbum] = React.useState<Album>();

@@ -2,9 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/layout';
 import PrivateRoute from './components/providers/PrivateRoute';
+import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
 import Dashboard from './pages/Dashboard';
+import DebugPage from './pages/DebugPage';
 import Error500Page from './pages/error/500Page';
 import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
@@ -17,7 +19,20 @@ const App = () => {
       <Layout>
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} fallback={LandingPage} />
-          <PrivateRoute path="/artist/:artistName" component={ArtistPage} redirect={'/login'} />
+          <PrivateRoute exact path="/debug" component={DebugPage} />
+          <PrivateRoute
+            exact
+            path="/artist/:artistName"
+            component={ArtistPage}
+            redirect={'/login'}
+          />
+          <PrivateRoute
+            exact
+            path="/artist/:artistName/:albumName"
+            component={AlbumPage}
+            redirect={'/login'}
+          />
+
           <Route path="/setup/:stage" component={SetupPage} />
           <Route path="/login">
             <LoginPage />

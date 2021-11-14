@@ -11,7 +11,6 @@ interface IArtistPageRouteProps {
 
 const ArtistPage = () => {
   const { artistName } = useParams<IArtistPageRouteProps>();
-  const params = useParams();
   const queryResult = useArtistQuery(artistName);
 
   const _renderLoading = () => <div>Loading.....</div>;
