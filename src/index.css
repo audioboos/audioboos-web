@@ -2,34 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+  }
+  [type='checkbox'],
+  [type='radio'] {
+    @apply text-indigo-600 border-gray-300 rounded focus:ring-indigo-500;
+  }
+}
+
 body {
-    scrollbar-gutter: stable both-edges;
-    overflow-y: hidden;
+  scrollbar-gutter: stable both-edges;
+  overflow-y: hidden;
+  font: 'Sarabun', sans-serif;
 }
 .audioboos-scroll {
-    display: inline-block;
-    width: 300px;
-    overflow: hidden;
+  display: inline-block;
+  width: 300px;
+  overflow: hidden;
 }
 .audioboos-scroll:hover {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #d6dee1;
-    border-radius: 0px;
-    border: 3px solid transparent;
-    background-clip: content-box;
+  background-color: #d6dee1;
+  border-radius: 0px;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #a8bbbf;
+  background-color: #a8bbbf;
 }

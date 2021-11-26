@@ -1,14 +1,18 @@
 module.exports = {
-    purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-    darkMode: false, // or 'media' or 'class'
-    theme: {
-        maxHeight: {
-            120: "54rem",
-        },
-        extend: {},
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    maxHeight: {
+      120: '54rem',
     },
-    variants: {
-        extend: { display: ["group-hover"], overflow: ["hover", "focus"] },
+    extend: {
+      fontFamily: {
+        Sarabun: ['"Sarabun"', 'sans-serif'],
+      },
     },
-    plugins: [],
+  },
+  variants: {
+    extend: { display: ['group-hover'], overflow: ['hover', 'focus'] },
+  },
+  plugins: [require('@tailwindcss/forms')],
 };

@@ -8,9 +8,9 @@ import {
 } from "react-icons/md";
 import { usePopper } from "react-popper";
 import { useDispatch, useSelector } from "react-redux";
+import { MiniActionButton } from "..";
 import { clearQueue, play, removeFromQueue } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
-import MiniActionButton from "../MiniActionButton";
 
 const QueueControl = () => {
     let [referenceElement, setReferenceElement] = React.useState<any>();

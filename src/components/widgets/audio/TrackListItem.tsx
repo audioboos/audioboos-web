@@ -7,6 +7,7 @@ import {
     MdPostAdd
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { MiniActionButton } from "..";
 import { Album, Artist, Track } from "../../../models";
 import {
     addToQueue,
@@ -15,7 +16,6 @@ import {
     togglePlayState
 } from "../../../store/redux/audio";
 import { RootState } from "../../../store/redux/store";
-import MiniActionButton from "../MiniActionButton";
 
 interface ITrackListItemProps {
     artist: Artist;

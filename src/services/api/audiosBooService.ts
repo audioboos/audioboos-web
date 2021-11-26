@@ -36,7 +36,7 @@ class AudioBoosService extends ApiService {
         const client = await this.getInstance();
 
         try {
-            const response = await client.get(`albums/${artistName}`);
+            const response = await client.get(`album/${artistName}`);
             if (response && response.status === 200) {
                 return response.data as Album[];
             }
@@ -53,7 +53,7 @@ class AudioBoosService extends ApiService {
 
         try {
             const response = await client.get(
-                `albums/${artistName}/${albumName}`
+                `album/${artistName}/${albumName}`
             );
             if (response && response.status === 200) {
                 return response.data as Album;
