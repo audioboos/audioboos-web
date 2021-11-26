@@ -29,6 +29,7 @@
 body {
   scrollbar-gutter: stable both-edges;
   overflow-y: hidden;
+  font: 'Sarabun', sans-serif;
 }
 .audioboos-scroll {
   display: inline-block;

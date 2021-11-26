@@ -7,7 +7,7 @@ import fileSystemService from '../../services/api/fileSystemService';
 interface IFileInfo {
   key: string;
 }
-const SetupAddLibrary = ({ register }: IHookFormProps) => {
+const SetupAddLibrary = ({ register, setValue }: IHookFormProps) => {
   const defaultPath = '/';
   const [files, setFiles] = React.useState<IFileInfo[]>();
   const [currentPath, setCurrentPath] = React.useState(defaultPath);
@@ -29,6 +29,7 @@ const SetupAddLibrary = ({ register }: IHookFormProps) => {
         })
       );
     })();
+    setValue('libraryPath', currentPath);
   }, [currentPath]);
 
   return (
