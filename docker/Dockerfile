@@ -3,8 +3,8 @@ FROM node:14.15.4-buster as builder
 WORKDIR /app
 COPY package.json package.json
 COPY yarn.lock yarn.lock
-# RUN yarn install --frozen-lockfile
-RUN npm install
+COPY .env.production .env
+RUN yarn install --frozen-lockfile
 COPY . .
 
 ENV NODE_ENV=production

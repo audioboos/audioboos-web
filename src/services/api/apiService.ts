@@ -25,7 +25,6 @@ class ApiService {
         return ApiService._client;
     };
     private __requestClient = async () => {
-        import.meta.env.NODE_TLS_REJECT_UNAuthorisED = "0";
         const instance = axios.create({
           baseURL: import.meta.env.VITE_API_URL as string,
           maxRedirects: 0,

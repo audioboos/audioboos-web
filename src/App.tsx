@@ -51,9 +51,11 @@ enum State {
 const AppWrapper = () => {
   const settings = useSettingsQuery();
   const [state, setState] = React.useState<State>(State.Loading);
+  React.useEffect(() => {
+    console.log('AppWrapper', 'VITE URL', import.meta.env.VITE_API_URL);
+  }, []);
 
   React.useEffect(() => {
-    console.log('App', 'AppWrapper', settings);
     if (settings.isLoading || settings.isFetching) {
       setState(State.Loading);
     } else if (settings.isSuccess && settings.data) {
