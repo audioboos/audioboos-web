@@ -7,6 +7,8 @@ import AppWrapper from './App';
 import './index.css';
 import store from './store/redux/store';
 
+console.log('main.tsx', 'VITE URL', import.meta.env.VITE_API_URL);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
