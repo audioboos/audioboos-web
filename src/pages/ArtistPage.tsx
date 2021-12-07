@@ -1,8 +1,9 @@
 import React from 'react';
-import { MdManageSearch, MdModeEditOutline } from 'react-icons/md';
+import { MdManageSearch, MdModeEditOutline, MdRefresh } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import { AlbumsList, ArtistCard, ArtistStats, MiniActionButton } from '../components/widgets';
 import { Artist } from '../models';
+import jobService from '../services/api/jobService';
 import { useArtistQuery } from '../store/redux/api';
 
 interface IArtistPageRouteProps {
@@ -24,6 +25,12 @@ const ArtistPage = () => {
             <ArtistStats artist={artist} />
           </div>
           <div className="inline-flex space-x-2 text-gray-500">
+            <MiniActionButton
+              onClick={async () => await jobService.scanArtist(artistName)}
+              tooltip="Refresh artist info"
+            >
+              <MdRefresh />
+            </MiniActionButton>
             <MiniActionButton onClick={() => null} tooltip="Edit artist info">
               <MdModeEditOutline />
             </MiniActionButton>
