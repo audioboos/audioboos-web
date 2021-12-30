@@ -4,10 +4,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   server: {
+    host: '0.0.0.0',
     https: {
-      key: fs.readFileSync('../certs/dev.audioboos.com.key'),
-      cert: fs.readFileSync('../certs/dev.audioboos.com.crt'),
+      key: fs.readFileSync('../certs/dev.audioboos.info.key'),
+      cert: fs.readFileSync('../certs/dev.audioboos.info.crt'),
     },
   },
-  plugins: [reactRefresh()],
 });
