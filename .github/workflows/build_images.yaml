@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     env:
-      VITE_API_URL: 'https://api.audioboos.fergl.ie'
+      VITE_API_URL: 'https://api.audioboos.info'
     steps:
       - name: checkout
         uses: actions/checkout@v2
