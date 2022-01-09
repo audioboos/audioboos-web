@@ -6,8 +6,8 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     https: {
-      key: fs.readFileSync('../certs/dev.audioboos.info.key'),
-      cert: fs.readFileSync('../certs/dev.audioboos.info.crt'),
+      key: fs.readFileSync('../certs/zerossl/private.key'),
+      cert: fs.readFileSync('../certs/zerossl/certificate.crt'),
     },
   },
 });
