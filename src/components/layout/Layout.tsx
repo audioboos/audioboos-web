@@ -1,8 +1,9 @@
-import React from "react";
+import React from 'react';
 export interface ILayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 const Layout = ({ children }: ILayoutProps) => {
-    return <React.Fragment>{children}</React.Fragment>;
+  console.log('Layout', 'Im a layout');
+  return <React.Fragment>{children}</React.Fragment>;
 };
 export default Layout;

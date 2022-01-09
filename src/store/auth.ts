@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Profile } from '../models/Profile';
-import ApiService from '../services/api/apiService';
 import authService from '../services/api/authService';
+import { RootState } from './redux/store';
 export enum LoginStatus {
   checking,
   loggedIn,
@@ -15,25 +15,22 @@ const initialState: IAuthState = {
   user: null,
   loginStatus: LoginStatus.notLoggedIn,
 };
-export const login = createAsyncThunk(
-  'auth/login',
-  async ({ email, password }: { email: string; password: string }) => {
-    const result = await authService.login(email, password);
-    if (result) {
-      const profile = await authService.getProfile();
-      return profile;
-    }
-    return null;
-  }
-);
+export const login = createAsyncThunk('auth/login', async (args) => {
+  const profile = await authService.getProfile();
+  return profile;
+});
+export const logout = createAsyncThunk('auth/logout', async (args) => {
+  await authService.logout();
+  return true;
+});
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     reset: () => initialState,
-    setCredentials: (state: IAuthState, action: PayloadAction<IAuthState>) => {
-      state.user = action.payload.user;
+    setCredentials: (state: IAuthState, action: PayloadAction<Profile>) => {
+      state.user = action.payload;
       state.loginStatus = LoginStatus.loggedIn;
     },
   },
@@ -53,8 +50,17 @@ const authSlice = createSlice({
       localStorage.removeItem('storageHash');
       state = initialState;
     },
+    [logout.fulfilled.toString()]: (state, { payload }) => {
+      localStorage.removeItem('storageHash');
+      localStorage.clear();
+      state = initialState;
+    },
   },
 });
 export const { setCredentials } = authSlice.actions;
 export const authReducer = authSlice.reducer;
+export const selectCurrentUser = (state: RootState) => state.authReducer.user;
+export const selectIsLoggedIn = (state: RootState) =>
+  state.authReducer.loginStatus === LoginStatus.loggedIn;
+
 export default authSlice;

@@ -1,6 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Layout } from './components/layout';
+import { AuthLayout, Layout } from './components/layout';
 import PrivateRoute from './components/providers/PrivateRoute';
 import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';
@@ -11,35 +12,32 @@ import Error500Page from './pages/error/500Page';
 import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
+import UserMiddleware from './services/user-resolver.middleware';
+import { selectIsLoggedIn } from './store/auth';
 import { useSettingsQuery } from './store/redux/api';
 
 const App = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
-    <AudioProvider>
-      <Layout>
-        <Switch>
-          <PrivateRoute exact path="/" component={Dashboard} fallback={LandingPage} />
-          <PrivateRoute exact path="/debug" component={DebugPage} />
-          <PrivateRoute
-            exact
-            path="/artist/:artistName"
-            component={ArtistPage}
-            redirect={'/login'}
-          />
-          <PrivateRoute
-            exact
-            path="/artist/:artistName/:albumName"
-            component={AlbumPage}
-            redirect={'/login'}
-          />
-
-          <Route path="/setup/:stage" component={SetupPage} />
-          <Route path="/login">
+    <UserMiddleware>
+      <AudioProvider>
+        {isLoggedIn ? (
+          <AuthLayout>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/debug" component={DebugPage} />
+              <Route exact path="/artist/:artistName" component={ArtistPage} />
+              <Route exact path="/artist/:artistName/:albumName" component={AlbumPage} />
+              <Route path="/setup/:stage" component={SetupPage} />
+            </Switch>
+          </AuthLayout>
+        ) : (
+          <Layout>
             <LoginPage />
-          </Route>
-        </Switch>
-      </Layout>
-    </AudioProvider>
+          </Layout>
+        )}
+      </AudioProvider>
+    </UserMiddleware>
   );
 };
 enum State {
