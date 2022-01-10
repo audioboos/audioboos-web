@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import FullscreenProgress from '../pages/FullScreenProgress';
-import { setCredentials } from '../store/auth';
+import SplashScreen from '../pages/splash/SplashScreen';
+import { setAuthChecked, setCredentials } from '../store/auth';
 import api from '../store/redux/api';
-import { RootState } from '../store/redux/store';
 import { useAuthUser } from './use-user.hook';
 
 const UserMiddleware: FC = ({ children }) => {
@@ -14,11 +13,13 @@ const UserMiddleware: FC = ({ children }) => {
   api.endpoints.auth.useQuery();
 
   if (!user && storageHash) {
-    return <FullscreenProgress />;
+    return <SplashScreen />;
   }
   console.log('user-resolver.middleware', 'user', user);
   if (user) {
     dispatch(setCredentials(user));
+  } else {
+    dispatch(setAuthChecked(true));
   }
   return <>{children}</>;
 };

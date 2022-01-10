@@ -8,19 +8,21 @@ import LoginPage from './pages/auth/LoginPage';
 import Dashboard from './pages/Dashboard';
 import DebugPage from './pages/DebugPage';
 import Error500Page from './pages/error/500Page';
+import SplashScreen from './pages/splash/SplashScreen';
 import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
 import UserMiddleware from './services/user-resolver.middleware';
-import { selectIsLoggedIn } from './store/auth';
+import { selectIsLoggedIn, LoginStatus, selectLoginStatus } from './store/auth';
 import { useSettingsQuery } from './store/redux/api';
 
 const App = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const loginStatus = useSelector(selectLoginStatus);
+
   return (
     <UserMiddleware>
       <AudioProvider>
-        {isLoggedIn ? (
+        {loginStatus === LoginStatus.loggedIn ? (
           <AuthLayout>
             <Switch>
               <Route exact path="/" component={Dashboard} />
@@ -30,6 +32,8 @@ const App = () => {
               <Route path="/setup/:stage" component={SetupPage} />
             </Switch>
           </AuthLayout>
+        ) : loginStatus === LoginStatus.checking ? (
+          <SplashScreen />
         ) : (
           <Layout>
             <LoginPage />
@@ -50,7 +54,6 @@ const AppWrapper = () => {
   const [state, setState] = React.useState<State>(State.Loading);
 
   React.useEffect(() => {
-    console.log('App', 'AppWrapper', settings);
     if (settings.isLoading || settings.isFetching) {
       setState(State.Loading);
     } else if (settings.isSuccess && settings.data) {
@@ -71,7 +74,8 @@ const AppWrapper = () => {
       return <SetupPage />;
     }
   };
-  return <Router>{_renderLayout()}</Router>;
+//   return <Router>{_renderLayout()}</Router>;
+  return <SplashScreen />;
 };
 
 export default AppWrapper;

@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Work+Sans';
+  src: local('Work+Sans'),
+    url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap')
+      format('truetype');
+}
+.brand {
+  font-family: 'Work Sans', sans-serif;
+}

@@ -13,7 +13,7 @@ interface IAuthState {
 }
 const initialState: IAuthState = {
   user: null,
-  loginStatus: LoginStatus.notLoggedIn,
+  loginStatus: LoginStatus.checking,
 };
 export const login = createAsyncThunk('auth/login', async (args) => {
   const profile = await authService.getProfile();
@@ -29,6 +29,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
+    setAuthChecked: (state: IAuthState, action: PayloadAction<true>) => {
+      if (action.payload) {
+        state.user = initialState.user;
+        state.loginStatus = LoginStatus.notLoggedIn;
+      }
+    },
     setCredentials: (state: IAuthState, action: PayloadAction<Profile>) => {
       state.user = action.payload;
       state.loginStatus = LoginStatus.loggedIn;
@@ -57,9 +63,10 @@ const authSlice = createSlice({
     },
   },
 });
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, setAuthChecked } = authSlice.actions;
 export const authReducer = authSlice.reducer;
 export const selectCurrentUser = (state: RootState) => state.authReducer.user;
+export const selectLoginStatus = (state: RootState) => state.authReducer.loginStatus;
 export const selectIsLoggedIn = (state: RootState) =>
   state.authReducer.loginStatus === LoginStatus.loggedIn;
 
