@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthLayout, Layout } from './components/layout';
-import PrivateRoute from './components/providers/PrivateRoute';
 import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
@@ -74,55 +73,5 @@ const AppWrapper = () => {
   };
   return <Router>{_renderLayout()}</Router>;
 };
-
-//   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-//   const authQuery = useAuthQuery();
-//   const _getLayout = (children: React.ReactNode) => {
-//     return isAuthenticated ? <AuthLayout>{children}</AuthLayout> : <Layout>{children}</Layout>;
-//   };
-
-//   return (
-//     <AudioProvider>
-//       <Router>
-//         {_getLayout(
-//           <Switch>
-//             <Route exact path="/">
-//               {isAuthenticated ? <Dashboard /> : <LandingPage />}
-//             </Route>
-//             <Route path="/setup/:stage" component={SetupPage} />
-//             <Route exact path="/login">
-//               <LoginPage />
-//             </Route>
-//             {/* <PrivateRoute
-//               component={<LoginPage />}
-//               isAuthenticated={isAuthenticated}
-//               isLoading={isLoading}
-//               path="/login"
-//             ></PrivateRoute> */}
-//             {/* <PrivateRoute redirectTo={'/register'} component={RegisterPage} path="/register" />
-//             <PrivateRoute component={DebugPage} path="/debug" />
-//             <PrivateRoute component={<AlbumPage />} path="/artist/:artistName/:albumName" />
-
-//             <Route
-//               path="/artist/:artistName/:albumName"
-//               render={(props) => (
-//                 <AlbumPage
-//                   artistName={props.match.params.artistName}
-//                   albumName={props.match.params.albumName}
-//                 />
-//               )}
-//             />
-//             <Route
-//               path="/artist/:artistName"
-//               render={(props) => <ArtistPage artistName={props.match.params.artistName} />}
-//             />
-//             <Route path="/404" component={NotFoundPage} />
-//             <Redirect to="/404" /> */}
-//           </Switch>
-//         )}
-//       </Router>
-//     </AudioProvider>
-//   );
-// };
 
 export default AppWrapper;
