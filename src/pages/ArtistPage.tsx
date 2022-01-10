@@ -48,7 +48,7 @@ const ArtistPage = () => {
           <div className="w-full">
             <div className="flex flex-col space-x-3 md:flex-row">
               <div className="container flex flex-col items-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
-                <AlbumsList artistName={artistName} />
+                <AlbumsList artist={artist} />
               </div>
               <div className="hidden md:block">
                 <ArtistCard artist={artist} />

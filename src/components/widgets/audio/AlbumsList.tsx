@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MiniActionButton } from '..';
-import { Album } from '../../../models';
+import { Album, Artist } from '../../../models';
 import audioBoosService from '../../../services/api/audiosBooService';
 
 interface IAlbumsListProps {
-  artistName: string;
+  artist: Artist;
 }
 
-function AlbumsList({ artistName }: IAlbumsListProps) {
+function AlbumsList({ artist }: IAlbumsListProps) {
   const history = useHistory();
   const [albums, setAlbums] = useState<Album[] | undefined>();
-  useEffect(() => {
-    const loadArtists = async () => {
-      const results = await audioBoosService.getAlbums(artistName);
-      setAlbums(results);
-    };
-    loadArtists();
-    return () => audioBoosService.cancel();
-  }, [artistName]);
   return (
     <React.Fragment>
       <table className="w-full whitespace-nowrap">
@@ -31,11 +23,11 @@ function AlbumsList({ artistName }: IAlbumsListProps) {
           </tr>
         </thead>
         <tbody className="w-full">
-          {albums?.map((a) => {
+          {artist?.albums?.map((a) => {
             return (
               <tr
                 key={a.id}
-                onClick={() => history.push(`/artist/${artistName}/${a.name}`)}
+                onClick={() => history.push(`/artist/${artist.name}/${a.name}`)}
                 className="h-20 text-sm leading-none text-gray-800 bg-white border-t border-b border-gray-100 cursor-pointer hover:bg-gray-100"
               >
                 <td className="pl-4 cursor-pointer">
