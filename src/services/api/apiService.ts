@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { refreshTokenCookies } from '../auth/util';
 
 class ApiService {
   private static _client: AxiosInstance | undefined = undefined;
@@ -42,7 +43,7 @@ class ApiService {
             try {
               //SUPER important we use another axios instance here,
               //otherwise it will get caught in a retry loop
-              const rs = await axios.post('/auth/refresh');
+              await refreshTokenCookies();
               return instance(originalConfig);
             } catch (_error) {
               originalConfig._retry = false;

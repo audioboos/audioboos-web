@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { Album, Artist, Settings } from '../../models';
 import { Profile } from '../../models/Profile';
+import { refreshTokenCookies } from '../../services/auth/util';
 import { RootState } from './store';
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL as string,
@@ -21,8 +22,8 @@ const baseQueryWithRefresh: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
   let result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
     // try to get a new token
-    const refreshResult = await baseQuery('/auth/refresh', api, extraOptions);
-    if (refreshResult.meta?.response?.status === 200) {
+    const refreshResult = await refreshTokenCookies();
+    if (refreshResult.status === 200) {
       result = await baseQuery(args, api, extraOptions);
     } else {
       //TODO: redirect to login page or something?
