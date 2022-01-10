@@ -5,7 +5,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { Artist, Settings } from '../../models';
+import { Album, Artist, Settings } from '../../models';
 import { Profile } from '../../models/Profile';
 import { RootState } from './store';
 const baseQuery = fetchBaseQuery({
@@ -50,12 +50,21 @@ const api = createApi({
         query: () => ({ url: `/auth/profile`, method: 'GET' }),
       }),
       updateArtist: build.mutation<Artist, Partial<Artist>>({
-        query: ({ id, ...patch }) => ({
-          url: `/artists/${id}`,
+        query: ({ ...patch }) => ({
+          url: `/artists`,
           method: 'PATCH',
           body: patch,
         }),
         invalidatesTags: ['Artist'],
+      }),
+
+      updateAlbum: build.mutation<Artist, Partial<Album>>({
+        query: ({ ...patch }) => ({
+          url: `/albums`,
+          method: 'PATCH',
+          body: patch,
+        }),
+        invalidatesTags: ['Album'],
       }),
     };
   },
@@ -65,6 +74,7 @@ export const {
   useSettingsQuery,
   useArtistsQuery,
   useArtistQuery,
+  useUpdateAlbumMutation,
   useUpdateArtistMutation,
   useAuthQuery,
 } = api;

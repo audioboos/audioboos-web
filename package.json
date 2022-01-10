@@ -9,12 +9,15 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@atlaskit/inline-edit": "^12.1.5",
+    "@atlaskit/textfield": "^5.1.4",
     "@headlessui/react": "^1.4.1",
     "@microsoft/signalr": "^6.0.0",
     "@popperjs/core": "^2.10.2",
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.24.0",
     "dompurify": "^2.3.4",
+    "dotenv": "^10.0.0",
     "font-awesome": "^4.7.0",
     "formik": "^2.2.9",
     "react": "^17.0.0",

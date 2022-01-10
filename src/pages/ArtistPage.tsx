@@ -2,10 +2,13 @@ import React from 'react';
 import { MdManageSearch, MdModeEditOutline, MdRefresh } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import { AlbumsList, ArtistCard, ArtistStats, MiniActionButton } from '../components/widgets';
-import InlineEdit from '../components/widgets/editable-text/inline-edit.component';
 import { Artist } from '../models';
 import jobService from '../services/api/jobService';
+import InlineEdit from '@atlaskit/inline-edit';
+import Textfield from '@atlaskit/textfield';
+
 import { useArtistQuery, useUpdateArtistMutation } from '../store/redux/api';
+import { toast } from 'react-toastify';
 
 interface IArtistPageRouteProps {
   artistName: string;
@@ -13,9 +16,19 @@ interface IArtistPageRouteProps {
 
 const ArtistPage = () => {
   const { artistName } = useParams<IArtistPageRouteProps>();
-  const { data, isLoading, isError, isSuccess } = useArtistQuery(artistName);
+  const { data: artist, isLoading, isError, isSuccess } = useArtistQuery(artistName);
   const [updateArtist, updateResult] = useUpdateArtistMutation();
 
+  const [editArtistName, setEditArtistName] = React.useState<string>();
+  React.useEffect(() => {
+    if (artist) {
+      console.log('ArtistPage', 'isLoading', isLoading);
+      console.log('ArtistPage', 'isError', isError);
+      console.log('ArtistPage', 'isSuccess', isSuccess);
+      console.log('ArtistPage', 'artist', artist);
+      setEditArtistName(artist.name);
+    }
+  }, [artist, isLoading, isError, isSuccess]);
   const _renderLoading = () => <div>Loading.....</div>;
   const _renderError = () => <div>Error loading.....</div>;
   const _renderArtist = (artist: Artist) => {
@@ -25,18 +38,42 @@ const ArtistPage = () => {
           <div>
             <h4 className="text-2xl font-bold leading-tight text-gray-800">
               <InlineEdit
-                text={artist.name}
-                onSetText={(text: string) => {
-                  updateArtist({ id: artist.id, name: text });
+                defaultValue={editArtistName}
+                editView={({ errorMessage, ...fieldProps }) => (
+                  <Textfield {...fieldProps} autoFocus />
+                )}
+                readView={() => <div data-testid="read-view">{editArtistName || ''}</div>}
+                onConfirm={(value: string) => {
+                  if (value && value != artistName) {
+                    setEditArtistName(value);
+                    updateArtist({ id: artist.id, name: value })
+                      .unwrap()
+                      .then((payload) => {
+                        toast.success('Artist updated!', {
+                          position: 'top-right',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                        });
+                      })
+                      .catch((error) => {
+                        console.error('ArtistPage', 'updateArtist', error);
+                        toast.error('💩 Failed to update artist!', {
+                          position: 'top-right',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                        });
+                      });
+                  }
                 }}
-              >
-                <input
-                  type="text"
-                  name="artist-name"
-                  placeholder="Artist name"
-                  value={artist.name}
-                ></input>
-              </InlineEdit>
+              />
             </h4>
             <ArtistStats artist={artist} />
           </div>
