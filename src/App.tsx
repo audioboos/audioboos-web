@@ -74,8 +74,7 @@ const AppWrapper = () => {
       return <SetupPage />;
     }
   };
-//   return <Router>{_renderLayout()}</Router>;
-  return <SplashScreen />;
+  return <Router>{_renderLayout()}</Router>;
 };
 
 export default AppWrapper;
