@@ -1098,6 +1098,11 @@ caniuse-lite@^1.0.30001264, caniuse-lite@^1.0.30001265:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001267.tgz#b1cf2937175afc0570e4615fc2d2f9069fa0ed30"
   integrity sha512-r1mjTzAuJ9W8cPBGbbus8E0SKcUP7gn03R14Wk8FlAlqhH9hroy9nLqmpuXlfKEw/oILW+FGz47ipXV2O7x8lg==
 
+card.js@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/card.js/-/card.js-0.0.2.tgz#cd813e7af0062dff06f19aad4ddc343cdd048b46"
+  integrity sha1-zYE+evAGLf8G8ZqtTdw0PN0Ei0Y=
+
 chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -2953,6 +2958,11 @@ react-animated-css@^1.2.1:
     lodash "^4.17.11"
     prop-types "^15.5.10"
     react "^15.6.1"
+
+react-chartjs-2@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-4.0.0.tgz#a79919c9efe5381b8cb5abfd0ac7a56c9736cdb8"
+  integrity sha512-0kx41EVO6wIoeU6zvdwovX9kKcdrs7O62DGTSNmwAXZeLGJ3U+n4XijO1kxcMmAi4I6PQJWGD5oRwxVixHSp6g==
 
 react-dnd-html5-backend@^14.0:
   version "14.0.2"

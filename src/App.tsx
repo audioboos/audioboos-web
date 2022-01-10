@@ -5,7 +5,6 @@ import { AuthLayout, Layout } from './components/layout';
 import AlbumPage from './pages/AlbumPage';
 import ArtistPage from './pages/ArtistPage';
 import LoginPage from './pages/auth/LoginPage';
-import Dashboard from './pages/Dashboard';
 import DebugPage from './pages/DebugPage';
 import Error500Page from './pages/error/500Page';
 import SplashScreen from './pages/splash/SplashScreen';
@@ -25,7 +24,7 @@ import { useAuthUser } from './services/use-user.hook';
 import api from './store/redux/api';
 import authService from './services/api/authService';
 import { Profile } from './models/Profile';
-
+import DashboardComponent from './features/dashboard/dashboard.component';
 const App = () => {
   const [user, setUser] = React.useState<Profile | null>(null);
   const checkLoginStatus = () => {
@@ -52,7 +51,7 @@ const App = () => {
       {loginStatus === LoginStatus.loggedIn ? (
         <AuthLayout>
           <Switch>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/" component={DashboardComponent} />
             <Route exact path="/debug" component={DebugPage} />
             <Route exact path="/artist/:artistName" component={ArtistPage} />
             <Route exact path="/artist/:artistName/:albumName" component={AlbumPage} />
