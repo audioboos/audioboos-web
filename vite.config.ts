@@ -10,4 +10,7 @@ export default defineConfig({
       cert: fs.readFileSync('../certs/zerossl/certificate.crt'),
     },
   },
+  define: {
+    'process.env': {},
+  },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthLayout, Layout } from './components/layout';
 import AlbumPage from './pages/AlbumPage';
@@ -13,34 +13,60 @@ import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
 import UserMiddleware from './services/user-resolver.middleware';
-import { selectIsLoggedIn, LoginStatus, selectLoginStatus } from './store/auth';
+import {
+  selectIsLoggedIn,
+  LoginStatus,
+  selectLoginStatus,
+  setCredentials,
+  setAuthChecked,
+} from './store/auth';
 import { useSettingsQuery } from './store/redux/api';
+import { useAuthUser } from './services/use-user.hook';
+import api from './store/redux/api';
+import authService from './services/api/authService';
+import { Profile } from './models/Profile';
 
 const App = () => {
+  const [user, setUser] = React.useState<Profile | null>(null);
+  const checkLoginStatus = () => {
+    authService
+      .getProfile()
+      .then((r) => {
+        console.log('App', 'loggedIn?', r);
+        if (r) {
+          setUser(r);
+          dispatch(setCredentials(r));
+        } else {
+          dispatch(setAuthChecked(true));
+        }
+      })
+      .catch((err) => console.log('App', 'errorCheckingLogin', err));
+  };
+  React.useEffect(() => {
+    checkLoginStatus();
+  }, []);
+  const dispatch = useDispatch();
   const loginStatus = useSelector(selectLoginStatus);
-
   return (
-    <UserMiddleware>
-      <AudioProvider>
-        {loginStatus === LoginStatus.loggedIn ? (
-          <AuthLayout>
-            <Switch>
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/debug" component={DebugPage} />
-              <Route exact path="/artist/:artistName" component={ArtistPage} />
-              <Route exact path="/artist/:artistName/:albumName" component={AlbumPage} />
-              <Route path="/setup/:stage" component={SetupPage} />
-            </Switch>
-          </AuthLayout>
-        ) : loginStatus === LoginStatus.checking ? (
-          <SplashScreen />
-        ) : (
-          <Layout>
-            <LoginPage />
-          </Layout>
-        )}
-      </AudioProvider>
-    </UserMiddleware>
+    <AudioProvider>
+      {loginStatus === LoginStatus.loggedIn ? (
+        <AuthLayout>
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/debug" component={DebugPage} />
+            <Route exact path="/artist/:artistName" component={ArtistPage} />
+            <Route exact path="/artist/:artistName/:albumName" component={AlbumPage} />
+            <Route path="/setup/:stage" component={SetupPage} />
+          </Switch>
+        </AuthLayout>
+      ) : loginStatus === LoginStatus.checking ? (
+        <SplashScreen />
+      ) : (
+        <Layout>
+          <LoginPage />
+        </Layout>
+      )}
+    </AudioProvider>
   );
 };
 enum State {

@@ -5,7 +5,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { Artist, Settings } from '../../models';
+import { Album, Artist, Settings } from '../../models';
 import { Profile } from '../../models/Profile';
 import { RootState } from './store';
 const baseQuery = fetchBaseQuery({
@@ -34,6 +34,7 @@ const baseQueryWithRefresh: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
 
 const api = createApi({
   baseQuery: baseQueryWithRefresh,
+  tagTypes: ['Artist', 'Album', 'Track'],
   endpoints(build) {
     return {
       artists: build.query<Array<Artist>, void>({
@@ -48,9 +49,33 @@ const api = createApi({
       auth: build.query<Profile, void>({
         query: () => ({ url: `/auth/profile`, method: 'GET' }),
       }),
+      updateArtist: build.mutation<Artist, Partial<Artist>>({
+        query: ({ ...patch }) => ({
+          url: `/artists`,
+          method: 'PATCH',
+          body: patch,
+        }),
+        invalidatesTags: ['Artist'],
+      }),
+
+      updateAlbum: build.mutation<Artist, Partial<Album>>({
+        query: ({ ...patch }) => ({
+          url: `/albums`,
+          method: 'PATCH',
+          body: patch,
+        }),
+        invalidatesTags: ['Album'],
+      }),
     };
   },
 });
 
-export const { useSettingsQuery, useArtistsQuery, useArtistQuery, useAuthQuery } = api;
+export const {
+  useSettingsQuery,
+  useArtistsQuery,
+  useArtistQuery,
+  useUpdateAlbumMutation,
+  useUpdateArtistMutation,
+  useAuthQuery,
+} = api;
 export default api;

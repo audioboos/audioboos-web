@@ -5,9 +5,16 @@ import { useParams } from 'react-router-dom';
 import { AlbumCard } from '../components/widgets';
 import EditAlbumDialog from '../components/widgets/audio/EditAlbumDialog';
 import TrackList from '../components/widgets/audio/TrackList';
+import InlineEdit from '@atlaskit/inline-edit';
 import { Album, Artist } from '../models';
-import { useArtistQuery } from '../store/redux/api';
+import {
+  useArtistQuery,
+  useUpdateAlbumMutation,
+  useUpdateArtistMutation,
+} from '../store/redux/api';
 import { addAllToQueue, clearQueue, INowPlaying, setNowPlaying } from '../store/redux/audio';
+import Textfield from '@atlaskit/textfield';
+import { toast } from 'react-toastify';
 interface IAlbumPageParams {
   artistName: string;
   albumName: string;
@@ -15,18 +22,25 @@ interface IAlbumPageParams {
 const AlbumPage = () => {
   const { artistName, albumName } = useParams<IAlbumPageParams>();
   const [editing, setEditing] = React.useState(false);
-  const [artist, setArtist] = React.useState<Artist>();
   const [album, setAlbum] = React.useState<Album>();
-  const artistQueryResult = useArtistQuery(artistName);
+  const { data: artist, isLoading, isError, isSuccess } = useArtistQuery(artistName);
+  const [updateAlbum, updateResult] = useUpdateAlbumMutation();
+  const [editAlbumName, setEditAlbumName] = React.useState<string>();
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    if (artistQueryResult.data) {
-      const album = artistQueryResult.data.albums.find((r) => r.name === albumName);
-      setAlbum(album);
-      setArtist(artistQueryResult.data);
-    }
-  }, [artistQueryResult, albumName]);
 
+  React.useEffect(() => {
+    if (artist) {
+      console.log('AlbumPage', 'isLoading', isLoading);
+      console.log('AlbumPage', 'isError', isError);
+      console.log('AlbumPage', 'isSuccess', isSuccess);
+      console.log('AlbumPage', 'artist', artist);
+      const album = artist.albums.find((a) => a.name === albumName);
+      if (album && album.name) {
+        setAlbum(album);
+        setEditAlbumName(album.name);
+      }
+    }
+  }, [artist, isLoading, isError, isSuccess]);
   const _playAll = () => {
     dispatch(clearQueue());
     _addAllToQueue(true);
@@ -47,7 +61,9 @@ const AlbumPage = () => {
       }
     }
   };
-  return (
+  const _renderLoading = () => <div>Loading.....</div>;
+  const _renderError = () => <div>Error loading.....</div>;
+  const _renderAlbumPage = () => (
     <React.Fragment>
       <div>
         <EditAlbumDialog isOpen={editing} setOpen={setEditing} album={album} />
@@ -55,7 +71,45 @@ const AlbumPage = () => {
         <div className="container flex flex-col items-start justify-between px-6 pb-4 mx-auto my-6 border-b border-gray-300 lg:my-12 lg:flex-row lg:items-center">
           <div>
             <h4 className="text-2xl font-bold leading-tight text-gray-800">
-              {artistName} - {album?.name}
+              {artist?.name}
+              <span> - </span>
+              <InlineEdit
+                defaultValue={editAlbumName}
+                editView={({ errorMessage, ...fieldProps }) => (
+                  <Textfield {...fieldProps} autoFocus />
+                )}
+                readView={() => <div data-testid="read-view">{editAlbumName || ''}</div>}
+                onConfirm={(value: string) => {
+                  if (value && value != album.name) {
+                    setEditAlbumName(value);
+                    updateAlbum({ id: album?.id, name: value })
+                      .unwrap()
+                      .then((payload) => {
+                        toast.success('💩 Artist updated!', {
+                          position: 'top-right',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                        });
+                      })
+                      .catch((error) => {
+                        console.error('ArtistPage', 'updateArtist', error);
+                        toast.error('💩 Failed to update artist!', {
+                          position: 'top-right',
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                        });
+                      });
+                  }
+                }}
+              />
             </h4>
             <ul className="flex flex-col items-start mt-3 text-sm text-gray-600 md:flex-row md:items-center">
               <li className="flex items-center mt-3 mr-3 md:mt-0">
@@ -165,6 +219,13 @@ const AlbumPage = () => {
           </div>
         )}
       </div>
+    </React.Fragment>
+  );
+  return (
+    <React.Fragment>
+      {isLoading && _renderLoading()}
+      {isError && _renderError()}
+      {isSuccess && album && _renderAlbumPage()}
     </React.Fragment>
   );
 };

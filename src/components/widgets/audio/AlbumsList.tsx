@@ -10,7 +10,6 @@ interface IAlbumsListProps {
 
 function AlbumsList({ artist }: IAlbumsListProps) {
   const history = useHistory();
-  const [albums, setAlbums] = useState<Album[] | undefined>();
   return (
     <React.Fragment>
       <table className="w-full whitespace-nowrap">
@@ -23,27 +22,27 @@ function AlbumsList({ artist }: IAlbumsListProps) {
           </tr>
         </thead>
         <tbody className="w-full">
-          {artist?.albums?.map((a) => {
+          {artist.albums?.map((album: Album) => {
             return (
               <tr
-                key={a.id}
-                onClick={() => history.push(`/artist/${artist.name}/${a.name}`)}
+                key={album.id}
+                onClick={() => history.push(`/artist/${artist.name}/${album.name}`)}
                 className="h-20 text-sm leading-none text-gray-800 bg-white border-t border-b border-gray-100 cursor-pointer hover:bg-gray-100"
               >
                 <td className="pl-4 cursor-pointer">
                   <div className="flex items-center">
                     <div className="w-10 h-10">
-                      <img className="w-full h-full" src={a.smallImage} alt="Album" />
+                      <img className="w-full h-full" src={album.smallImage} alt="Album" />
                     </div>
                     <div className="pl-4">
-                      <p className="font-semibold text-gray-700 uppercase">{a.name}</p>
-                      <p className="pt-2 text-xs leading-3 text-gray-600">{a.description}</p>
+                      <p className="font-semibold text-gray-700 uppercase">{album.name}</p>
+                      <p className="pt-2 text-xs leading-3 text-gray-600">{album.description}</p>
                     </div>
                   </div>
                 </td>
                 <td className="pl-12">
                   <p className="text-sm font-medium leading-none text-gray-800">
-                    {a.releaseDate.year}
+                    {album.releaseDate.year}
                   </p>
                 </td>
                 <td className="pl-12">

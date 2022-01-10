@@ -6,7 +6,7 @@ import Sidebar from './Sidebar';
 
 const AuthLayout = ({ children }: ILayoutProps) => {
   return (
-    <div className="font-oxygen">
+    <div className="font-alice">
       <div className="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <Sidebar />
         <div className="flex flex-col w-full h-full overflow-x-hidden overflow-y-auto">
