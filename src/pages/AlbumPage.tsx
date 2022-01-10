@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom';
 import { AlbumCard } from '../components/widgets';
 import EditAlbumDialog from '../components/widgets/audio/EditAlbumDialog';
 import TrackList from '../components/widgets/audio/TrackList';
+import InlineEdit from '../components/widgets/editable-text/inline-edit.component';
 import { Album, Artist } from '../models';
-import { useArtistQuery } from '../store/redux/api';
+import { useArtistQuery, useUpdateArtistMutation } from '../store/redux/api';
 import { addAllToQueue, clearQueue, INowPlaying, setNowPlaying } from '../store/redux/audio';
 interface IAlbumPageParams {
   artistName: string;
@@ -17,8 +18,11 @@ const AlbumPage = () => {
   const [editing, setEditing] = React.useState(false);
   const [artist, setArtist] = React.useState<Artist>();
   const [album, setAlbum] = React.useState<Album>();
+
   const artistQueryResult = useArtistQuery(artistName);
+
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     if (artistQueryResult.data) {
       const album = artistQueryResult.data.albums.find((r) => r.name === albumName);
@@ -55,7 +59,9 @@ const AlbumPage = () => {
         <div className="container flex flex-col items-start justify-between px-6 pb-4 mx-auto my-6 border-b border-gray-300 lg:my-12 lg:flex-row lg:items-center">
           <div>
             <h4 className="text-2xl font-bold leading-tight text-gray-800">
-              {artistName} - {album?.name}
+              {artist?.name}
+              <span> - </span>
+              {album?.name}
             </h4>
             <ul className="flex flex-col items-start mt-3 text-sm text-gray-600 md:flex-row md:items-center">
               <li className="flex items-center mt-3 mr-3 md:mt-0">

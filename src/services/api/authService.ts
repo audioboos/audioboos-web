@@ -58,16 +58,16 @@ class AuthService extends ApiService {
     }
     return false;
   };
-  getProfile = async (): Promise<Profile> => {
+  getProfile = async (): Promise<Profile | undefined> => {
     const client = await this.getInstance();
 
     try {
-      const response = await client.get('/auth/profile');
+      const response = await client.get('/profile');
       return response && response.data;
     } catch (err) {
       console.error('Exception fetching settings', err);
     }
-    throw 'Unable to load your profile';
+    return undefined;
   };
 }
 const authService = new AuthService();

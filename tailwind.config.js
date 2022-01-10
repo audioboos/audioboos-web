@@ -21,7 +21,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        oxygen: ['"Oxygen"', 'sans-serif'],
+        alice: ['"Alice"', 'sans-serif'],
       },
     },
   },

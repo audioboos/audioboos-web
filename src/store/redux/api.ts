@@ -34,6 +34,7 @@ const baseQueryWithRefresh: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
 
 const api = createApi({
   baseQuery: baseQueryWithRefresh,
+  tagTypes: ['Artist', 'Album', 'Track'],
   endpoints(build) {
     return {
       artists: build.query<Array<Artist>, void>({
@@ -48,9 +49,23 @@ const api = createApi({
       auth: build.query<Profile, void>({
         query: () => ({ url: `/auth/profile`, method: 'GET' }),
       }),
+      updateArtist: build.mutation<Artist, Partial<Artist>>({
+        query: ({ id, ...patch }) => ({
+          url: `/artists/${id}`,
+          method: 'PATCH',
+          body: patch,
+        }),
+        invalidatesTags: ['Artist'],
+      }),
     };
   },
 });
 
-export const { useSettingsQuery, useArtistsQuery, useArtistQuery, useAuthQuery } = api;
+export const {
+  useSettingsQuery,
+  useArtistsQuery,
+  useArtistQuery,
+  useUpdateArtistMutation,
+  useAuthQuery,
+} = api;
 export default api;
