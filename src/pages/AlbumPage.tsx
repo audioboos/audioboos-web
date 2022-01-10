@@ -80,7 +80,7 @@ const AlbumPage = () => {
                 )}
                 readView={() => <div data-testid="read-view">{editAlbumName || ''}</div>}
                 onConfirm={(value: string) => {
-                  if (value && value != album.name) {
+                  if (value && value != album?.name) {
                     setEditAlbumName(value);
                     updateAlbum({ id: album?.id, name: value })
                       .unwrap()

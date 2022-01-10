@@ -40,9 +40,12 @@ class ApiService {
             originalConfig._retry = true;
 
             try {
-              const rs = await instance.post('/auth/refresh');
+              //SUPER important we use another axios instance here,
+              //otherwise it will get caught in a retry loop
+              const rs = await axios.post('/auth/refresh');
               return instance(originalConfig);
             } catch (_error) {
+              originalConfig._retry = false;
               return Promise.reject(_error);
             }
           }
