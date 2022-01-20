@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { Profile } from '../models/Profile';
-import SplashScreen from '../pages/splash/SplashScreen';
+import SplashScreen from '../pages/splash/splash-page.component';
 import { setAuthChecked, setCredentials } from '../store/auth';
 import api from '../store/redux/api';
 import { useAuthUser } from './use-user.hook';

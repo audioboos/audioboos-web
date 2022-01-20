@@ -10,7 +10,7 @@ const NavbarUrlButton = ({ text, url, children }: INavbarUrlButtonProps) => {
   return (
     <NavLink
       to={url}
-      className="flex items-center px-5 py-6 text-sm leading-5 text-gray-700 transition duration-200 ease-in-out hover:bg-gray-100 focus:outline-none"
+      className="flex items-center px-5 text-sm leading-5 text-gray-100 transition duration-800 ease-in-out hover:opacity-50 focus:outline-none"
     >
       <span className="mr-2">{children}</span>
       {text}

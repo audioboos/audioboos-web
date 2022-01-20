@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import jobService from "../../../services/api/jobService";
 import { MiniActionButton } from "../../widgets";
 
-const RefreshLibraryButton = () => {
+const RefreshLibraryButtonComponent = () => {
     const refreshAudioLibrary = async () => {
         const result = await jobService.startJob("UpdateLibrary");
         if (result) {
@@ -39,4 +39,4 @@ const RefreshLibraryButton = () => {
     );
 };
 
-export default RefreshLibraryButton;
+export default RefreshLibraryButtonComponent;

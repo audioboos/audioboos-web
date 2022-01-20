@@ -1,9 +1,13 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { Artist } from '../../../models';
-import { useArtistsQuery } from '../../../store/redux/api';
+import React from "react";
+import { NavLink, Link } from "react-router-dom";
+import { Artist } from "../../../models";
+import { useArtistsQuery } from "../../../store/redux/api";
 
-function ArtistsList() {
+interface ArtistListProps {
+  onNavigate: () => void;
+}
+
+function ArtistsList({ onNavigate }: ArtistListProps) {
   const queryResult = useArtistsQuery();
   const _renderArtists = (artists: Artist[]) => {
     return (
@@ -13,11 +17,12 @@ function ArtistsList() {
             <li className="items-center" key={artist.id}>
               <Link
                 className={
-                  'text-xs uppercase py-3 font-bold block ' +
-                  (window.location.href.indexOf('/admin/dashboard') !== -1
-                    ? 'text-sky-500 hover:text-sky-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500')
+                  "text-xs uppercase py-3 font-bold block " +
+                  (window.location.href.indexOf("/admin/dashboard") !== -1
+                    ? "text-sky-500 hover:text-sky-600"
+                    : "text-blueGray-700 hover:text-blueGray-500")
                 }
+                onClick={() => onNavigate()}
                 to={`/artist/${artist.name}`}
               >
                 <img

@@ -7,9 +7,9 @@ import { IconButton } from '../../components/widgets';
 import { InitialSettings } from '../../models';
 import settingsService from '../../services/api/settingsService';
 import { useSettingsQuery } from '../../store/redux/api';
-import SetupAddLibrary from './SetupAddLibrary';
-import SetupConfirm from './SetupConfirm';
-import SetupSiteInfo from './SetupSiteInfo';
+import SetupAddLibrary from './setup-addlibrary-page.component';
+import SetupConfirm from './setup-confirm-page.component';
+import SetupSiteInfo from './setup-siteinfo-page.component';
 
 interface ISetupRouteParams {
   stage: string;

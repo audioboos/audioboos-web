@@ -2,19 +2,19 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthLayout, Layout } from './components/layout';
-import AlbumPage from './pages/AlbumPage';
-import ArtistPage from './pages/ArtistPage';
+import AlbumPage from './pages/album-page.component';
+import ArtistPage from './pages/artist-page.component';
 import LoginPage from './pages/auth/LoginPage';
-import DebugPage from './pages/DebugPage';
-import Error500Page from './pages/error/500Page';
-import SplashScreen from './pages/splash/SplashScreen';
-import SetupPage from './pages/setup/SetupPage';
+import DebugPage from './pages/debug-page.component';
+import { SplashScreen } from './pages/splash';
 import { AudioProvider } from './services/audio';
 import { LoginStatus, selectLoginStatus, setCredentials, setAuthChecked } from './store/auth';
 import { useSettingsQuery } from './store/redux/api';
 import authService from './services/api/authService';
 import { Profile } from './models/Profile';
 import DashboardComponent from './features/dashboard/dashboard.component';
+import { SetupPage } from './pages/setup';
+import { Error500Page } from './pages/error';
 const App = () => {
   const [user, setUser] = React.useState<Profile | null>(null);
   const checkLoginStatus = () => {

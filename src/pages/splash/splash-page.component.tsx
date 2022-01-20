@@ -1,5 +1,5 @@
 import React from 'react';
-import './SplashScreen.css';
+import './splash-page.component.css';
 const SplashScreen = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-black ">
