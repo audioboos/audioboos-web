@@ -12,12 +12,16 @@ const UserDropdown = () => {
   const dispatch = useDispatch();
 
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef<Element>();
+  const btnDropdownRef = React.createRef<HTMLAnchorElement>();
   const popoverDropdownRef = React.createRef<HTMLDivElement>();
   const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current as Element, popoverDropdownRef.current as HTMLDivElement, {
-      placement: 'bottom-start',
-    });
+    createPopper(
+      btnDropdownRef.current as HTMLAnchorElement,
+      popoverDropdownRef.current as HTMLDivElement,
+      {
+        placement: 'bottom-start',
+      }
+    );
     setDropdownPopoverShow(true);
   };
   const closeDropdownPopover = () => {

@@ -4,6 +4,6 @@ export enum LoginStatus {
   loggedIn,
   notLoggedIn,
 }
-export { RootState };
+export type { RootState };
 
 export default store;
