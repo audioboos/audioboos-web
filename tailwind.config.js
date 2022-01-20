@@ -21,7 +21,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        alice: ['"Alice"', 'sans-serif'],
+        alice: ['"IBM Plex Sans"', 'sans-serif'],
       },
     },
   },

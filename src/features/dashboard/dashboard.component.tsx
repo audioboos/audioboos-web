@@ -9,14 +9,6 @@ import {
 const DashboardComponent = () => {
   return (
     <>
-      <div className="flex flex-wrap p-5">
-        <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
-          <CardLineChart />
-        </div>
-        <div className="w-full px-4 xl:w-4/12">
-          <CardBarChart />
-        </div>
-      </div>
       <div className="flex flex-wrap mt-4">
         <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
           <CardPageVisits />
