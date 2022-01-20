@@ -7,7 +7,7 @@ export default function HeaderStats() {
   return (
     <>
       {/* Header */}
-      <div className="relative pt-12 pb-32 bg-lightBlue-600 md:pt-32">
+      <div className="relative pt-12 pb-32 bg-sky-600 md:pt-32">
         <div className="w-full px-4 mx-auto md:px-10">
           <div>
             {/* Card stats */}
@@ -57,7 +57,7 @@ export default function HeaderStats() {
                   statPercentColor="text-emerald-500"
                   statDescripiron="Since last month"
                   statIconName="fas fa-percent"
-                  statIconColor="bg-lightBlue-500"
+                  statIconColor="bg-sky-500"
                 />
               </div>
             </div>
