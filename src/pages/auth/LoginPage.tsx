@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AlertWidget } from '../../components/widgets';
-import { AlertWidgetType } from '../../components/widgets/AlertWidget';
+import { AlertWidgetType } from '../../components/widgets/alert-widget.component';
 import authService from '../../services/api/authService';
 import { login } from '../../store/auth';
 import { useAuthQuery } from '../../store/redux/api';

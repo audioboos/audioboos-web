@@ -1,5 +1,5 @@
 import React from "react";
-import "./MiniActionButton.css";
+import './mini-actionbutton.component.css';
 interface IMiniActionButtonProps {
     tooltip?: string;
     onClick: () => void;

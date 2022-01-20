@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "../icons";
 import { ArtistsList } from "../widgets";
-import EventReceiver from "../widgets/EventReceiver";
+import EventReceiver from "../widgets/event-receiver.component";
 
 const Sidebar = () => {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -78,7 +78,7 @@ const Sidebar = () => {
               Artists
             </h6>
             <ArtistsList onNavigate={() => setCollapseShow("hidden")} />
-            <div className="my-auto absolute bottom-0">
+            <div className="absolute bottom-0 my-auto">
               <EventReceiver />
             </div>
           </div>

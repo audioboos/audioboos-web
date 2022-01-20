@@ -1,4 +1,4 @@
-import AlertWidget from './AlertWidget';
+import AlertWidget from './alert-widget.component';
 import ArtistStats from './artist/ArtistStats';
 import AlbumCard from './audio/AlbumCard';
 import AlbumsList from './audio/AlbumsList';
