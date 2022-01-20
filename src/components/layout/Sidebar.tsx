@@ -82,25 +82,6 @@ const Sidebar = () => {
         </div>
       </nav>
     </>
-
-    // <aside className="flex justify-between h-screen bg-white border-r w-80 dark:border-primary-darker dark:bg-darker">
-    //     <div className="flex flex-col">
-    //         <div className="flex items-center justify-start mx-6 mt-5 bg-white">
-    //             <Logo />
-    //         </div>
-    //         <div className="mb-auto audioboos-scroll">
-    //             <nav className="flex flex-col flex-grow px-6 mt-10">
-    //                 <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md">
-    //                     Artists
-    //                 </p>
-    //                 <ArtistsList />
-    //             </nav>
-    //         </div>
-    //         <div className="">
-    //             <EventReceiver />
-    //         </div>
-    //     </div>
-    // </aside>
   );
 };
 

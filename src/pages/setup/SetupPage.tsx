@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import { useHistory, useParams } from 'react-router-dom';
-import logo from '../../assets/images/logo.svg';
+import logo from '../../../assets/images/logo.svg';
 import { IconButton } from '../../components/widgets';
 import { InitialSettings } from '../../models';
 import settingsService from '../../services/api/settingsService';

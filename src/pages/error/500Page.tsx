@@ -1,5 +1,5 @@
 import React from 'react';
-import alone from '../../assets/images/error/alone.svg';
+import alone from '../../../assets/images/error/alone.svg';
 
 const Error500Page = () => {
   return (
