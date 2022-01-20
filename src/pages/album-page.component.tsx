@@ -15,15 +15,12 @@ import {
 import { addAllToQueue, clearQueue, INowPlaying, setNowPlaying } from '../store/redux/audio';
 import Textfield from '@atlaskit/textfield';
 import { toast } from 'react-toastify';
-interface IAlbumPageParams {
-  artistName: string;
-  albumName: string;
-}
+
 const AlbumPage = () => {
-  const { artistName, albumName } = useParams<IAlbumPageParams>();
+  const { artistName, albumName } = useParams();
   const [editing, setEditing] = React.useState(false);
   const [album, setAlbum] = React.useState<Album>();
-  const { data: artist, isLoading, isError, isSuccess } = useArtistQuery(artistName);
+  const { data: artist, isLoading, isError, isSuccess } = useArtistQuery(artistName as string);
   const [updateAlbum, updateResult] = useUpdateAlbumMutation();
   const [editAlbumName, setEditAlbumName] = React.useState<string>();
   const dispatch = useDispatch();
@@ -65,7 +62,7 @@ const AlbumPage = () => {
   const _renderError = () => <div>Error loading.....</div>;
   const _renderAlbumPage = () => (
     <React.Fragment>
-      <div className='overflow-x-hidden'>
+      <div className="overflow-x-hidden">
         <EditAlbumDialog isOpen={editing} setOpen={setEditing} album={album} />
 
         <div className="container flex flex-col items-start justify-between px-6 py-6 pb-4 mx-auto my-1 mb-0 bg-white border-b border-gray-300 rounded-t lg:my-2 lg:flex-row lg:items-center">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MiniActionButton } from '..';
 import { Album, Artist } from '../../../models';
 import audioBoosService from '../../../services/api/audiosBooService';
@@ -9,7 +9,7 @@ interface IAlbumsListProps {
 }
 
 function AlbumsList({ artist }: IAlbumsListProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <table className="w-full whitespace-nowrap">
@@ -26,7 +26,7 @@ function AlbumsList({ artist }: IAlbumsListProps) {
             return (
               <tr
                 key={album.id}
-                onClick={() => history.push(`/artist/${artist.name}/${album.name}`)}
+                onClick={() => navigate(`/artist/${artist.name}/${album.name}`)}
                 className="h-20 text-sm leading-none text-gray-800 bg-white border-t border-b border-gray-100 cursor-pointer hover:bg-gray-100"
               >
                 <td className="pl-4 cursor-pointer">

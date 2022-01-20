@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/images/logo.svg';
 import { IconButton } from '../../components/widgets';
 import { InitialSettings } from '../../models';
@@ -11,21 +11,18 @@ import SetupAddLibrary from './setup-addlibrary-page.component';
 import SetupConfirm from './setup-confirm-page.component';
 import SetupSiteInfo from './setup-siteinfo-page.component';
 
-interface ISetupRouteParams {
-  stage: string;
-}
 const SetupPage = () => {
   const stages = ['first', 'library', 'confirm', 'post'];
   const { data, refetch } = useSettingsQuery();
-  let { stage } = useParams<ISetupRouteParams>();
+  let { stage } = useParams();
   let params = useParams();
   const [currentStage, setCurrentStage] = React.useState(stages.findIndex((r) => r === stage));
-  const history = useHistory();
+  const navigate = useNavigate();
   React.useEffect(() => {
     console.log('SetupPage', 'params', params);
     if (!stage) {
       setCurrentStage(0);
-      history.replace('/setup/first');
+      navigate('/setup/first', { replace: true });
     }
   }, [stage]);
 
@@ -60,10 +57,10 @@ const SetupPage = () => {
       const result = await settingsService.postSettings(setupInfo);
       if (result?.siteName) {
         refetch();
-        history.push('/');
+        navigate('/');
       }
     } else {
-      history.replace(`/setup/${stage}`);
+      navigate(`/setup/${stage}`, { replace: true });
     }
     setCurrentStage(stages.findIndex((r) => r === stage));
   };

@@ -10,13 +10,9 @@ import Textfield from '@atlaskit/textfield';
 import { useArtistQuery, useUpdateArtistMutation } from '../store/redux/api';
 import { toast } from 'react-toastify';
 
-interface IArtistPageRouteProps {
-  artistName: string;
-}
-
 const ArtistPage = () => {
-  const { artistName } = useParams<IArtistPageRouteProps>();
-  const { data: artist, isLoading, isError, isSuccess } = useArtistQuery(artistName);
+  const { artistName } = useParams();
+  const { data: artist, isLoading, isError, isSuccess } = useArtistQuery(artistName as string);
   const [updateArtist, updateResult] = useUpdateArtistMutation();
 
   const [editArtistName, setEditArtistName] = React.useState<string>();

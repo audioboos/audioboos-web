@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthLayout, Layout } from './components/layout';
 import AlbumPage from './pages/album-page.component';
 import ArtistPage from './pages/artist-page.component';
@@ -40,13 +40,13 @@ const App = () => {
     <AudioProvider>
       {loginStatus === LoginStatus.loggedIn ? (
         <AuthLayout>
-          <Switch>
-            <Route exact path="/" component={DashboardComponent} />
-            <Route exact path="/debug" component={DebugPage} />
-            <Route exact path="/artist/:artistName" component={ArtistPage} />
-            <Route exact path="/artist/:artistName/:albumName" component={AlbumPage} />
-            <Route path="/setup/:stage" component={SetupPage} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<DashboardComponent />} />
+            <Route path="/debug" element={<DebugPage />} />
+            <Route path="/artist/:artistName" element={<ArtistPage />} />
+            <Route path="/artist/:artistName/:albumName" element={<AlbumPage />} />
+            <Route path="/setup/:stage" element={<SetupPage />} />
+          </Routes>
         </AuthLayout>
       ) : loginStatus === LoginStatus.checking ? (
         <SplashScreen />

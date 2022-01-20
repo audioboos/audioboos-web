@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPopper } from '@popperjs/core';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import authService from '../../services/api/authService';
 import { logout } from '../../store/auth';
 import { useDispatch } from 'react-redux';

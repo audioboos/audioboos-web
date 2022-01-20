@@ -1,4 +1,4 @@
-FROM node:14.15.4-buster as builder
+FROM node:16-alpine as builder
 
 WORKDIR /app
 COPY package.json package.json

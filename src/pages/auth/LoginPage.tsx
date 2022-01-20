@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AlertWidget } from '../../components/widgets';
 import { AlertWidgetType } from '../../components/widgets/alert-widget.component';
@@ -13,7 +13,7 @@ import { useAuthQuery } from '../../store/redux/api';
 const LoginPage = () => {
   console.log('Layout', 'Im a login page');
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { data, refetch } = useAuthQuery();
   const dispatch = useDispatch();
   const [error, setError] = React.useState<string>();
@@ -22,7 +22,7 @@ const LoginPage = () => {
     if (result) {
       refetch();
       dispatch(login());
-      history.push('/');
+      navigate('/');
     } else {
       setError('Unable to log you in at this time');
     }
