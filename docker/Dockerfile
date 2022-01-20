@@ -4,7 +4,8 @@ WORKDIR /app
 COPY package.json package.json
 COPY yarn.lock yarn.lock
 COPY .env.production .env
-RUN yarn install --frozen-lockfile
+# RUN yarn install --frozen-lockfile
+RUN yarn install
 COPY . .
 
 ENV NODE_ENV=production
