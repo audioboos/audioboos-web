@@ -34,7 +34,7 @@ const ArtistPage = () => {
   const _renderArtist = (artist: Artist) => {
     return (
       <div>
-        <div className="container flex flex-col items-start justify-between px-6 pb-4 mx-auto my-6 border-b border-gray-300 lg:my-12 lg:flex-row lg:items-center">
+        <div className="container flex flex-col items-start justify-between px-6 py-6 pb-4 mx-auto my-1 mb-0 bg-white border-b border-gray-300 rounded-t lg:my-2 lg:flex-row lg:items-center">
           <div>
             <h4 className="text-2xl font-bold leading-tight text-gray-800">
               <InlineEdit
@@ -97,7 +97,7 @@ const ArtistPage = () => {
           </div>
         </div>
         {/* Page title ends */}
-        <div className="container px-6 mx-auto">
+        <div className="container px-2 mx-auto">
           <div className="w-full">
             <div className="flex flex-col space-x-3 md:flex-row">
               <div className="container flex flex-col items-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">

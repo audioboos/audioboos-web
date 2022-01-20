@@ -65,7 +65,7 @@ const AlbumPage = () => {
   const _renderError = () => <div>Error loading.....</div>;
   const _renderAlbumPage = () => (
     <React.Fragment>
-      <div>
+      <div className='overflow-x-hidden'>
         <EditAlbumDialog isOpen={editing} setOpen={setEditing} album={album} />
 
         <div className="container flex flex-col items-start justify-between px-6 py-6 pb-4 mx-auto my-1 mb-0 bg-white border-b border-gray-300 rounded-t lg:my-2 lg:flex-row lg:items-center">
@@ -207,10 +207,10 @@ const AlbumPage = () => {
         </div>
         {/* Page title ends */}
         {artist && album && (
-          <div className="container mx-auto">
+          <div className="container px-2 mx-auto">
             <div className="w-full">
               <div className="flex flex-col space-x-3 md:flex-row">
-                <div className="container flex flex-col items-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
+                <div className="container flex flex-col items-center w-full mx-auto rounded-lg shadow">
                   <TrackList artist={artist} album={album} />
                 </div>
                 <div className="hidden md:block">
