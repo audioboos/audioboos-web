@@ -10,7 +10,7 @@ interface IIconButtonProps {
 }
 const defaults = {
   className:
-    'inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800',
+    'inline-flex items-center h-10 px-5 text-indigo-100 transition-colors duration-150 bg-indigo-500 rounded-lg focus:shadow-outline hover:bg-indigo-800',
   iconRight: false,
   fullWidth: false,
 };

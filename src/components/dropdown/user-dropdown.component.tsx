@@ -1,13 +1,21 @@
 import React from 'react';
 import { createPopper } from '@popperjs/core';
+import { Link, useHistory } from 'react-router-dom';
+import authService from '../../services/api/authService';
+import { logout } from '../../store/auth';
+import { useDispatch } from 'react-redux';
+import { useAuthQuery } from '../../store/redux/api';
 
 const UserDropdown = () => {
   // dropdown props
+  const { refetch } = useAuthQuery();
+  const dispatch = useDispatch();
+
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
+  const btnDropdownRef = React.createRef<Element>();
+  const popoverDropdownRef = React.createRef<HTMLDivElement>();
   const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
+    createPopper(btnDropdownRef.current as Element, popoverDropdownRef.current as HTMLDivElement, {
       placement: 'bottom-start',
     });
     setDropdownPopoverShow(true);
@@ -31,7 +39,7 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full align-middle border-none rounded-full shadow-lg"
-              src={require('assets/img/team-1-800x800.jpg').default}
+              src="/assets/images/team-1-800x800.jpg"
             />
           </span>
         </div>
@@ -43,42 +51,34 @@ const UserDropdown = () => {
           'bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48'
         }
       >
-        <a
-          href="#pablo"
+        <Link
+          to="/me"
           className={
             'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
           onClick={(e) => e.preventDefault()}
         >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
+          Profile
+        </Link>
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
         <a
-          href="#pablo"
+          href="#"
           className={
             'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={async () => {
+            const result = await authService.logout();
+            if (result) {
+              refetch();
+              dispatch(logout());
+              setTimeout(() => {
+                console.log('Authentication', "Fair enough, I'm a bad person");
+                window.location.reload();
+              }, 1000);
+            }
+          }}
         >
-          Seprated link
+          Logout
         </a>
       </div>
     </>

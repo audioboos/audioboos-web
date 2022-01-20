@@ -1,6 +1,6 @@
 import React from 'react';
+import { ILayoutProps } from '../../layout/Layout';
 import Footer from '../../layout/old/Footer';
-import { ILayoutProps } from '../../layout/old/Layout';
 import { Navbar } from '../../layout/old/Navbar';
 import Sidebar from '../../layout/old/Sidebar';
 

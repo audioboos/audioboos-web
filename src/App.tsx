@@ -8,20 +8,10 @@ import LoginPage from './pages/auth/LoginPage';
 import DebugPage from './pages/DebugPage';
 import Error500Page from './pages/error/500Page';
 import SplashScreen from './pages/splash/SplashScreen';
-import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/setup/SetupPage';
 import { AudioProvider } from './services/audio';
-import UserMiddleware from './services/user-resolver.middleware';
-import {
-  selectIsLoggedIn,
-  LoginStatus,
-  selectLoginStatus,
-  setCredentials,
-  setAuthChecked,
-} from './store/auth';
+import { LoginStatus, selectLoginStatus, setCredentials, setAuthChecked } from './store/auth';
 import { useSettingsQuery } from './store/redux/api';
-import { useAuthUser } from './services/use-user.hook';
-import api from './store/redux/api';
 import authService from './services/api/authService';
 import { Profile } from './models/Profile';
 import DashboardComponent from './features/dashboard/dashboard.component';

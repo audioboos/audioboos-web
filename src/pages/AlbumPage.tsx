@@ -2,7 +2,7 @@ import React from 'react';
 import { MdModeEdit, MdPlayArrow, MdPlaylistPlay } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { AlbumCard } from '../components/widgets';
+import { AlbumCard, IconButton } from '../components/widgets';
 import EditAlbumDialog from '../components/widgets/audio/EditAlbumDialog';
 import TrackList from '../components/widgets/audio/TrackList';
 import InlineEdit from '@atlaskit/inline-edit';
@@ -68,11 +68,10 @@ const AlbumPage = () => {
       <div>
         <EditAlbumDialog isOpen={editing} setOpen={setEditing} album={album} />
 
-        <div className="container flex flex-col items-start justify-between px-6 pb-4 mx-auto my-6 border-b border-gray-300 lg:my-12 lg:flex-row lg:items-center">
+        <div className="container flex flex-col items-start justify-between px-6 py-6 pb-4 mx-auto my-1 mb-0 bg-white border-b border-gray-300 rounded-t lg:my-2 lg:flex-row lg:items-center">
           <div>
-            <h4 className="text-2xl font-bold leading-tight text-gray-800">
-              {artist?.name}
-              <span> - </span>
+            <h2 className="text-2xl font-bold leading-tight text-gray-800">{artist?.name}</h2>
+            <h4 className="text-xl font-bold leading-tight text-gray-600">
               <InlineEdit
                 defaultValue={editAlbumName}
                 editView={({ errorMessage, ...fieldProps }) => (
@@ -179,33 +178,36 @@ const AlbumPage = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-row mt-6 space-x-1 lg:mt-0">
-            <button
+          <div className="flex flex-row mt-2 space-x-1 lg:-mt-4">
+            <IconButton
+              text={'Play'}
+              iconRight={false}
+              fullWidth={false}
               onClick={() => _playAll()}
-              className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
             >
               <MdPlayArrow className="w-5 h-5 mr-1 text-white" />
-              Play
-            </button>
-            <button
+            </IconButton>
+            <IconButton
+              text={'Queue'}
+              iconRight={false}
+              fullWidth={false}
               onClick={() => _addAllToQueue()}
-              className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
             >
               <MdPlaylistPlay className="w-5 h-5 mr-1 text-white" />
-              Queue
-            </button>
-            <button
+            </IconButton>
+            <IconButton
+              text={'Edit'}
+              iconRight={false}
+              fullWidth={false}
               onClick={() => setEditing(true)}
-              className="flex flex-row px-8 py-2 text-sm text-white transition duration-150 ease-in-out bg-indigo-700 border rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
             >
               <MdModeEdit className="w-5 h-5 mr-1 text-white" />
-              Edit
-            </button>
+            </IconButton>
           </div>
         </div>
         {/* Page title ends */}
         {artist && album && (
-          <div className="container px-6 mx-auto">
+          <div className="container mx-auto">
             <div className="w-full">
               <div className="flex flex-col space-x-3 md:flex-row">
                 <div className="container flex flex-col items-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
