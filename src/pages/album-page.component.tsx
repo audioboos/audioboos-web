@@ -3,8 +3,8 @@ import { MdModeEdit, MdPlayArrow, MdPlaylistPlay } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AlbumCard, IconButton } from '../components/widgets';
-import EditAlbumDialog from '../components/widgets/audio/EditAlbumDialog';
-import TrackList from '../components/widgets/audio/TrackList';
+import EditAlbumDialog from '../components/widgets/audio/edit-albumdialog.component';
+import TrackList from '../components/widgets/audio/tracklist.component';
 import InlineEdit from '@atlaskit/inline-edit';
 import { Album, Artist } from '../models';
 import {

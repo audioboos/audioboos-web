@@ -1,6 +1,6 @@
 import React from "react";
 import { Album, Artist } from "../../../models";
-import TrackListItem from "./TrackListItem";
+import TrackListItem from "./tracklist-item.component";
 
 interface ITrackListProps {
     artist: Artist;

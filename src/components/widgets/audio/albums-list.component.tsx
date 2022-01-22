@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MiniActionButton } from '..';
+import { ImageWithFallback, MiniActionButton } from '..';
 import { Album, Artist } from '../../../models';
 import audioBoosService from '../../../services/api/audiosBooService';
 
@@ -32,7 +32,12 @@ function AlbumsList({ artist }: IAlbumsListProps) {
                 <td className="pl-4 cursor-pointer">
                   <div className="flex items-center">
                     <div className="w-10 h-10">
-                      <img className="w-full h-full" src={album.smallImage} alt="Album" />
+                      <ImageWithFallback
+                        className="w-full h-full"
+                        src={album.smallImage}
+                        alt="Album"
+                        fallback={'/assets/images/default-album.jpg'}
+                      />
                     </div>
                     <div className="pl-4">
                       <p className="font-semibold text-gray-700 uppercase">{album.name}</p>
