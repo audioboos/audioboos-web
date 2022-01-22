@@ -1,10 +1,10 @@
 import React from 'react';
-import alone from '../../../assets/images/error/alone.svg';
+import { Images } from '../../services';
 
 const Error500Page = () => {
   return (
     <div className="relative h-screen overflow-hidden bg-indigo-900">
-      <img src={alone} className="absolute object-cover w-full h-full" />
+      <img src={Images.NotFound} className="absolute object-cover w-full h-full" />
       <div className="absolute inset-0 bg-black opacity-25"></div>
       <div className="container relative z-10 flex items-center px-6 py-32 mx-auto md:px-12 xl:py-40">
         <div className="relative z-10 flex flex-col items-center w-full font-mono">

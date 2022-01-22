@@ -2,4 +2,7 @@
 
 source ~/.prv/github_token && \
     echo $GITHUB_TOKEN | docker login ghcr.io -u fergalmoran --password-stdin && \
-    docker buildx build -t ghcr.io/audioboos/audioboos-web --file docker/Dockerfile --platform linux/arm/v7 --push .
+    docker buildx build \
+        -t ghcr.io/audioboos/audioboos-web \
+        --file docker/Dockerfile \
+        --platform linux/arm/v7 --push .

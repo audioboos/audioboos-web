@@ -2,9 +2,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import { useParams, useNavigate } from 'react-router-dom';
-import logo from '../../../assets/images/logo.svg';
 import { IconButton } from '../../components/widgets';
 import { InitialSettings } from '../../models';
+import { Images } from '../../services';
 import settingsService from '../../services/api/settingsService';
 import { useSettingsQuery } from '../../store/redux/api';
 import SetupAddLibrary from './setup-addlibrary-page.component';
@@ -67,7 +67,7 @@ const SetupPage = () => {
   return (
     <div className="flex flex-col justify-center min-h-screen px-6 bg-gray-100">
       <div className="-mt-28 sm:mx-auto sm:w-full sm:max-w-3xl">
-        <img className="h-10 mx-auto" src={logo} alt="Header logo" />
+        <img className="h-10 mx-auto" src={Images.Logo} alt="Header logo" />
         <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-700">
           Welcome to Audioboos...
         </h2>

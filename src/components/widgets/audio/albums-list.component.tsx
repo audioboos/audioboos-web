@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ImageWithFallback, MiniActionButton } from '..';
 import { Album, Artist } from '../../../models';
+import { Images } from '../../../services';
 import audioBoosService from '../../../services/api/audiosBooService';
 
 interface IAlbumsListProps {
@@ -36,7 +37,7 @@ function AlbumsList({ artist }: IAlbumsListProps) {
                         className="w-full h-full"
                         src={album.smallImage}
                         alt="Album"
-                        fallback={'/assets/images/default-album.jpg'}
+                        fallback={Images.DefaultAlbum}
                       />
                     </div>
                     <div className="pl-4">

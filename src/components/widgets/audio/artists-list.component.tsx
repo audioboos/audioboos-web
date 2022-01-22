@@ -1,7 +1,9 @@
-import React from "react";
-import { NavLink, Link } from "react-router-dom";
-import { Artist } from "../../../models";
-import { useArtistsQuery } from "../../../store/redux/api";
+import React from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { Artist } from '../../../models';
+import { useArtistsQuery } from '../../../store/redux/api';
+import { ImageWithFallback } from '../../widgets';
+import { Images } from '../../../services';
 
 interface ArtistListProps {
   onNavigate: () => void;
@@ -17,18 +19,24 @@ function ArtistsList({ onNavigate }: ArtistListProps) {
             <li className="items-center" key={artist.id}>
               <Link
                 className={
-                  "text-xs uppercase py-3 font-bold block " +
-                  (window.location.href.indexOf("/admin/dashboard") !== -1
-                    ? "text-sky-500 hover:text-sky-600"
-                    : "text-blueGray-700 hover:text-blueGray-500")
+                  'text-xs uppercase py-3 font-bold block ' +
+                  (window.location.href.indexOf('/admin/dashboard') !== -1
+                    ? 'text-sky-500 hover:text-sky-600'
+                    : 'text-blueGray-700 hover:text-blueGray-500')
                 }
                 onClick={() => onNavigate()}
                 to={`/artist/${artist.name}`}
               >
-                <img
+                {/* <img
                   src={artist.smallImage}
                   alt={artist.name}
                   className="inline object-cover w-8 h-8 mr-2 text-sm rounded-full "
+                /> */}
+                <ImageWithFallback
+                  className="inline object-cover w-8 h-8 mr-2 text-sm rounded-full"
+                  src={artist.smallImage}
+                  alt={artist.name}
+                  fallback={Images.DefaultArtist}
                 />
                 {artist.name}
               </Link>

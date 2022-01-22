@@ -5,6 +5,7 @@ import authService from '../../services/api/authService';
 import { logout } from '../../store/auth';
 import { useDispatch } from 'react-redux';
 import { useAuthQuery } from '../../store/redux/api';
+import { Images } from '../../services';
 
 const UserDropdown = () => {
   // dropdown props
@@ -43,7 +44,7 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full align-middle border-none rounded-full shadow-lg"
-              src="/assets/images/team-1-800x800.jpg"
+              src={Images.DefaultAvatar}
             />
           </span>
         </div>
