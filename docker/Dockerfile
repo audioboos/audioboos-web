@@ -1,10 +1,10 @@
-FROM node:16-alpine as builder
+FROM node:16-buster as builder
 
 WORKDIR /app
 COPY package.json package.json
 COPY yarn.lock yarn.lock
 COPY .env.production .env
-# RUN yarn install --frozen-lockfile
+
 RUN yarn install
 COPY . .
 
