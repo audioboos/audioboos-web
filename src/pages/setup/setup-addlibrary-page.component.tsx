@@ -2,7 +2,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import React from 'react';
 import { MdDriveFolderUpload, MdFolderOpen } from 'react-icons/md';
 import IHookFormProps from '../../components/IHookFormProps';
-import fileSystemService from '../../services/api/fileSystemService';
+import fileSystemService from '../../services/api/filesystem.service';
 
 interface IFileInfo {
   key: string;

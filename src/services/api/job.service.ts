@@ -1,4 +1,4 @@
-import ApiService from './apiService';
+import ApiService from './api.service';
 
 class JobService extends ApiService {
   scanArtist = async (artistName: string): Promise<boolean> => {

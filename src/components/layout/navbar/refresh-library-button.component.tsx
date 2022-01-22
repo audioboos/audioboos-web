@@ -1,7 +1,7 @@
 import React from "react";
 import { MdRefresh } from 'react-icons/md';
 import { toast } from "react-toastify";
-import jobService from "../../../services/api/jobService";
+import jobService from "../../../services/api/job.service";
 import { MiniActionButton } from "../../widgets";
 
 const RefreshLibraryButtonComponent = () => {

@@ -1,5 +1,5 @@
 import { InitialSettings, Settings } from '../../models';
-import ApiService from './apiService';
+import ApiService from './api.service';
 
 class SettingsService extends ApiService {
   getSettings = async (): Promise<Settings | undefined> => {

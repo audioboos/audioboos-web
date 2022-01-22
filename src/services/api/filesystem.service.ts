@@ -1,4 +1,4 @@
-import ApiService from './apiService';
+import ApiService from './api.service';
 
 class FileSystemService extends ApiService {
   getDirectories = async (path: string = ''): Promise<string[] | undefined> => {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ImageWithFallback, MiniActionButton } from '..';
 import { Album, Artist } from '../../../models';
 import { Images } from '../../../services';
-import audioBoosService from '../../../services/api/audiosBooService';
+import audioBoosService from '../../../services/api/audioboos.service';
 
 interface IAlbumsListProps {
   artist: Artist;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPopper } from '@popperjs/core';
 import { Link } from 'react-router-dom';
-import authService from '../../services/api/authService';
+import authService from '../../services/api/auth.service';
 import { logout } from '../../store/auth';
 import { useDispatch } from 'react-redux';
 import { useAuthQuery } from '../../store/redux/api';

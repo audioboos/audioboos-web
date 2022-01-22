@@ -10,11 +10,12 @@ import { SplashScreen } from './pages/splash';
 import { AudioProvider } from './services/audio';
 import { LoginStatus, selectLoginStatus, setCredentials, setAuthChecked } from './store/auth';
 import { useSettingsQuery } from './store/redux/api';
-import authService from './services/api/authService';
+import authService from './services/api/auth.service';
 import { Profile } from './models/Profile';
 import DashboardComponent from './features/dashboard/dashboard.component';
 import { SetupPage } from './pages/setup';
 import { Error500Page } from './pages/error';
+import Greebles from './pages/greebles-page.comonent';
 const App = () => {
   const [user, setUser] = React.useState<Profile | null>(null);
   const checkLoginStatus = () => {
@@ -52,7 +53,10 @@ const App = () => {
         <SplashScreen />
       ) : (
         <Layout>
-          <LoginPage />
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/greebles" element={<Greebles />} />
+          </Routes>
         </Layout>
       )}
     </AudioProvider>

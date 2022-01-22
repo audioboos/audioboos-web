@@ -6,15 +6,8 @@ import { MdHome, MdOutlineBugReport, MdOutlinePodcasts } from 'react-icons/md';
 
 const Navbar = () => {
   return (
-    <nav className="z-10 flex items-center w-full p-4 bg-sky-600 md:flex-row md:flex-nowrap md:justify-start">
-      <div className="flex flex-wrap items-center justify-between w-full px-4 bg-sky-600 mx-autp md:flex-nowrap md:px-10">
-        {/* Brand */}
-        <a
-          className="hidden text-sm font-semibold text-white uppercase lg:inline-block"
-          onClick={(e) => e.preventDefault()}
-        >
-          Dashboard
-        </a>
+    <nav className="z-10 flex items-center w-full p-2 bg-sky-600 md:flex-row md:flex-nowrap md:justify-start">
+      <div className="flex flex-wrap items-center justify-between w-full pt-1 pb-2 bg-sky-600 mx-autp md:flex-nowrap md:px-10">
         <div className="flex flex-row text-white lg:ml-auto">
           <NavbarUrlButton text="Dashboard" url="/">
             <MdHome className="w-8 h-8" />

@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { IconButton } from '../../components/widgets';
 import { InitialSettings } from '../../models';
 import { Images } from '../../services';
-import settingsService from '../../services/api/settingsService';
+import settingsService from '../../services/api/settings.service';
 import { useSettingsQuery } from '../../store/redux/api';
 import SetupAddLibrary from './setup-addlibrary-page.component';
 import SetupConfirm from './setup-confirm-page.component';

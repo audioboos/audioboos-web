@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import jobService from '../services/api/jobService';
+import jobService from '../services/api/job.service';
 const DebugPage = () => {
   const [artistName, setArtistName] = React.useState('');
   const scanArtist = async (artistName: string) => {

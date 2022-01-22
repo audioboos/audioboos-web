@@ -3,7 +3,7 @@ import { MdManageSearch, MdModeEditOutline, MdRefresh } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import { AlbumsList, ArtistCard, ArtistStats, MiniActionButton } from '../components/widgets';
 import { Artist } from '../models';
-import jobService from '../services/api/jobService';
+import jobService from '../services/api/job.service';
 import InlineEdit from '@atlaskit/inline-edit';
 import Textfield from '@atlaskit/textfield';
 

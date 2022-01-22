@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Profile } from '../models/Profile';
-import authService from '../services/api/authService';
+import authService from '../services/api/auth.service';
 import { RootState } from './redux/store';
 export enum LoginStatus {
   checking,

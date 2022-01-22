@@ -1,5 +1,6 @@
+import axios, { AxiosError } from 'axios';
 import { Profile } from '../../models/Profile';
-import ApiService from './apiService';
+import ApiService from './api.service';
 
 class AuthService extends ApiService {
   isAuthenticated = async (redirect: boolean = false): Promise<boolean> => {
@@ -20,7 +21,9 @@ class AuthService extends ApiService {
       const response = await client.post('/auth/logout');
       return response.status === 200;
     } catch (err) {
-      console.error('authService', 'logout', err);
+      if (axios.isAxiosError(err) && err?.response?.status !== 401) {
+        console.error('authService', 'logout', err);
+      }
     }
     return false;
   };
@@ -65,7 +68,9 @@ class AuthService extends ApiService {
       const response = await client.get('/profile');
       return response && response.data;
     } catch (err) {
-      console.error('Exception fetching settings', err);
+      if (axios.isAxiosError(err) && err?.response?.status !== 401) {
+        console.error('Exception fetching settings', err);
+      }
     }
     return undefined;
   };

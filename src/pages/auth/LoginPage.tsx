@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AlertWidget } from '../../components/widgets';
 import { AlertWidgetType } from '../../components/widgets/alert-widget.component';
-import authService from '../../services/api/authService';
+import authService from '../../services/api/auth.service';
 import { login } from '../../store/auth';
 import { useAuthQuery } from '../../store/redux/api';
 

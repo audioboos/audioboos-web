@@ -1,5 +1,5 @@
 import { Album, Artist } from "../../models";
-import ApiService from "./apiService";
+import ApiService from "./api.service";
 
 class AudioBoosService extends ApiService {
     getArtists = async (): Promise<Artist[] | undefined> => {
