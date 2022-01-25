@@ -5,7 +5,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { Album, Artist, Settings } from '../models';
+import { Album, Artist, PlayLog, Settings } from '../models';
 import { Profile } from '../models/Profile';
 import { refreshTokenCookies } from '../services/auth/util';
 import { RootState } from './redux/store';
@@ -35,7 +35,7 @@ const baseQueryWithRefresh: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
 
 const api = createApi({
   baseQuery: baseQueryWithRefresh,
-  tagTypes: ['Artist', 'Album', 'Track'],
+  tagTypes: ['Artist', 'Album', 'Track', 'PlayLog'],
   endpoints(build) {
     return {
       artists: build.query<Array<Artist>, void>({

@@ -5,7 +5,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { Album, Artist, Settings } from '../../models';
+import { Album, Artist, Settings, PlayLog } from '../../models';
 import { Profile } from '../../models/Profile';
 import { refreshTokenCookies } from '../../services/auth/util';
 import { RootState } from './store';
@@ -44,6 +44,9 @@ const api = createApi({
       artist: build.query<Artist, string>({
         query: (name) => ({ url: `/artists/${name}`, method: 'GET' }),
       }),
+      playLog: build.query<PlayLog[], void>({
+        query: () => ({ url: `/stats/recent`, method: 'GET' }),
+      }),
       settings: build.query<Settings, void>({
         query: () => ({ url: `/settings`, method: 'GET' }),
       }),
@@ -78,5 +81,6 @@ export const {
   useUpdateAlbumMutation,
   useUpdateArtistMutation,
   useAuthQuery,
+  usePlayLogQuery,
 } = api;
 export default api;

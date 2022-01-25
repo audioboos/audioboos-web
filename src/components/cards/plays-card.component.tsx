@@ -1,6 +1,13 @@
 import React from 'react';
+import { usePlayLogQuery } from '../../store/redux/api';
 
 const PlaysCard = () => {
+  const { data: plays, isLoading, error } = usePlayLogQuery();
+  React.useEffect(() => {
+    console.log('🚀 ~ file: plays-card.component.tsx ~ line 6 ~ PlaysCard ~ isLoading', isLoading);
+    console.log('🚀 ~ file: plays-card.component.tsx ~ line 6 ~ PlaysCard ~ isLoading', isLoading);
+    console.log('🚀 ~ file: plays-card.component.tsx ~ line 11 ~ PlaysCard ~ error', error);
+  }, [plays, isLoading, error]);
   return (
     <div className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
       <div className="px-4 py-3 mb-0 border-0 rounded-t">
@@ -24,95 +31,38 @@ const PlaysCard = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap">
-                Page name
+                Artist
               </th>
               <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap">
-                Visitors
+                Album
               </th>
               <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap">
-                Unique users
+                Track
               </th>
               <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap">
-                Bounce rate
+                Total Plays
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                /argon/
-              </th>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                4,569
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                340
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                <i className="mr-4 fas fa-arrow-up text-emerald-500"></i>
-                46,53%
-              </td>
-            </tr>
-            <tr>
-              <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                /argon/index.html
-              </th>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                3,985
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                319
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                <i className="mr-4 text-orange-500 fas fa-arrow-down"></i>
-                46,53%
-              </td>
-            </tr>
-            <tr>
-              <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                /argon/charts.html
-              </th>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                3,513
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                294
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                <i className="mr-4 text-orange-500 fas fa-arrow-down"></i>
-                36,49%
-              </td>
-            </tr>
-            <tr>
-              <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                /argon/tables.html
-              </th>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                2,050
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                147
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                <i className="mr-4 fas fa-arrow-up text-emerald-500"></i>
-                50,87%
-              </td>
-            </tr>
-            <tr>
-              <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                /argon/profile.html
-              </th>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                1,795
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                190
-              </td>
-              <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                <i className="mr-4 text-red-500 fas fa-arrow-down"></i>
-                46,53%
-              </td>
-            </tr>
+            {plays &&
+              plays.map((play, index) => (
+                <tr key={index}>
+                  <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {play.artistName}
+                  </th>
+                  <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {play.albumName}
+                  </td>
+                  <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {play.trackName}
+                  </td>
+                  <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    <i className="mr-4 fas fa-arrow-up text-emerald-500"></i>
+                    46,53%
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
